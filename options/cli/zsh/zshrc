@@ -1,0 +1,84 @@
+#--------COMPLETIONS--------
+# enable completion features
+
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
+
+zstyle ':completion:*' use-cache on
+# zstyle ':completion:*' cache-path "$HOME/.config/zsh/.zcompcache"
+
+# Only display some tags for the command cd
+zstyle ':completion:*:*:cd:*' tag-order local-directories directory-stack path-directories
+##############################
+
+
+
+
+#------HISTORY-------------
+HISTFILE="$HOME/.cache/.zsh_history"
+HISTSIZE=10000
+SAVEHIST=20000
+setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
+setopt hist_ignore_dups       # ignore duplicated commands history list
+setopt hist_ignore_space      # ignore commands that start with space
+setopt hist_verify            # show command with history expansion to user before running it
+setopt share_history          # share command history data
+##############################
+
+
+
+#-------COLORS AND THEMES---
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#484E5B,underline"
+export FZF_DEFAULT_OPTS='--color=fg:#ebdbb2,hl:#bd93f9 --color=fg+:#d5c4a1,bg+:#32302f,hl+:#bd93f9 --color=info:#ffb86c,prompt:#98971a,pointer:#d79921 --color=marker:#ff79c6,spinner:#ffb86c,header:#458588'
+
+#cd with eza config
+zstyle ':completion:*:descriptions' format '[%d]' # set descriptions format to enable group support 
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS} # set list-colors to enable filename colorizing
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath' # preview directory's content with eza when completing cd
+
+#-------PROMPT-------
+# PROMPT="%B$(gitstatus -i)%F{10}%n%F{10}@%F{10}%m%F{10}: "
+# RPROMPT="%B%~%B%F{10} %B%*%b%B/%b%B%w%b"
+##############################
+
+
+
+#-------KEYBINDS-------
+bindkey '^[[Z' autosuggest-accept   # Accept suggestion from zsh-autosuggest (shift-tab) 
+bindkey '^ '   autosuggest-execute  # Accept and execute suggestion from zsh-autosuggest (ctrl-space)
+
+bindkey "^[[1;5C" forward-word #Bind move one word left/right to ctrl left/right
+bindkey "^[[1;5D" backward-word
+
+#############################
+
+#-------ALIAS-------
+alias chroot='TERM=xterm-256color chroot'
+alias vampiretrain=" ~/.fightcade2/emulator/fbneo/run_vsav_training.sh"
+alias eza="eza -x --icons"
+alias ls="eza -x --icons"
+alias bat="bat --theme=gruvbox-dark"
+# alias btop="btop --utf-force"
+alias v='nvim'
+alias vc='nvim ~/Coding'
+alias vn='nvim ~/Documents/Notes/index.md'
+alias vj='nvim -c WikiJournal'
+alias cn='cd ~/Documents/Notes'
+alias make='make -j$(nproc)'
+alias touhou6="cd ~/Games/Touhou\ 6\ \ -\ The\ Embodiment\ of\ Scarlet\ Devil/ && LANG=ja_JP.UTF-8 wine thprac\ v2.0.8.3.exe"
+alias xgo='xdg-open'
+alias kcli='kdeconnect-cli -n M2012K11AG'
+alias sgcc="g++ -Werror -pedantic-errors -ggdb -Wall -Weffc++ -Wextra -Wsign-conversion -std=c++20"
+alias ssh="kitty +kitten ssh"
+
+#-------VARIABLES-------
+eval "$(dircolors)"
+export notes="/home/petarch/Documents/Notes"
+###########################
+
+#-------FUNCTIONS-------
+#AND THAT'S ALL
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+

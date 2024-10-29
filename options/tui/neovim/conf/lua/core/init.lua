@@ -1,0 +1,5 @@
+require("core.lazy")
+require("plugins")
+require("core.settings")
+require("core.mappings")
+dofile("/tmp/themes/nvim/theme")

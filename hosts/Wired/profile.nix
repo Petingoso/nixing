@@ -14,6 +14,7 @@ in {
     # "opensnitch.nix"
     "opentabletdriver.nix"
     "pcloud.nix"
+    "piper.nix"
     "wayland.nix"
   ];
 }

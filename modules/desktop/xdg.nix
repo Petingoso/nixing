@@ -49,6 +49,8 @@ in {
                     image_viewer = "org.xfce.ristretto.desktop";
                     text_editor = "nvim.desktop";
                 in{
+                    "x-scheme-handler/heroic" = [ "heroic.desktop" ];
+                    "application/pdf" = ["org.gnome.Evince.desktop"];
                     "text/html" = [ primary_browser secondary_browser ];
                     "x-scheme-handler/http" = [ primary_browser secondary_browser ];
                     "x-scheme-handler/https" = [ primary_browser secondary_browser ];
@@ -58,7 +60,6 @@ in {
                     "message/rfc822" = [ mail_client ];
                     "x-scheme-handler/mid" = [ mail_client ];
                     "inode/directory" = [ file_manager ];
-                    "x-scheme-handler/heroic" = [ "heroic.desktop" ];
                     "audio/mp3" = [ media_player ];
                     "audio/ogg" = [ media_player ];
                     "audio/mpeg" = [ media_player ];

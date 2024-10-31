@@ -51,7 +51,7 @@ in {
     vscodium
     wineWowPackages.waylandFull
     youtube-music
-    # miru
+    miru
     (callPackage "${self}/pkgs/olympus/package.nix" {})
     (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
     xdg-utils

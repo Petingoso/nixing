@@ -44,7 +44,7 @@
             type = "simple";
             sensitive = true;
             operand = "process.path";
-            data = "${lib.getBin pkgs.kdeconnect-kde}/libexec/.kdeconnectd-wrapped";
+            data = "${lib.getBin pkgs.plasma5Packages.kdeconnect-kde}/libexec/.kdeconnectd-wrapped";
           };
         };
       };

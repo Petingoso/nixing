@@ -3,16 +3,7 @@
   lib,
   pkgs,
   ...
-}: let
-  firefox = pkgs.firefox-bin-unwrapped.overrideAttrs (oldAttrs: rec {
-    inherit (oldAttrs);
-    version = "131.0.2";
-    src = builtins.fetchurl {
-      url = "https://ftp.mozilla.org/pub/firefox/releases/${version}/linux-x86_64/en-GB/firefox-${version}.tar.bz2";
-      sha256 = "cda36e33d2de502a51a9ce1cd50530661e79c58b114fa97651db45debb98f865";
-    };
-  });
-in {
+}:{
   options.mystuff.programs = {
     firefox-config.enable = lib.mkEnableOption "firefox-config";
   };
@@ -24,7 +15,7 @@ in {
       programs.firefox = {
         enable = true;
 
-        package = pkgs.wrapFirefox firefox {
+        package = pkgs.wrapFirefox pkgs.firefox-esr-128-unwrapped {
           extraPolicies = {
             CaptivePortal = false;
             DisableFirefoxStudies = true;

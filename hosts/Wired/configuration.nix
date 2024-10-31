@@ -1,6 +1,8 @@
 {config, ...}: let
   inherit (config.mystuff.other.system) username;
 in {
+  programs.kdeconnect.enable = true;
+
   mystuff = {
     other.home-manager.enable = true;
     programs = {

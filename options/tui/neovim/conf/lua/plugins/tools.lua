@@ -112,6 +112,8 @@ local tools = {
 			require("plugins.configs.web-tools")
 		end,
 	}, -- Browser Sync and the sort
+
+	{"github/copilot.vim"} -- github copilot
 }
 
 return tools

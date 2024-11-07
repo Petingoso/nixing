@@ -100,6 +100,11 @@ map("n", "<C-Up>", splits.resize_up, { desc = "Resize split up" })
 map("n", "<C-Down>", splits.resize_down, { desc = "Resize split down" })
 map("n", "<C-Left>", splits.resize_left, { desc = "Resize split left" })
 map("n", "<C-Right>", splits.resize_right, { desc = "Resize split right" })
+ 
+map("n", "<C-w>mm", cmd 'WindowsMaximize', { desc = "Maximize window" })
+map("n", "<C-w>mv", cmd 'WindowsMaximizeVertically', { desc = "Maximize window vertically" })
+map("n", "<C-w>mh", cmd 'WindowsMaximizeHorizontally', { desc = "Maximize window horizontally" })
+map("n", "<C-w>e", cmd 'WindowsEqualize', { desc = "Equalize window sizes" })
 
 -- Buffer and Tab management
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })

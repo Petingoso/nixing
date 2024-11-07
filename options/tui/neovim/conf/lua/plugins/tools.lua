@@ -113,6 +113,17 @@ local tools = {
 		end,
 	}, -- Browser Sync and the sort
 
+	{
+		"CopilotC-Nvim/CopilotChat.nvim",
+		event = "InsertEnter",
+		dependencies = {
+			{ "zbirenbaum/copilot.lua" },
+			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+		},
+		config = function()
+			require("CopilotChat").setup()
+		end,
+	}, -- for asking copilot
 }
 
 return tools

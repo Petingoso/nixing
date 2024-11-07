@@ -100,11 +100,11 @@ map("n", "<C-Up>", splits.resize_up, { desc = "Resize split up" })
 map("n", "<C-Down>", splits.resize_down, { desc = "Resize split down" })
 map("n", "<C-Left>", splits.resize_left, { desc = "Resize split left" })
 map("n", "<C-Right>", splits.resize_right, { desc = "Resize split right" })
- 
-map("n", "<C-w>mm", cmd 'WindowsMaximize', { desc = "Maximize window" })
-map("n", "<C-w>mv", cmd 'WindowsMaximizeVertically', { desc = "Maximize window vertically" })
-map("n", "<C-w>mh", cmd 'WindowsMaximizeHorizontally', { desc = "Maximize window horizontally" })
-map("n", "<C-w>e", cmd 'WindowsEqualize', { desc = "Equalize window sizes" })
+
+map("n", "<C-w>mm", ":WindowsMaximize<CR>", { desc = "Maximize window" })
+map("n", "<C-w>mv", ":WindowsMaximizeVertically<CR>", { desc = "Maximize window vertically" })
+map("n", "<C-w>mh", ":WindowsMaximizeHorizontally<CR>", { desc = "Maximize window horizontally" })
+map("n", "<C-w>e" ,  ":WindowsEqualize<CR>", { desc = "Equalize window sizes" })
 
 -- Buffer and Tab management
 map("n", "<S-l>", "<cmd>bnext<cr>", { desc = "Next buffer" })
@@ -145,15 +145,20 @@ map("n", "<localleader>di", dap.step_into, { desc = "DAP step into" })
 map("n", "<localleader>do", dap.step_out, { desc = "DAP setp out" })
 map("n", "<localleader>dC", dap.clear_breakpoints, { desc = "DAP Clear Breakpoints" })
 
--- neotest 
-map('n','<localleader>tt',neotest.run.run,		     { noremap = true, silent = true, desc = 'Run nearest [t]est' })
-map('n','<localleader>tf',function()
+-- neotest
+map("n", "<localleader>tt", neotest.run.run, { noremap = true, silent = true, desc = "Run nearest [t]est" })
+map("n", "<localleader>tf", function()
 	neotest.run.run(vim.fn.expand("%"))
-end,{ noremap = true, silent = true, desc = 'Run all tests in [file]' })
-map('n','<localleader>ts',neotest.run.stop,		     { noremap = true, silent = true, desc = '[S]top nearest test' })
-map('n','<localleader>too',":Neotest output<CR>",		     { noremap = true, silent = true, desc = 'Show [O]utput' })
-map('n','<localleader>top',":Neotest output-panel<CR>",		     { noremap = true, silent = true, desc = 'Show [O]utput [P]anel' })
-map('n','<localleader>ts',neotest.summary.toggle,	     { noremap = true, silent = true, desc = 'Show [S]ummary' })
+end, { noremap = true, silent = true, desc = "Run all tests in [file]" })
+map("n", "<localleader>ts", neotest.run.stop, { noremap = true, silent = true, desc = "[S]top nearest test" })
+map("n", "<localleader>too", ":Neotest output<CR>", { noremap = true, silent = true, desc = "Show [O]utput" })
+map(
+	"n",
+	"<localleader>top",
+	":Neotest output-panel<CR>",
+	{ noremap = true, silent = true, desc = "Show [O]utput [P]anel" }
+)
+map("n", "<localleader>ts", neotest.summary.toggle, { noremap = true, silent = true, desc = "Show [S]ummary" })
 --
 -- Close debugger and clear breakpoints
 map("n", "<localleader>de", function()

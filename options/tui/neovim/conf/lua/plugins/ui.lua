@@ -44,7 +44,7 @@ local ui = {
 		end,
 	},
 
-	{ "kevinhwang91/rnvimr" },
+	{ "kevinhwang91/rnvimr" }, --ranger nvim
 
 	{
 		"nvim-neo-tree/neo-tree.nvim",

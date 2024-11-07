@@ -113,7 +113,6 @@ local tools = {
 		end,
 	}, -- Browser Sync and the sort
 
-	{"github/copilot.vim"} -- github copilot
 }
 
 return tools

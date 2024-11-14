@@ -10,6 +10,7 @@ in {
     "docker.nix"
     "fcitx.nix"
     "kleopatra.nix"
+    "nix-alien.nix"
     # "libvirt.nix"
     # "opensnitch.nix"
     "opentabletdriver.nix"

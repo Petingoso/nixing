@@ -103,7 +103,7 @@ local tools = {
 
 	{ "lervag/wiki.vim" }, --vim wiki, markdown collection
 	{ "alvan/vim-closetag" }, --close html tags
-	{ "ekickx/clipboard-image.nvim" }, --:PasteImg to paste an image
+	{ "dfendr/clipboard-image.nvim" }, --:PasteImg to paste an image
 	{ "ibhagwan/smartyank.nvim" }, --better yank
 	{ "tpope/vim-sleuth" }, -- Detect tabstop and shiftwidth automatically
 	{

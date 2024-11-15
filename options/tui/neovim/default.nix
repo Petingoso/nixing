@@ -13,7 +13,7 @@
 
       programs.neovim = {
         enable = true;
-        extraPackages = [pkgs.gcc pkgs.unzip pkgs.hurl pkgs.jq pkgs.nodePackages.browser-sync];
+        extraPackages = [pkgs.gcc pkgs.unzip pkgs.hurl pkgs.jq pkgs.nodePackages.browser-sync pkgs.yarn pkgs.nodejs ];
       };
 
       home.file."./.config/nvim" = {

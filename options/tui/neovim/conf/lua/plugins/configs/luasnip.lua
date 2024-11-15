@@ -1,4 +1,7 @@
 local ls = require("luasnip")
+local s = ls.snippet
+local t = ls.text_node
+
 require("luasnip.loaders.from_vscode").lazy_load()
 require("luasnip").setup({
 	region_check_events = "InsertEnter",
@@ -114,3 +117,31 @@ au User LuasnipChoiceNodeLeave lua Choice_popup_close()
 au User LuasnipChangeChoice lua Update_choice_popup(require("luasnip").session.event_node)
 augroup END
 ]])
+
+--logical snippets md
+ls.add_snippets("markdown", {
+	s("not", {
+		t("¬"),
+	}),
+	s("and", {
+		t("∧"),
+	}),
+	s("or", {
+		t("∨"),
+	}),
+	s("implies", {
+		t("→"),
+	}),
+	s("then", {
+		t("⊢"),
+	}),
+	s("therefore", {
+		t("∴"),
+	}),
+	s("because", {
+		t("∵"),
+	}),
+	s("sse", {
+		t("↔"),
+	}),
+})

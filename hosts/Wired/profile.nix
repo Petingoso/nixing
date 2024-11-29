@@ -3,6 +3,7 @@
 in {
   imports = map (name: "${../../modules/optional/${name}}") [
     "cpu/amd.nix"
+    "btrfs-maint.nix"
     "hyprland/default.nix"
     "scripts/default.nix"
     # "afs.nix"

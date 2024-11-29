@@ -15,9 +15,9 @@
       programs.dconf.enable = true;
       environment.sessionVariables = {
         GSETTINGS_SCHEMA_DIR = "${pkgs.gnome.nixos-gsettings-overrides}/share/gsettings-schemas/nixos-gsettings-overrides/glib-2.0/schemas/";
+        XCURSOR_THEME = "Adwaita";
       };
-      home-manager.users.${config.mystuff.other.system.username} = {
-        gtk.cursorTheme.package = pkgs.bibata-cursors;
+      home-manager.users.${config.mystuff.other.system.username} = { 
         gtk.iconTheme = {
           package = pkgs.papirus-icon-theme;
           name = "Papirus-Dark";

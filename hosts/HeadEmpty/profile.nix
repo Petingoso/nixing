@@ -12,7 +12,7 @@ in {
     "kleopatra.nix"
     "nix-alien.nix"
     # "libvirt.nix"
-    # "opensnitch.nix"
+    "opensnitch.nix"
     #"opentabletdriver.nix"
     "pcloud.nix"
     "piper.nix"

@@ -42,12 +42,14 @@
       blur.new_optimizations = true;
       blur.ignore_opacity = true;
 
-      drop_shadow = 1;
-      shadow_range = 20;
-      shadow_render_power = 2;
-      shadow_ignore_window = 1;
-      shadow_offset = "8 8";
-      "col.shadow" = "0x44000000";
+      shadow = {
+        enabled = true;
+        range = 20;
+        render_power = 2;
+        ignore_window = true;
+        color = "0x44000000";
+        offset = "8 8";
+      };
     };
 
     # misc.disable_hyprland_logo = true;

@@ -27,6 +27,7 @@ in {
     };
     services = {
       networkmanager.enable = true;
+      networkmanager.powersave = true;
     };
     gtk.enable = true;
     qt.enable = true;

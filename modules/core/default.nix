@@ -1,6 +1,5 @@
 _: {
   imports = [
-    ./btrfs-maint.nix
     ./common.nix
     ./dbus.nix
     ./docs.nix

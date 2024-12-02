@@ -1,6 +1,6 @@
 {config, ...}: {
   home-manager.users.${config.mystuff.other.system.username} = {
-    home.file.".local/bin/conservation-mode" = {
+    home.file.".local/bin/thinkpad_conservation_mode" = {
       text = ''
         #!/usr/bin/env bash
         if [ $1 = 1 ]; then

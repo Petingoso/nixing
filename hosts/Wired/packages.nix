@@ -26,6 +26,8 @@ in {
   ];
 
   users.users.${username}.packages = with pkgs; [
+    ludusavi
+    rclone
     bitwarden
     calibre
     ckan

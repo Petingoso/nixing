@@ -5,5 +5,6 @@ _: {
     ./profile.nix
     ./packages.nix
     ./system.nix
+    ./t480.nix
   ];
 }

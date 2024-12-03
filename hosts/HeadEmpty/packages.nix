@@ -32,7 +32,6 @@ in {
     pavucontrol
     pcsx2
     qalculate-gtk
-    steam
     steamtinkerlaunch
     stremio
     texliveMedium
@@ -44,4 +43,8 @@ in {
     youtube-music
     xdg-utils
   ];
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+  };
 }

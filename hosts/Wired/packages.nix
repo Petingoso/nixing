@@ -26,7 +26,6 @@ in {
   ];
 
   users.users.${username}.packages = with pkgs; [
-    ludusavi
     rclone
     bitwarden
     calibre
@@ -54,8 +53,10 @@ in {
     wineWowPackages.waylandFull
     youtube-music
     miru
-    (callPackage "${self}/pkgs/olympus/package.nix" {})
+
+    (callPackage "${self}/pkgs/olympus/package.nix"{celesteWrapper = pkgs.steam-run;})
     (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
+    (callPackage "${self}/pkgs/ludusavi.nix" {})
     xdg-utils
     gamescope
     r2modman

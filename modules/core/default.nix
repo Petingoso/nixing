@@ -1,5 +1,6 @@
 _: {
   imports = [
+    ./agenix.nix
     ./common.nix
     ./dbus.nix
     ./docs.nix

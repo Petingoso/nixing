@@ -26,6 +26,7 @@ in {
       mpv.enable = true;
       neovim-config.enable = true;
       ranger.enable = true;
+      vesktop.enable = true;
     };
     services = {
       networkmanager.enable = true;

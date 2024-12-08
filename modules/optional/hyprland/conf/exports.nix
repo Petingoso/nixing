@@ -8,7 +8,6 @@
     "WLR_BACKEND,vulkan"
     "GDK_BACKEND,wayland"
 
-
     "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
     "QT_QPA_PLATFORM,wayland"
     "QT_QPA_PLATFORMTHEME,kvantum"

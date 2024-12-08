@@ -48,8 +48,8 @@ in
       dir = ./Wired;
       type = "desktop";
     }
-   {
-	dir=./HeadEmpty;
-	type="desktop";
-   } 
+    {
+      dir = ./HeadEmpty;
+      type = "desktop";
+    }
   ]

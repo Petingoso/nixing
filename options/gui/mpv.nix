@@ -41,9 +41,7 @@ in {
             mpris
             thumbfast
             # sponsorblock
-            
             # uosc
-            
             ;
         };
       };

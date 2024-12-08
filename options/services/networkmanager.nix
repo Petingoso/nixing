@@ -9,7 +9,7 @@
   inherit (lib.types) bool;
 in {
   options.mystuff.services.networkmanager = {
-     enable = mkOption {
+    enable = mkOption {
       description = "enable networkmanager";
       type = bool;
     };
@@ -22,21 +22,21 @@ in {
   };
 
   config = {
-      networking = {
-        networkmanager = {
-          enable = true;
-          dns = "systemd-resolved";
-          wifi.powersave = cfg.powersave;
-        };
-      };
-
-      services.resolved = {
+    networking = {
+      networkmanager = {
         enable = true;
-        fallbackDns = [
-          "9.9.9.9"
-          "2620:fe::fe"
-        ];
+        dns = "systemd-resolved";
+        wifi.powersave = cfg.powersave;
       };
-      users.users.${config.mystuff.other.system.username}.extraGroups = ["networkmanager"];
     };
+
+    services.resolved = {
+      enable = true;
+      fallbackDns = [
+        "9.9.9.9"
+        "2620:fe::fe"
+      ];
+    };
+    users.users.${config.mystuff.other.system.username}.extraGroups = ["networkmanager"];
+  };
 }

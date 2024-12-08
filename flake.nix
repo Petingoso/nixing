@@ -23,7 +23,7 @@
     };
 
     nix-alien.url = "github:thiagokokada/nix-alien";
-    
+
     agenix.url = "github:ryantm/agenix";
   };
 }

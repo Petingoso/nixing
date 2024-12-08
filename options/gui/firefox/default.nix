@@ -3,7 +3,7 @@
   lib,
   pkgs,
   ...
-}:{
+}: {
   options.mystuff.programs = {
     firefox-config.enable = lib.mkEnableOption "firefox-config";
   };

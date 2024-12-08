@@ -25,21 +25,7 @@ in {
                 postFixup = concatStrings [
                     old.postFixup
                     ''
-                        wrapProgram $out/bin/vesktop \
-                            --add-flags "--ozone-platform=wayland \
-                                --enable-zero-copy \
-                                --use-gl=angle \
-                                --use-vulkan \
-                                --enable-oop-rasterization \
-                                --enable-raw-draw \
-                                --enable-gpu-rasterization \
-                                --enable-gpu-compositing \
-                                --enable-native-gpu-memory-buffers \
-                                --enable-accelerated-2d-canvas \
-                                --enable-accelerated-video-decode \
-                                --enable-accelerated-mjpeg-decode \
-                                --disable-gpu-vsync \
-                                --enable-features=Vulkan,VulkanFromANGLE,DefaultANGLEVulkan,VaapiIgnoreDriverChecks,VaapiVideoDecoder,PlatformHEVCDecoderSupport"
+                        wrapProgram $out/bin/vesktop --add-flags "--ozone-platform=wayland"
                     ''
                 ];
             }))

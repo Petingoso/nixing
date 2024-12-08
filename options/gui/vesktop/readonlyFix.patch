@@ -1,8 +1,8 @@
 diff --git a/src/main/settings.ts b/src/main/settings.ts
-index b2aeea9..b700c6b 100644
+index 6fad97f..dfc64e3 100644
 --- a/src/main/settings.ts
 +++ b/src/main/settings.ts
-@@ -27,8 +27,12 @@ function loadSettings<T extends object = any>(file: string, name: string) {
+@@ -26,8 +26,10 @@ function loadSettings<T extends object = any>(file: string, name: string) {
  
      const store = new SettingsStore(settings);
      store.addGlobalChangeListener(o => {
@@ -12,8 +12,6 @@ index b2aeea9..b700c6b 100644
 +            mkdirSync(dirname(file), { recursive: true });
 +            writeFileSync(file, JSON.stringify(o, null, 4));
 +        } catch {}
-+     });
-+
      });
  
      return store;

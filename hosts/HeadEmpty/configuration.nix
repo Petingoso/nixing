@@ -35,5 +35,8 @@ in {
     qt.enable = true;
   };
 
+  age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
+  age.secrets.test.file = ../../secrets/test.age;
+
   system.stateVersion = "24.05";
 }

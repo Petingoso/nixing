@@ -1,7 +1,6 @@
 {
   pkgs,
   config,
-  self,
   ...
 }: let
   inherit (config.mystuff.other.system) username;
@@ -37,7 +36,6 @@ in {
     texliveMedium
     tor-browser
     ungoogled-chromium
-    vesktop
     vscodium
     wineWowPackages.waylandFull
     youtube-music

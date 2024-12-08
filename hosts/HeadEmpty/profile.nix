@@ -5,7 +5,7 @@ in {
     "cpu/intel.nix"
     "hyprland/default.nix"
     "scripts/default.nix"
-    # "afs.nix"
+    "afs.nix"
     "direnv.nix"
     # "docker.nix"
     "fcitx.nix"

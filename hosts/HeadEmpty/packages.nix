@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  self,
   ...
 }: let
   inherit (config.mystuff.other.system) username;
@@ -40,6 +41,9 @@ in {
     wineWowPackages.waylandFull
     youtube-music
     xdg-utils
+    rclone
+
+    (callPackage "${self}/pkgs/ludusavi.nix" {})
   ];
   programs.steam = {
     enable = true;

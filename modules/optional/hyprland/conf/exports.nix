@@ -8,9 +8,6 @@
     "WLR_BACKEND,vulkan"
     "GDK_BACKEND,wayland"
 
-    "QT_IM_MODULE,fcitx"
-    "GLFW_IM_MODULE,ibus"
-    "SDL_IM_MODULE,fcitx"
 
     "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
     "QT_QPA_PLATFORM,wayland"

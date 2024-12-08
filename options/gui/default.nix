@@ -5,6 +5,7 @@ _: {
     ./rofi
     ./swaync
     ./themes
+    ./vesktop
     ./waybar
     ./mpv.nix
   ];

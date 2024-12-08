@@ -55,15 +55,15 @@ in {
                 minimizeToTray = true;
             };
 
-            xdg.configFile."vesktop/quickCss.css".source = ./quickCss.css;
+            xdg.configFile."vesktop/themes/theme.css".source = ./theme.css;
             xdg.configFile."vesktop/settings/settings.json".text = builtins.toJSON {
                 notifyAboutUpdates = false;
                 autoUpdate = false;
                 autoUpdateNotification = false;
                 useQuickCss = true;
                 themeLinks = [];
-                enabledThemes = ["Catppuccin.theme.css"]; # TODO:
-                enableReactDevtools = false;
+                enabledThemes = ["./theme.css"]; # TODO:
+                enableReactDevtools = true;
                 frameless = false;
                 transparent = true;
                 winCtrlQ = false;

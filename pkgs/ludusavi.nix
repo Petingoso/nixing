@@ -100,7 +100,8 @@ rustPlatform.buildRustPackage rec {
     in
     ''
       patchelf --set-rpath "${libPath}" "$out/bin/ludusavi"
-      wrapProgram $out/bin/ludusavi --set ICED_BACKEND tiny-skia --prefix PATH : ${lib.makeBinPath [ zenity libsForQt5.kdialog ]}
+      wrapProgram "$out/bin/ludusavi" --set WGPU_BACKEND gl \
+      --prefix PATH : ${lib.makeBinPath [ zenity libsForQt5.kdialog ]}
     '';
 
 

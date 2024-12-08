@@ -48,7 +48,6 @@ in {
     texliveMedium
     tor-browser
     ungoogled-chromium
-    vesktop
     vscodium
     wineWowPackages.waylandFull
     youtube-music

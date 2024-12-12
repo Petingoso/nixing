@@ -48,7 +48,7 @@ in {
         autoUpdateNotification = false;
         useQuickCss = true;
         themeLinks = [];
-        enabledThemes = ["./theme.css"]; # TODO:
+        enabledThemes = ["./theme.css"]; 
         enableReactDevtools = true;
         frameless = false;
         transparent = true;

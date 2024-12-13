@@ -13,6 +13,7 @@ in {
     gnome-disk-utility
     lxappearance
     ncpamixer
+    libreoffice
     nemo
     nemo-fileroller
     piper

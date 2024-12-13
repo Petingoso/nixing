@@ -50,12 +50,8 @@ in {
         themeLinks = [];
         enabledThemes = ["./theme.css"]; # TODO:
         enableReactDevtools = true;
-        frameless = false;
         transparent = true;
         winCtrlQ = false;
-        macosTranslucency = false;
-        disableMinSize = false;
-        winNativeTitleBar = false;
         plugins = {
           BadgeAPI.enabled = true;
           CommandsAPI.enabled = true;
@@ -73,46 +69,10 @@ in {
             enabled = true;
             settingsLocation = "aboveActivity";
           };
-          AlwaysAnimate.enabled = false;
-          AlwaysTrust.enabled = false;
-          AnonymiseFileNames.enabled = false;
-          "WebRichPresence (arRPC)".enabled = false;
-          BANger.enabled = false;
-          BetterFolders = {
-            enabled = false;
-            sidebar = true;
-            sidebarAnim = true;
-            closeAllFolders = false;
-            closeAllHomeButton = false;
-            closeOthers = false;
-            forceOpen = false;
-            keepIcons = false;
-            showFolderIcon = 1;
-          };
-          BetterGifAltText.enabled = false;
-          BetterNotesBox.enabled = false;
-          BetterRoleDot.enabled = false;
           BetterUploadButton.enabled = true;
-          BiggerStreamPreview.enabled = false;
-          BlurNSFW.enabled = false;
-          CallTimer = {
-            enabled = true;
-            format = "human";
-          };
           ClearURLs.enabled = true;
-          ColorSighted.enabled = false;
-          ConsoleShortcuts.enabled = false;
           CopyUserURLs.enabled = true;
           CrashHandler.enabled = true;
-          CustomRPC.enabled = false;
-          Dearrow.enabled = false;
-          DisableDMCallIdle.enabled = false;
-          EmoteCloner.enabled = false;
-          Experiments = {
-            enabled = false;
-            enableIsStaff = false;
-          };
-          F8Break.enabled = false;
           FakeNitro = {
             enabled = true;
             enableEmojiBypass = true;
@@ -124,26 +84,10 @@ in {
             transformCompoundSentence = false;
             enableStreamQualityBypass = true;
           };
-          FakeProfileThemes = {
-            enabled = false;
-            nitroFirst = true;
-          };
           FavoriteEmojiFirst.enabled = true;
-          FavoriteGifSearch = {
-            enabled = false;
-            searchOption = "hostandpath";
-          };
           FixImagesQuality.enabled = true;
-          FixSpotifyEmbed = {
-            enabled = true;
-            volume = 10;
-          };
-          ForceOwnerCrown.enabled = false;
-          FriendInvites.enabled = false;
           GameActivityToggle.enabled = true;
           GifPaste.enabled = true;
-          HideAttachments.enabled = false;
-          iLoveSpam.enabled = false;
           IgnoreActivities = {
             enabled = true;
             ignoredActivities = [];
@@ -158,27 +102,7 @@ in {
             size = 100;
             zoomSpeed = 0.5;
           };
-          InvisibleChat = {
-            enabled = false;
-            savedPasswords = "password";
-          };
-          KeepCurrentChannel.enabled = false;
-          LastFMRichPresence.enabled = false;
-          LoadingQuotes.enabled = false;
           MemberCount.enabled = true;
-          MessageClickActions = {
-            enabled = true;
-            enableDeleteOnClick = true;
-            enableDoubleClickToEdit = true;
-            enableDoubeClickToReply = true;
-            requireModifier = true;
-          };
-          MessageLinkEmbeds = {
-            enabled = false;
-            automodEmbeds = "never";
-            listMode = "blacklist";
-            idList = "";
-          };
           MessageLogger = {
             enabled = true;
             deleteStyle = "text";
@@ -188,56 +112,14 @@ in {
             ignoreChannels = "";
             ignoreGuilds = "";
           };
-          MessageTags.enabled = false;
-          MoreCommands.enabled = false;
-          MoreKaomoji.enabled = true;
-          MoreUserTags.enabled = true;
-          Moyai.enabled = false;
-          MuteNewGuild = {
-            enabled = true;
-            guild = false;
-            everyone = true;
-            role = true;
-          };
           MutualGroupDMs.enabled = true;
-          NoBlockedMessages = {
-            enabled = false;
-            ignoreBlockedMessages = false;
-          };
-          NoDevtoolsWarning.enabled = false;
-          NoF1.enabled = false;
-          NoPendingCount.enabled = false;
           NoProfileThemes.enabled = true;
-          NoReplyMention = {
-            enabled = false;
-            # userList = "372809091208445953";
-            # shouldPingListed = false;
-            # inverseShiftReply = true;
-          };
-          NoScreensharePreview.enabled = false;
-          NoTypingAnimation = false;
-          NoUnblockToJump.enabled = false;
-          NSFWGateBypass.enabled = true;
-          oneko.enabled = false;
-          OpenInApp.enabled = false;
-          "Party mode 🎉".enabled = false;
-          PermissionFreeWill = {
-            enabled = false;
-            # lockout = true;
-            # onboarding = true;
-          };
           PermissionsViewer = {
             enabled = true;
             permissionsSortOrder = 0;
             defaultPermissionsDropdownState = false;
           };
-          petpet.enabled = false;
-          PictureInPicture = {
-            enabled = false;
-            # loop = false;
-          };
           PinDMs.enabled = true;
-          PlainFolderIcon.enabled = false;
           PlatformIndicators = {
             enabled = true;
             list = true;
@@ -246,11 +128,6 @@ in {
             colorMobileIndicator = true;
           };
           PreviewMessage.enabled = true;
-          PronounDB.enabled = false;
-          QuickMention.enabled = false;
-          QuickReply.enabled = false;
-          ReactErrorDecoder.enabled = false;
-          ReadAllNotificationsButton.enabled = false;
           RelationshipNotifier = {
             enabled = true;
             notices = true;
@@ -260,17 +137,7 @@ in {
             servers = true;
             groups = true;
           };
-          RevealAllSpoilers.enabled = false;
-          ReverseImageSearch.enabled = false;
-          ReviewDB.enabled = false;
-          RoleColorEverywhere = {
-            enabled = false;
-            # chatMentions = true;
-            # memberList = true;
-            # voiceUsers = true;
-          };
           SearchReply.enabled = true;
-          SendTimestamps.enabled = false;
           ServerListIndicators = {
             enabled = true;
             mode = 3;
@@ -283,64 +150,7 @@ in {
             # uesDevIcon = "GREYSCALE";
             bgOpacity = 100;
           };
-          ShowAllMessageButtons.enabled = false;
-          ShowConnections = {
-            enabled = false;
-            # iconSize = 32;
-            # iconSpacing = 1;
-          };
-          ShowHiddenChannels = {
-            enabled = false;
-            # hideUnreads = true;
-            # showMode = 0;
-            # defaultAllowedUsersAndRolesDropdownState = true;
-          };
-          ShowMeYourName.enabled = false;
           ShowTimeouts.enabled = true;
-          SilentMessageToggle = {
-            enabled = false;
-            # persistState = false;
-            # autoDisable = true;
-          };
-          SilentTyping = {
-            enabled = false;
-            # showIcon = false;
-            # isEnabled = true;
-          };
-          SortFriendRequests.enabled = false;
-          SpotifyControls.enabled = false;
-          SpotifyCrack.enabled = false;
-          SpotifyShareCommands.enabled = false;
-          StartupTimings.enabled = false;
-          SupportHelper.enabled = true;
-          TextReplace.enabled = false;
-          TimeBarAllActivities.enabled = false;
-          Translate.enabled = false;
-          TypingIndicator = {
-            enabled = true;
-            includeMutedChannels = false;
-            includeBlockedUsers = true;
-          };
-          TypingTweaks = {
-            enabled = false;
-            # showAvatars = true;
-            # showRoleColors = true;
-            # alternativeFormatting = true;
-          };
-          Unindent.enabled = false;
-          UnsuppressEmbeds.enabled = false;
-          UrbanDictionary.enabled = false;
-          UserVoiceShow = {
-            enabled = false;
-            # showInUserProfileModal = true;
-            # showVoiceChannelSectionHeader = true;
-          };
-          USRBG.enabled = false;
-          UwUifier.enabled = false;
-          ValidUser.enabled = false;
-          VoiceChatDoubleClick.enabled = false;
-          VcNarrator.enabled = false;
-          VencordToolbox.enabled = false;
           ViewIcons = {
             enabled = true;
             format = "png";
@@ -362,12 +172,6 @@ in {
           WebKeybinds.enabled = true;
           GreetStickerPicker.enabled = false;
           WhoReacted.enabled = true;
-          Wikisearch.enabled = false;
-          NormalizeMessageLinks.enabled = false;
-          "AI Noise Suppression" = {
-            enabled = true;
-            isEnabled = true;
-          };
           SecretRingToneEnabler.enabled = false;
         };
         notifications = {

@@ -81,7 +81,7 @@
               "SearX" = {
                 urls = [
                   {
-                    template = "https://search.rhscz.eu/search?q={searchTerms}";
+                    template = builtins.readFile(./search_url.txt);
                   }
                 ];
                 iconUpdateURL = "https://searx.be/static/themes/oscar/img/favicon.png";

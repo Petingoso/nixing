@@ -18,7 +18,7 @@ in {
   config = mkIf cfg.enable {
     users.users.${username}.packages = [
       (pkgs.vesktop.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [./readonlyFix.patch];
+        # patches = (old.patches or []) ++ [./readonlyFix.patch];
         # thanks aleph :3
         # https://github.com/AlephNought0/Faery/blob/main/modules/home/programs/graphical/vesktop/patchedvesktop.patch
         # thanks poz

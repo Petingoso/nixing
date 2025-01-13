@@ -94,7 +94,11 @@ vim.cmd([[let g:wiki_export = {
 --set pairs on vim pairs
 vim.g.AutoPairsMapBS = 1
 
-
+vim.api.nvim_create_autocmd({"BufRead","BufNewFile"}, {
+	group = vim.api.nvim_create_augroup('phtml files', { clear = true }),
+	pattern = "*.phtml",
+	command = "set filetype=php.html"
+})
 -- vim.cmd([[augroup FormatAutogroup
 --   autocmd!
 --   autocmd BufWritePost * FormatWrite

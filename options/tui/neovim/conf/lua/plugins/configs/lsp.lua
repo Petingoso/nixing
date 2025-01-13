@@ -2,9 +2,6 @@
 --  This function gets run when an LSP connects to a particular buffer.
 local lspconfig = require("lspconfig")
 
--- nvim-cmp supports additional completion capabilities
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-
 local on_attach = function(_, bufnr)
 	-- to define small helper and utility functions so you don't have to repeat yourself
 	-- many times.
@@ -20,12 +17,7 @@ local on_attach = function(_, bufnr)
 	end
 end
 
-local servers = { "nil_ls", "clangd", "cssls", "html","phpactor" }
-require'lspconfig'.jedi_language_server.setup{}
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
+local servers = { "nil_ls", "clangd", "cssls", "html"}
 for _, lsp_server in ipairs(servers) do
 	lspconfig[lsp_server].setup({
 		on_attach = on_attach,
@@ -33,3 +25,15 @@ for _, lsp_server in ipairs(servers) do
 		flags = {},
 	})
 end
+
+lspconfig.jedi_language_server.setup({})
+lspconfig.phpactor.setup({
+	root_dir = function(fname)
+		return require("lspconfig/util").find_git_ancestor(fname) or vim.fn.getcwd()
+	end,
+})
+
+-- nvim-cmp supports additional completion capabilities
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+

@@ -17,7 +17,30 @@ local on_attach = function(_, bufnr)
 	end
 end
 
-local servers = { "nil_ls", "clangd", "cssls", "html"}
+local function which_python()
+	local f = io.popen("env which python", "r") or error("Fail to execute 'env which python'")
+	local s = f:read("*a") or error("Fail to read from io.popen result")
+	f:close()
+	return string.gsub(s, "%s+$", "")
+end
+
+-- nvim-cmp supports additional completion capabilities
+local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+lspconfig.pylsp.setup({
+	settings = {
+		pylsp = { plugins = { jedi = { environment = which_python() } } },
+	},
+})
+
+lspconfig.phpactor.setup({
+	root_dir = function(fname)
+		return require("lspconfig/util").find_git_ancestor(fname) or vim.fn.getcwd()
+	end,
+})
+
+local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor" }
 for _, lsp_server in ipairs(servers) do
 	lspconfig[lsp_server].setup({
 		on_attach = on_attach,
@@ -25,15 +48,3 @@ for _, lsp_server in ipairs(servers) do
 		flags = {},
 	})
 end
-
-lspconfig.jedi_language_server.setup({})
-lspconfig.phpactor.setup({
-	root_dir = function(fname)
-		return require("lspconfig/util").find_git_ancestor(fname) or vim.fn.getcwd()
-	end,
-})
-
--- nvim-cmp supports additional completion capabilities
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-

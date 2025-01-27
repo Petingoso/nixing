@@ -27,6 +27,7 @@
           lua-language-server
           vscode-extensions.ms-vscode.cpptools
           vscode-langservers-extracted
+          python3Packages.python-lsp-server
           python3Packages.jedi-language-server
           phpactor
           nil

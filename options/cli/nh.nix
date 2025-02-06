@@ -1,8 +1,6 @@
 {
   config,
-  inputs,
   lib,
-  pkgs,
   ...
 }: let
   cfg = config.mystuff.programs.nh;
@@ -20,15 +18,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # nix.settings = {
-    #     substituters = [
-    #         "https://viperml.cachix.org"
-    #     ];
-    #     trusted-public-keys = [
-    #         "viperml.cachix.org-1:qZhKBMTfmcLL+OG6fj/hzsMEedgKvZVFRRAhq7j8Vh8="
-    #     ];
-    # };
-
     programs.nh = {
       enable = true;
       inherit (cfg) flake;

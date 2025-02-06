@@ -30,7 +30,6 @@ in {
     bitwarden
     calibre
     ckan
-    dualsensectl
     evince
     fastfetch
     heroic
@@ -55,7 +54,8 @@ in {
 
     (callPackage "${self}/pkgs/olympus/package.nix" {celesteWrapper = pkgs.steam-run;})
     (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
-    (callPackage "${self}/pkgs/ludusavi.nix" {})
+    # (callPackage "${self}/pkgs/ludusavi.nix" {})
+    ludusavi
     xdg-utils
     gamescope
     r2modman

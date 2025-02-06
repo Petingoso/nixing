@@ -1,5 +1,11 @@
-{ pkgs, ... }:
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  inherit (config.mystuff.other.system) username;
+in {
   virtualisation.containers.enable = true;
   virtualisation = {
     podman = {
@@ -13,6 +19,8 @@
     };
   };
 
+  users.extraGroups.podman.members = ["${username}"];
+
   # Useful other development tools
   environment.systemPackages = with pkgs; [
     # dive # look into docker image layers
@@ -20,4 +28,10 @@
     #docker-compose # start group of containers for dev
     podman-compose # start group of containers for dev
   ];
+
+  # Add 'newuidmap' and 'sh' to the PATH for users' Systemd units.
+  # Required for Rootless podman.
+  systemd.user.extraConfig = ''
+    DefaultEnvironment="PATH=/run/current-system/sw/bin:/run/wrappers/bin:${lib.makeBinPath [pkgs.bash]}"
+  '';
 }

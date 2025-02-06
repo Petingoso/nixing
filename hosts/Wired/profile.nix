@@ -6,9 +6,10 @@ in {
     "btrfs-maint.nix"
     "hyprland/default.nix"
     "scripts/default.nix"
-    "afs.nix"
+    # "afs.nix"
     "direnv.nix"
     "docker.nix"
+    "dualsense.nix"
     "fcitx.nix"
     "kleopatra.nix"
     "nix-alien.nix"
@@ -16,7 +17,8 @@ in {
     "opensnitch.nix"
     "opentabletdriver.nix"
     "pcloud.nix"
-    "piper.nix"
+    # "piper.nix"
+    # "podman.nix"
     "wayland.nix"
   ];
 }

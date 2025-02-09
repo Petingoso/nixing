@@ -124,6 +124,18 @@ local tools = {
 			require("CopilotChat").setup()
 		end,
 	}, -- for asking copilot
+	{
+		"chomosuke/typst-preview.nvim",
+		ft = "typst",
+		opts = {
+			dependencies_bin = {
+				["tinymist"] = "tinymist",
+			},
+		},
+		config = function()
+			require("typst-preview").setup()
+		end,
+	},
 }
 
 return tools

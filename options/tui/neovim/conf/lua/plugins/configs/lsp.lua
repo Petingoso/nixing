@@ -28,23 +28,44 @@ end
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-lspconfig.pylsp.setup({
-	settings = {
-		pylsp = { plugins = { jedi = { environment = which_python() } } },
+-- generic config
+local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor", "tinymist", "pylsp" }
+
+-- server-specific overrides
+local server_overrides = {
+	pylsp = {
+		settings = {
+			exportPdf = "onType",
+			outputPath = "$root/target/$dir/$name",
+		},
 	},
-})
+}
 
-lspconfig.phpactor.setup({
-	root_dir = function(fname)
-		return require("lspconfig/util").find_git_ancestor(fname) or vim.fn.getcwd()
-	end,
-})
-
-local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor" }
 for _, lsp_server in ipairs(servers) do
-	lspconfig[lsp_server].setup({
+	local config = {
 		on_attach = on_attach,
 		capabilities = capabilities,
 		flags = {},
+	}
+
+	-- Apply server-specific overrides if they exist
+	if server_overrides[lsp_server] then
+		for k, v in pairs(server_overrides[lsp_server]) do
+			config[k] = v
+		end
+	end
+
+	lspconfig[lsp_server].setup(config)
+end
+
+-- for servers with bad root_dir functions
+local function setup_root(server)
+	lspconfig[server].setup({
+		root_dir = function(fname)
+			return require("lspconfig/util").find_git_ancestor(fname) or vim.fn.getcwd()
+		end,
 	})
 end
+
+setup_root("phpactor")
+setup_root("tinymist")

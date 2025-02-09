@@ -23,21 +23,14 @@ local ClangConfig = function()
 end
 
 local formatterConfig = {
-	lua = {
+	lua = require("formatter.filetypes.lua").stylua,
+
+	nix = require("formatter.filetypes.nix").alejandra,
+
+	typst = {
 		function()
 			return {
-				exe = "stylua",
-				args = { "-" },
-				stdin = true,
-			}
-		end,
-	},
-	nix = {
-		function()
-			return {
-				exe = "alejandra",
-				args = { "" },
-				stdin = true,
+				exe = "typstyle",
 			}
 		end,
 	},
@@ -49,19 +42,16 @@ local formatterConfig = {
 			}
 		end,
 	},
-	rust = {
-		-- -- Rustfmt
-		-- function()
-		--   return {
-		--     exe = "rustfmt",
-		--     args = {"--emit=stdout"},
-		--     stdin = true
-		--   }
-		-- end
-	},
 	["*"] = {
-		require("formatter.filetypes.any").lsp_format,
-		-- require('formatter.filetypes.any').remove_trailing_whitespace
+		require("formatter.filetypes.any").remove_trailing_whitespace,
+		--(https://github.com/mhartington/formatter.nvim/issues/260#issuecomment-1676039290)
+		function()
+			local defined_types = require("formatter.config").values.filetype
+			if defined_types[vim.bo.filetype] ~= nil then
+				return nil
+			end
+			vim.lsp.buf.format({ async = true })
+		end,
 	},
 }
 local commonFT = {
@@ -86,6 +76,7 @@ local C_type = {
 	"c",
 	"cpp",
 }
+
 for _, ft in ipairs(commonFT) do
 	formatterConfig[ft] = { prettierConfig }
 end

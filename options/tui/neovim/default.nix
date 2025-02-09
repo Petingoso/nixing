@@ -12,25 +12,36 @@
       programs.neovim = {
         enable = true;
         extraPackages = with pkgs; [
+          # C
           gcc
+
+          # utils
           unzip
           hurl
           jq
+          ripgrep
+
+          # browsersync
           nodePackages.browser-sync
           yarn
           nodejs
+
+          # formatters
           stylua
           beautysh
           clang-tools
           prettierd
-          ripgrep
+          nil
+          typstyle
+
+          # LSPs
           lua-language-server
-          vscode-extensions.ms-vscode.cpptools
           vscode-langservers-extracted
+          vscode-extensions.ms-vscode.cpptools
           python3Packages.python-lsp-server
           python3Packages.jedi-language-server
           phpactor
-          nil
+          tinymist
         ];
       };
 

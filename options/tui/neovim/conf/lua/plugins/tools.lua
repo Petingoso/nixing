@@ -18,12 +18,20 @@ local tools = {
 
 	-- formatter config
 	{
-		"mhartington/formatter.nvim",
+		"nvimtools/none-ls.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
 		event = "VeryLazy",
 		config = function()
 			require("plugins.configs.formatter")
 		end,
 	},
+	-- {
+	-- 	"mhartington/formatter.nvim",
+	-- 	event = "VeryLazy",
+	-- 	config = function()
+	-- 		require("plugins.configs.formatter")
+	-- 	end,
+	-- },
 
 	{ "voldikss/vim-floaterm" }, --toggle term
 

@@ -28,10 +28,9 @@
 
           # formatters
           stylua
-          beautysh
           clang-tools
+          shfmt
           prettierd
-          nil
           typstyle
 
           # LSPs
@@ -42,6 +41,7 @@
           python3Packages.jedi-language-server
           phpactor
           tinymist
+          nil
         ];
       };
 

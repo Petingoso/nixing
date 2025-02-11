@@ -33,12 +33,11 @@ local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor", "tinymist", "
 
 -- server-specific overrides
 local server_overrides = {
-	pylsp = {
-		settings = {
-			exportPdf = "onType",
-			outputPath = "$root/target/$dir/$name",
-		},
-	},
+	-- tinymist = {
+	-- 	settings = {
+	-- 		formatterMode = "typstyle",
+	-- 	},
+	-- },
 }
 
 for _, lsp_server in ipairs(servers) do
@@ -54,6 +53,9 @@ for _, lsp_server in ipairs(servers) do
 			config[k] = v
 		end
 	end
+
+	-- print("Config for " .. lsp_server .. ":")
+	-- print(vim.inspect(config))
 
 	lspconfig[lsp_server].setup(config)
 end

@@ -30,7 +30,7 @@ map("t", "<leader>e", "<C-Bslash><C-n>:RnvimrToggle<CR>", { desc = "Toggle Explo
 map("n", "<leader>o", ":Neotree toggle<CR>", { desc = "Toggle NeoTree file browser" })
 
 --format
-map("n", "<localleader>f", ":Format<CR>", { desc = "Call Formatter" })
+map("n", "<localleader>f", ":lua vim.lsp.buf.format()<CR>", { desc = "Call Formatter" })
 
 --go up
 map("n", "<leader>cd", "<cmd>cd ..<cr>", { desc = "[C]hange [D]irectory Up" })

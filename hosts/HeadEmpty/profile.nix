@@ -11,7 +11,7 @@ in {
     "fcitx.nix"
     "kleopatra.nix"
     "nix-alien.nix"
-    # "libvirt.nix"
+    "libvirt.nix"
     "opensnitch.nix"
     #"opentabletdriver.nix"
     "pcloud.nix"

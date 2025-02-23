@@ -23,9 +23,9 @@ in {
     # to acess the home manager "config" change that param
     home-manager.users.${username} = {config, ...}: {
       # makes it runtime editable, this is a crime
-      xdg.configFile."VSCodium/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/config.json";
+      xdg.configFile."VSCodium/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/settings.json";
       xdg.configFile."VSCodium/User/tasks.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/tasks.json";
-      xdg.configFile."VSCodium/User/keybinds.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/tasks.json";
+      xdg.configFile."VSCodium/User/keybindings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/keybindings.json";
       programs.vscode = {
         enable = true;
         package = pkgs.vscodium.fhsWithPackages (ps: with ps; [gcc gdb clang-tools shfmt python3]);
@@ -37,6 +37,7 @@ in {
             myriad-dreamin.tinymist
             sumneko.lua
             ms-python.python
+            jnoortheen.nix-ide
 
             xaver.clang-format
             kamadorueda.alejandra
@@ -48,6 +49,7 @@ in {
             vspacecode.whichkey
             asvetliakov.vscode-neovim
             editorconfig.editorconfig
+            arrterian.nix-env-selector
 
             # Themes
             arcticicestudio.nord-visual-studio-code

@@ -46,7 +46,6 @@ in {
     texliveMedium
     tor-browser
     ungoogled-chromium
-    vscodium
     wineWowPackages.waylandFull
     youtube-music
     miru
@@ -58,6 +57,10 @@ in {
     gamescope
     r2modman
     fluidsynth
+    config.boot.kernelPackages.vhba
+
   ];
   programs.steam.enable = true;
+  programs.cdemu.enable = true;
+  programs.cdemu.gui = true;
 }

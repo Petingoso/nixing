@@ -23,6 +23,7 @@ in {
       waybar.enable = true;
       mpv.enable = true;
       neovim-config.enable = true;
+      vscode.enable = true;
       ranger.enable = true;
       vesktop.enable = true;
     };

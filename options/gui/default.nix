@@ -6,6 +6,7 @@ _: {
     ./swaync
     ./themes
     ./vesktop
+    ./vscodium
     ./waybar
     ./mpv.nix
   ];

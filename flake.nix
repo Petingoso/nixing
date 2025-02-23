@@ -25,5 +25,7 @@
     nix-alien.url = "github:thiagokokada/nix-alien";
 
     agenix.url = "github:ryantm/agenix";
+
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
   };
 }

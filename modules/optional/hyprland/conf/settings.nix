@@ -8,6 +8,8 @@
 
     monitor = ",preferred,auto,1";
 
+    cursor.no_hardware_cursors = true;
+
     input = {
       sensitivity = 1;
       kb_layout = "pt";

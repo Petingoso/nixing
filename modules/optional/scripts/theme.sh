@@ -94,7 +94,7 @@ case $select in
 		update_wallpaper $HOME/.config/wallpaper/pixelart/sea1_solarized.png
 		change_theme solarized
 		change_gtk_theme NumixSolarizedDarkRed
-		sed -i -e 's/"workbench.colorTheme": ".*"/"workbench.colorTheme": "Solarized Dark+"/g' "$vscodium_settings"
+		sed -i -e 's/"workbench.colorTheme": ".*"/"workbench.colorTheme": "Better Solarized Dark"/g' "$vscodium_settings"
 
 		;;
 	$theme4)
@@ -129,7 +129,7 @@ case $select in
 		update_wallpaper $HOME/.config/wallpaper/anime/wondering.jpg
 		change_theme rose-pine
 		change_gtk_theme RosePine-Main-B
-		sed -i -e 's/"workbench.colorTheme": ".*"/"workbench.colorTheme": "Rosé Pine Dawm"/g' "$vscodium_settings"
+		sed -i -e 's/"workbench.colorTheme": ".*"/"workbench.colorTheme": "Rosé Pine Moon"/g' "$vscodium_settings"
 
 		;;
 esac

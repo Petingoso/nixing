@@ -38,7 +38,6 @@ in {
     texliveMedium
     tor-browser
     ungoogled-chromium
-    vscodium
     wineWowPackages.waylandFull
     youtube-music
     xdg-utils

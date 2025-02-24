@@ -24,6 +24,7 @@ in {
       swaync.enable = true;
       waybar.enable = true;
       mpv.enable = true;
+      vscode.enable = true;
       neovim-config.enable = true;
       ranger.enable = true;
       vesktop.enable = true;

@@ -22,5 +22,5 @@
   "security.workspace.trust.enabled": false,
   "workbench.sideBar.location": "right",
   "editor.columnSelection": true,
-  "editor.lineNumbers": "relative",
+  "editor.lineNumbers": "relative"
 }

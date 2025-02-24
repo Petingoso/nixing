@@ -29,7 +29,6 @@ in {
       programs.vscode = {
         enable = true;
         package = pkgs.vscodium.fhsWithPackages (ps: with ps; [gcc gdb clang-tools shfmt python3]);
-
         extensions = with pkgs.vscode-extensions;
           [
             # LSP and formatters
@@ -50,6 +49,9 @@ in {
             asvetliakov.vscode-neovim
             editorconfig.editorconfig
             arrterian.nix-env-selector
+            usernamehw.errorlens
+            gruntfuggly.todo-tree
+            oderwat.indent-rainbow
 
             # Themes
             arcticicestudio.nord-visual-studio-code

@@ -49,6 +49,7 @@ in {
     wineWowPackages.waylandFull
     youtube-music
     miru
+    pcloud
 
     (callPackage "${self}/pkgs/olympus/package.nix" {celesteWrapper = pkgs.steam-run;})
     (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
@@ -56,7 +57,6 @@ in {
     xdg-utils
     gamescope
     r2modman
-    fluidsynth
     config.boot.kernelPackages.vhba
 
   ];

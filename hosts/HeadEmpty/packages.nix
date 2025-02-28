@@ -42,6 +42,7 @@ in {
     youtube-music
     xdg-utils
     rclone
+    pcloud
 
     (callPackage "${self}/pkgs/ludusavi.nix" {})
   ];

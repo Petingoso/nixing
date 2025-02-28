@@ -16,7 +16,7 @@ in {
     # "libvirt.nix"
     "opensnitch.nix"
     "opentabletdriver.nix"
-    "pcloud.nix"
+    # "pcloud.nix"
     # "piper.nix"
     # "podman.nix"
     "wayland.nix"

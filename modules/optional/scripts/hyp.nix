@@ -18,7 +18,7 @@
         cp -r ${self}/misc/rofi/* /tmp/themes/rofi/
         cp -r ${self}/misc/hyprland/* /tmp/themes/hyprland/
 
-        echo 'vim.cmd("colorscheme gruvbox")' >> /tmp/themes/nvim/theme
+        echo 'vim.cmd("colorscheme gruvbox")' > /tmp/themes/nvim/theme
 
         chmod 775 -R /tmp/themes/
 

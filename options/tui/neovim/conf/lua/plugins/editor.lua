@@ -19,7 +19,7 @@ local editor = {
 	--"gc" to comment visual regions/lines
 	{
 		"numToStr/Comment.nvim",
-		even = "BufEnter",
+		event = "BufEnter",
 		config = function()
 			require("plugins.configs.comment")
 		end,
@@ -34,7 +34,7 @@ local editor = {
 		end,
 	},
 
-	{ "LunarWatcher/auto-pairs" }, --auto pair
+	{ "LunarWatcher/auto-pairs", event = "InsertEnter" }, --auto pair
 	{ "tpope/vim-surround", event = "VeryLazy" }, -- change surrounding symbols ez "a"->(a)
 
 	--better marks
@@ -65,6 +65,7 @@ local editor = {
 	--get from other kitty windows
 	{
 		"garyhurtz/cmp_kitty",
+		event = "InsertEnter";
 		init = function()
 			require("cmp_kitty").setup()
 		end,
@@ -73,13 +74,14 @@ local editor = {
 	-- Snippet Engine and Snippet Expansion
 	{
 		"L3MON4D3/LuaSnip",
+		event = "InsertEnter",
 		dependencies = { "saadparwaiz1/cmp_luasnip", "rafamadriz/friendly-snippets" },
 		config = function()
 			require("plugins.configs.luasnip")
 		end,
 	},
 
-	{ "sedm0784/vim-you-autocorrect" }, --autocorrect with spell
+	{ "sedm0784/vim-you-autocorrect",event = "VeryLazy" }, --autocorrect with spell
 }
 
 return editor

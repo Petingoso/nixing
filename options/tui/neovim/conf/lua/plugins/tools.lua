@@ -110,7 +110,7 @@ local tools = {
 		ft = { "markdown" },
 	},
 
-	{ "lervag/vimtex" }, --latex completion and previewing
+	{ "lervag/vimtex", ft = {"latex"} }, --latex completion and previewing
 
 	{ "lervag/wiki.vim" }, --vim wiki, markdown collection
 	{ "alvan/vim-closetag" }, --close html tags

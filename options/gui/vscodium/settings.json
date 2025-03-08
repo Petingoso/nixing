@@ -21,6 +21,8 @@
   "editor.columnSelection": true,
   "editor.lineNumbers": "relative",
   "nix.enableLanguageServer": true,
-  "nix.formatterPath": "alejandra"
+"nix.formatterPath": "alejandra",
+"makefile.configureOnOpen": true,
+"makefile.launchConfigurations": []
 }
 

@@ -3,7 +3,7 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "workbench.colorTheme": "Gruvbox Dark Medium",
+  "workbench.colorTheme": "Nord",
   "[typst]": {
     "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
   },
@@ -13,14 +13,14 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[c]": {
-    "editor.defaultFormatter": "xaver.clang-format"
-  },
   "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono",
   "terminal.integrated.fontSize": 16,
   "vscode-neovim.neovimInitVimPaths.linux": "~/.config/vs-nvim",
   "security.workspace.trust.enabled": false,
   "workbench.sideBar.location": "right",
   "editor.columnSelection": true,
-  "editor.lineNumbers": "relative"
+  "editor.lineNumbers": "relative",
+  "nix.enableLanguageServer": true,
+  "nix.formatterPath": "alejandra"
 }
+

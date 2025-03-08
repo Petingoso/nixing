@@ -28,7 +28,7 @@ in {
       xdg.configFile."VSCodium/User/keybindings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/keybindings.json";
       programs.vscode = {
         enable = true;
-        package = pkgs.vscodium.fhsWithPackages (ps: with ps; [gcc gdb clang-tools shfmt python3]);
+        package = pkgs.vscodium.fhsWithPackages (ps: with ps; [gcc gdb clang-tools shfmt python3 nil]);
         extensions = with pkgs.vscode-extensions;
           [
             # LSP and formatters

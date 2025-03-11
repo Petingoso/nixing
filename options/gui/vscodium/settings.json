@@ -23,6 +23,9 @@
   "nix.enableLanguageServer": true,
 "nix.formatterPath": "alejandra",
 "makefile.configureOnOpen": true,
-"makefile.launchConfigurations": []
+"makefile.launchConfigurations": [],
+"makefile.defaultLaunchConfiguration": {
+    "MIMode": "gdb",
+    "miDebuggerPath": "/usr/bin/gdb"}
 }
 

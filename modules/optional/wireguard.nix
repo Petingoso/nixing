@@ -1,4 +1,7 @@
 {config,pkgs,self, ...}: {
+
+  age.secrets.wireguard.file = "${self}/secrets/wireguard.age";
+
   networking.firewall = let port = "34266"; in {
    logReversePathDrops = true;
    extraCommands = ''
@@ -15,7 +18,6 @@
     wgrnlFwmark = "765";
   in {
     address = ["192.168.20.81/24" "fd92:3315:9e43:c490::81/64"];
-    age.secrets.wireguard.file = "${self}/secrets/wireguard.age";
     privateKeyFile = config.age.secrets.wireguard.path;
     table = wgrnlFwmark;
     postUp = ''

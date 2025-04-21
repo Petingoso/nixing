@@ -6,9 +6,9 @@ in {
     "btrfs-maint.nix"
     "hyprland/default.nix"
     "scripts/default.nix"
-    # "afs.nix"
+    "afs.nix"
     "direnv.nix"
-    "docker.nix"
+    #"docker.nix"
     "dualsense.nix"
     "fcitx.nix"
     "kleopatra.nix"
@@ -20,5 +20,6 @@ in {
     # "piper.nix"
     # "podman.nix"
     "wayland.nix"
+    "wireguard.nix"
   ];
 }

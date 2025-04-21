@@ -26,6 +26,11 @@
 "makefile.launchConfigurations": [],
 "makefile.defaultLaunchConfiguration": {
     "MIMode": "gdb",
-    "miDebuggerPath": "/usr/bin/gdb"}
+    "miDebuggerPath": "/usr/bin/gdb"
+},
+"[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+},
+"diffEditor.ignoreTrimWhitespace": false
 }
 

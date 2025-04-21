@@ -4,7 +4,6 @@ vim.g.maplocalleader = ","
 local map = vim.keymap.set --easier syntax
 
 local dap = require("dap")
-local dap_ui = require("dapui")
 local telescope = require("telescope.builtin")
 local splits = require("smart-splits")
 local gitsigns = require("gitsigns")

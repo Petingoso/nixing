@@ -1,6 +1,6 @@
 {...}: {
   # Set your time zone.
-  services.automatic-timezoned.enable = true;
+  services.tzupdate.enable = true;
 
   # time.timeZone = "Europe/Lisbon";
 

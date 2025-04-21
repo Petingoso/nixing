@@ -29,7 +29,7 @@ in {
       programs.vscode = {
         enable = true;
         package = pkgs.vscodium.fhsWithPackages (ps: with ps; [gcc gnumake gdb lldb clang-tools shfmt python3 nil]);
-        extensions = with pkgs.vscode-extensions;
+        profiles.default.extensions = with pkgs.vscode-extensions;
           [
             # LSP and formatters
             ms-vscode.cpptools

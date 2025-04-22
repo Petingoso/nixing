@@ -52,4 +52,8 @@ in
       dir = ./HeadEmpty;
       type = "desktop";
     }
+    {
+      dir = ./teto;
+      type = "desktop";
+    }
   ]

@@ -25,19 +25,9 @@ in {
     networking = {
       networkmanager = {
         enable = true;
-        # dns = "systemd-resolved";
-        # services.resolved.enable = true;
         wifi.powersave = cfg.powersave;
       };
     };
 
-    services.resolved = {
-      enable = true;
-      fallbackDns = [
-        "9.9.9.9"
-        "2620:fe::fe"
-      ];
-    };
-    users.users.${config.mystuff.other.system.username}.extraGroups = ["networkmanager"];
   };
 }

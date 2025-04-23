@@ -11,6 +11,5 @@ in {
     "nix-alien.nix"
     "opensnitch.nix"
     "wayland.nix"
-    "wireguard.nix"
   ];
 }

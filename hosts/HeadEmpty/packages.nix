@@ -43,8 +43,7 @@ in {
     xdg-utils
     rclone
     pcloud
-
-    (callPackage "${self}/pkgs/ludusavi.nix" {})
+    ludusavi
   ];
   programs.steam = {
     enable = true;

@@ -2,19 +2,15 @@
   inherit (config.mystuff.other.system) username;
 in {
   programs.kdeconnect.enable = true;
-  
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  
+
   mystuff = {
     other.home-manager.enable = true;
     programs = {
       git = {
         enable = true;
         defaultBranch = "master";
-        userName = "Vasco Petinga";
-        userEmail = "vasco.petinga@rnl.tecnico.ulisboa.pt";
+        userName = "Petingoso";
+        userEmail = "petingavasco@protonmail.com";
       };
       zsh = {
         enable = true;
@@ -24,6 +20,9 @@ in {
       nh.flake = "/home/${username}/flake";
       firefox-config.enable = true;
       kitty.enable = true;
+      rofi.enable = true;
+      swaync.enable = true;
+      waybar.enable = true;
       mpv.enable = true;
       vscode.enable = true;
       neovim-config.enable = true;
@@ -33,9 +32,12 @@ in {
     services = {
       networkmanager.enable = true;
     };
+    gtk.enable = true;
+    qt.enable = true;
   };
 
   age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
 
-  system.stateVersion = "24.11";
+  system.stateVersion = "24.05";
 }
+

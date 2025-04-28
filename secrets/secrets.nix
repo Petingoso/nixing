@@ -12,5 +12,5 @@ let
 
 in {
   "test.age".publicKeys = Wired ++ HeadEmpty;
-  "wireguard.age".publicKeys = Wired ++ HeadEmpty ++ rnl;
+  "wireguard.age".publicKeys = Wired ++ HeadEmpty;
 }

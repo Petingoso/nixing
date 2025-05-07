@@ -84,7 +84,7 @@
                     template = builtins.readFile(./search_url.txt);
                   }
                 ];
-                iconUpdateURL = "https://searx.be/static/themes/oscar/img/favicon.png";
+                icon = "https://searx.be/static/themes/oscar/img/favicon.png";
                 updateInterval = 24 * 60 * 60 * 1000;
               };
               "Nix Packages" = {
@@ -112,11 +112,11 @@
                     template = "https://nixos.wiki/index.php?search={searchTerms}";
                   }
                 ];
-                iconUpdateURL = "https://nixos.wiki/favicon.png";
+                icon = "https://nixos.wiki/favicon.png";
                 updateInterval = 24 * 60 * 60 * 1000;
                 definedAliases = ["@nw"];
               };
-              "Wikipedia (en)".metaData.alias = "@wiki";
+              "wikipedia".metaData.alias = "@wiki";
             };
           };
           settings = {

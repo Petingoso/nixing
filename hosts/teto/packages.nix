@@ -32,5 +32,6 @@ in {
     pcloud
 
     xdg-utils
+    hydrapaper
   ];
 }

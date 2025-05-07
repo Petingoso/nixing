@@ -1,10 +1,30 @@
-{config, ...}: let
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}: let
   inherit (config.mystuff.other.system) username;
 in {
   programs.kdeconnect.enable = true;
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+
+  services = {
+      xserver = {
+        xkb.layout = "pt";
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+      displayManager.gdm.autoSuspend = false;
+    };
+  };
+
+  environment.systemPackages = with pkgs.gnomeExtensions; [
+    blur-my-shell
+    auto-move-windows
+    kimpanel
+    space-bar
+    tiling-shell
+  ];
+
 
   mystuff = {
     other.home-manager.enable = true;
@@ -43,6 +63,8 @@ in {
     settings.PasswordAuthentication = false;
     settings.KbdInteractiveAuthentication = false;
   };
+
+  services.fail2ban.enable = true;
 
   users.users.petnix.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5"

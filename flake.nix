@@ -10,7 +10,7 @@
     nixosConfigurations = import ./hosts {inherit inputs self;};
   };
   inputs = {
-    nixpkgs_unstable.url = "github:NixOS/nixpkgs/nixos-24.11";
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {

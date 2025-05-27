@@ -23,6 +23,7 @@ in {
     kimpanel
     space-bar
     tiling-shell
+    mouse-follows-focus-2
   ];
 
 

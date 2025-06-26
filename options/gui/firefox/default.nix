@@ -81,7 +81,7 @@
               "SearX" = {
                 urls = [
                   {
-                    template = builtins.readFile(./search_url.txt);
+                    template = builtins.readFile (./search_url.txt);
                   }
                 ];
                 icon = "https://searx.be/static/themes/oscar/img/favicon.png";

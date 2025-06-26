@@ -1,4 +1,8 @@
-{config,pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   inherit (config.mystuff.other.system) username;
 in {
   programs.kdeconnect.enable = true;

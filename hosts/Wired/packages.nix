@@ -58,7 +58,6 @@ in {
     gamescope
     r2modman
     config.boot.kernelPackages.vhba
-
   ];
   programs.steam.enable = true;
   programs.cdemu.enable = true;

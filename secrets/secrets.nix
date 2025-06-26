@@ -8,8 +8,7 @@ let
   Wired = [Wired_user];
   HeadEmpty = [HeadEmpty_user];
 
- rnl = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe"];
-
+  rnl = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe"];
 in {
   "test.age".publicKeys = Wired ++ HeadEmpty;
   "wireguard.age".publicKeys = Wired ++ HeadEmpty;

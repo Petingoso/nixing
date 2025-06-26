@@ -9,8 +9,8 @@ in {
   programs.kdeconnect.enable = true;
 
   services = {
-      xserver = {
-        xkb.layout = "pt";
+    xserver = {
+      xkb.layout = "pt";
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
       displayManager.gdm.autoSuspend = false;
@@ -25,7 +25,6 @@ in {
     tiling-shell
     mouse-follows-focus-2
   ];
-
 
   mystuff = {
     other.home-manager.enable = true;

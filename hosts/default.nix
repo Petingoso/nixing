@@ -56,4 +56,8 @@ in
       dir = ./teto;
       type = "desktop";
     }
+    {
+      dir = ./furry_femboys;
+      type = "server";
+    }
   ]

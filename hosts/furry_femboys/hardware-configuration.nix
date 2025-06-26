@@ -12,35 +12,39 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
+  boot.initrd.availableKernelModules = ["xhci_pci" "usb_storage" "uas" "usbhid"];
   boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd"];
+  boot.kernelModules = [];
   boot.extraModulePackages = [];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/811ffa26-7ffa-475a-90be-9ee6ff7eb0a8";
+    device = "/dev/disk/by-uuid/d2b8e296-edd0-4e08-9480-f6d04d6a93e1";
     fsType = "ext4";
+    options = ["noatime"];
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8813-7340";
+    device = "/dev/disk/by-uuid/CA30-F685";
     fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
+    options = ["fmask=0022" "dmask=0022"];
   };
 
-  swapDevices = [
-    {device = "/dev/disk/by-uuid/320b6399-ed62-4e15-8ee4-655a31f1601b";}
-  ];
+  fileSystems."/data" = {
+    device = "/dev/disk/by-uuid/96d0505c-8862-4c74-9b1d-bee4e09668b2";
+    fsType = "ext4";
+    options = ["noatime"];
+  };
+
+  swapDevices = [];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp11s0f3u2u3.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp4s0.useDHCP = lib.mkDefault true;
-  # networking.interfaces.enp5s0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.end0.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp1s0u1u2.useDHCP = lib.mkDefault true;
+  # networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }

@@ -11,8 +11,7 @@
 
   hardware.uinput.enable = true;
 
-    services.udev.extraRules = ''
+  services.udev.extraRules = ''
     SUBSYSTEM=="sound", ACTION=="change", ATTRS{idVendor}=="054c", ATTRS{idProduct}=="0ce6", ENV{SOUND_DESCRIPTION}="Wireless Controller"
   '';
-
 }

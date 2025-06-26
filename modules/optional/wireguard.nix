@@ -1,17 +1,23 @@
-{config,pkgs,self, ...}: {
-
+{
+  config,
+  pkgs,
+  self,
+  ...
+}: {
   age.secrets.wireguard.file = "${self}/secrets/wireguard.age";
 
-  networking.firewall = let port = "34266"; in {
-   logReversePathDrops = true;
-   extraCommands = ''
-     ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --sport ${port} -j RETURN
-     ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --dport ${port} -j RETURN
-   '';
-   extraStopCommands = ''
-     ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --sport ${port} -j RETURN || true
-     ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --dport ${port} -j RETURN || true
-   '';
+  networking.firewall = let
+    port = "34266";
+  in {
+    logReversePathDrops = true;
+    extraCommands = ''
+      ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --sport ${port} -j RETURN
+      ip46tables -t mangle -I nixos-fw-rpfilter -p udp -m udp --dport ${port} -j RETURN
+    '';
+    extraStopCommands = ''
+      ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --sport ${port} -j RETURN || true
+      ip46tables -t mangle -D nixos-fw-rpfilter -p udp -m udp --dport ${port} -j RETURN || true
+    '';
   };
 
   networking.wg-quick.interfaces.wgrnl = let

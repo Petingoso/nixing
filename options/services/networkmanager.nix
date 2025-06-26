@@ -28,6 +28,5 @@ in {
         wifi.powersave = cfg.powersave;
       };
     };
-
   };
 }

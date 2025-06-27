@@ -1,0 +1,60 @@
+{self,pkgs, config, lib, ... }:
+let
+  domain = "pi.undertale.uk";
+  server = "http://localhost:8000";  # Replace with your backend server address
+  logFile = "/var/log/caddy/vaultwarden.log";  # Replace with your desired log path
+  customCaddy = pkgs.caddy.withPlugins {
+    plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
+    hash = "sha256-Gsuo+ripJSgKSYOM9/yl6Kt/6BFCA6BuTDvPdteinAI=";
+  };
+in {
+  age.secrets.cloudflare-env.file = "${self}/secrets/cloudflare-env.age";
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  services.caddy = {
+    enable = true;
+    package = customCaddy;
+    environmentFile = config.age.secrets.cloudflare-env.path;
+    virtualHosts."${domain}" = {
+      extraConfig = ''
+        log {
+          level INFO
+          output file ${logFile} {
+            roll_size 10MB
+            roll_keep 10
+         }
+        }
+
+        encode zstd gzip
+
+	tls {
+	protocols tls1.2 tls1.3
+	dns cloudflare {env.CF_API_TOKEN}
+	}
+
+
+	header / {
+    	X-Content-Type-Options nosniff
+    	X-Frame-Options SAMEORIGIN
+	-Server
+	}
+
+	@ip_request {
+    		not host ${domain}
+  	}
+
+	
+ 	redir @ip_request https://${domain}{uri}
+
+        reverse_proxy ${server} {
+          header_up X-Real-IP {remote_host}
+        }
+      '';
+
+      serverAliases = [ "www.${domain}" ];
+      
+    };
+  };
+  systemd.tmpfiles.rules = [
+    "d /var/log/caddy 0755 caddy caddy - -"
+  ];
+}

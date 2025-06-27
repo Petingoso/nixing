@@ -7,6 +7,7 @@ _: {
     ./pi400.nix
     ./profile.nix
     ./system.nix
+    ./searx.nix
     ./vaultwarden.nix
   ];
 }

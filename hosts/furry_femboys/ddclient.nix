@@ -15,9 +15,9 @@
     use = "web, web='https://cloudflare.com/cdn-cgi/trace',web-skip='ip='";
 
     extraConfig = ''
-		ttl=1, 
-		login=token, 
-		'';
+      ttl=1,
+      login=token,
+    '';
     passwordFile = config.age.secrets.cloudflare.path;
   };
 }

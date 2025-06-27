@@ -16,4 +16,5 @@ in {
   "cloudflare.age".publicKeys = Wired ++ HeadEmpty ++ furry_femboys;
   "cloudflare-env.age".publicKeys = Wired ++ HeadEmpty ++ furry_femboys;
   "vaultwarden-token.age".publicKeys = furry_femboys;
+  "searx.age".publicKeys = furry_femboys;
 }

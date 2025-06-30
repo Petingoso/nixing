@@ -5,11 +5,18 @@
   lib,
   ...
 }: let
-  vaultDomain = "vault.pi.undertale.uk";
-  searchDomain = "search.pi.undertale.uk";
-  vaulServer = "http://localhost:8000";
+  base = "pi.undertale.uk";
+  vaultDomain = "vault.${base}";
+  searchDomain = "search.${base}";
+  zncDomain = "irc.${base}";
+  grampsDomain = "gramps.${base}";
+
+  vaultServer = "http://localhost:8000";
   searchServer = "http://localhost:8100";
-  logFile = "/var/log/caddy/vaultwarden.log"; # Replace with your desired log path
+  zncServer = "https://localhost:8200";
+  grampsServer = "http://localhost:8300";
+
+  logFile = "/var/log/caddy/vaultwarden.log";
   customCaddy = pkgs.caddy.withPlugins {
     plugins = ["github.com/caddy-dns/cloudflare@v0.2.1"];
     hash = "sha256-Gsuo+ripJSgKSYOM9/yl6Kt/6BFCA6BuTDvPdteinAI=";
@@ -30,25 +37,70 @@
 
   '';
 in {
-  age.secrets.cloudflare-env.file = "${self}/secrets/cloudflare-env.age";
+  age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
+
+  environment.etc = {
+    "fail2ban/filter.d/caddy.conf".text = ''
+      [Definition]
+      failregex = ^.*"remote_ip":"<HOST>",.*?"status":(?:401|403|500),.*$
+      ignoreregex =
+      datepattern = LongEpoch
+    '';
+  };
+
+  services.fail2ban.jails = {
+    "caddy" = ''
+      enabled = true
+      filter = caddy
+      findtime = 600
+      maxretry = 4
+      logpath = /var/log/caddy/access*.log
+      backend = auto
+    '';
+  };
+
   networking.firewall.allowedTCPPorts = [80 443];
   services.caddy = {
     enable = true;
     package = customCaddy;
-    environmentFile = config.age.secrets.cloudflare-env.path;
+    environmentFile = config.age.secrets.caddy-env.path;
 
     virtualHosts."${searchDomain}" = {
       extraConfig = ''
              	${commonCaddy}
         route{
         basic_auth {
-        	pet $2a$14$0R0sdYlbzYayE90W9/UQu.LJRLlqHNT6plbZj6MX6v7C8Z3Gpl3H6
+        	pet {env.HTTP_PASS}
 
         }
                reverse_proxy ${searchServer} {
                 header_up X-Real-IP {remote_host}
                }
         }
+      '';
+    };
+
+    virtualHosts."${grampsDomain}" = {
+      extraConfig = ''
+        ${commonCaddy}
+
+        reverse_proxy ${grampsServer} {
+                header_up X-Real-IP {remote_host}
+        }
+        
+      '';
+    };
+
+    virtualHosts."${zncDomain}" = {
+      extraConfig = ''
+            	${commonCaddy}
+              reverse_proxy ${zncServer} {
+        transport http {
+               	tls
+               	tls_insecure_skip_verify
+        }
+               header_up X-Real-IP {remote_host}
+              }
       '';
     };
 
@@ -64,14 +116,7 @@ in {
                }
 
 
-        @ip_request {
-           		not host ${vaultDomain}
-         	}
-
-
-        	redir @ip_request https://${vaultDomain}{uri}
-
-               reverse_proxy ${vaulServer} {
+               reverse_proxy ${vaultServer} {
                  header_up X-Real-IP {remote_host}
                }
       '';

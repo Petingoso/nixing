@@ -17,6 +17,8 @@
     password = "password";
   };
 
+  networking.firewall.allowedTCPPorts = [2200];
+
   services.openssh = {
     enable = true;
     ports = [2200];

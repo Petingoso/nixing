@@ -1,5 +1,6 @@
 _: {
   imports = [
+    ./backup.nix
     ./configuration.nix
     ./caddy.nix
     ./ddclient.nix

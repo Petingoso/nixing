@@ -19,7 +19,7 @@
   virtualisation.oci-containers.backend = "docker";
 
   virtualisation.oci-containers.containers."gramps-grampsweb" = {
-    environmentFiles = [ config.age.secrets.gramps-env.path ];
+    environmentFiles = [config.age.secrets.gramps-env.path];
     image = "ghcr.io/gramps-project/grampsweb:latest";
     environment = {
       "GRAMPSWEB_CELERY_CONFIG__broker_url" = "redis://grampsweb_redis:6379/0";

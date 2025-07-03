@@ -6,11 +6,12 @@ _: {
     ./ddclient.nix
     ./gramps.nix
     ./hardware-configuration.nix
+    ./immich.nix
     ./pi400.nix
     ./profile.nix
     ./system.nix
     ./searx.nix
     ./vaultwarden.nix
-    #./znc.nix
+    ./znc.nix
   ];
 }

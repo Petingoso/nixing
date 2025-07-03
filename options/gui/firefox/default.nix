@@ -81,7 +81,7 @@
               "SearX" = {
                 urls = [
                   {
-                    template ="https://search.pi.undertale.uk/search?q={searchTerms}";
+                    template = "https://search.pi.undertale.uk/search?q={searchTerms}";
                   }
                 ];
                 icon = "https://search.pi.undertale.uk/static/themes/oscar/img/favicon.png";

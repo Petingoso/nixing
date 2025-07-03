@@ -10,13 +10,14 @@
   searchDomain = "search.${base}";
   zncDomain = "irc.${base}";
   grampsDomain = "gramps.${base}";
+  immichDomain = "photos.${base}";
 
   vaultServer = "http://localhost:8000";
   searchServer = "http://localhost:8100";
   zncServer = "https://localhost:8200";
   grampsServer = "http://localhost:8300";
+  immichServer = "http://localhost:8400";
 
-  logFile = "/var/log/caddy/vaultwarden.log";
   customCaddy = pkgs.caddy.withPlugins {
     plugins = ["github.com/caddy-dns/cloudflare@v0.2.1"];
     hash = "sha256-Gsuo+ripJSgKSYOM9/yl6Kt/6BFCA6BuTDvPdteinAI=";
@@ -87,10 +88,20 @@ in {
         reverse_proxy ${grampsServer} {
                 header_up X-Real-IP {remote_host}
         }
-        
+
       '';
     };
 
+    virtualHosts."${immichDomain}" = {
+      extraConfig = ''
+        ${commonCaddy}
+
+        reverse_proxy ${immichServer} {
+                header_up X-Real-IP {remote_host}
+        }
+
+      '';
+    };
     virtualHosts."${zncDomain}" = {
       extraConfig = ''
             	${commonCaddy}
@@ -107,15 +118,6 @@ in {
     virtualHosts."${vaultDomain}" = {
       extraConfig = ''
         ${commonCaddy}
-               log {
-                 level INFO
-                 output file ${logFile} {
-                   roll_size 10MB
-                   roll_keep 10
-                }
-               }
-
-
                reverse_proxy ${vaultServer} {
                  header_up X-Real-IP {remote_host}
                }

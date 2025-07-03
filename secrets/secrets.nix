@@ -10,7 +10,7 @@ let
 
   furry_femboys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMGED4p6L2EYc8SY70XRF4TYM85/KDONH77vz/SFBSWc pet@furryfemboys"];
 
-  personal =  Wired ++ HeadEmpty ++ furry_femboys ;
+  personal = Wired ++ HeadEmpty ++ furry_femboys;
 in {
   "test.age".publicKeys = Wired ++ HeadEmpty;
   "wireguard.age".publicKeys = Wired ++ HeadEmpty;

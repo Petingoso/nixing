@@ -81,10 +81,10 @@
               "SearX" = {
                 urls = [
                   {
-                    template = "https://search.pi.undertale.uk/search?q={searchTerms}";
+                    template = "https://search.undertale.uk/search?q={searchTerms}";
                   }
                 ];
-                icon = "https://search.pi.undertale.uk/static/themes/oscar/img/favicon.png";
+                icon = "https://search.undertale.uk/static/themes/oscar/img/favicon.png";
                 updateInterval = 24 * 60 * 60 * 1000;
               };
               "Nix Packages" = {

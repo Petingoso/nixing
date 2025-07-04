@@ -26,7 +26,15 @@
     settings.PermitRootLogin = "no";
   };
 
-  services.fail2ban.enable = true;
+  system.autoUpgrade = {
+  	enable = true;
+  	flake = "path:/home/pet/flake#furry_femboys";
+	flags = ["--update-input" "nixpkgs" "--no-write-lock-file" "-L"];
+	dates = "weekly";
+	allowReboot = true;
+  	rebootWindow.lower = "01:00";
+	rebootWindow.upper = "03:00";
+  };
 
   users.users.pet.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5 petingavasco@protonmail.com"

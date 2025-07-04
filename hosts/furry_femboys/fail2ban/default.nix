@@ -23,6 +23,8 @@
 
   age.secrets.fail2ban-env.file = "${self}/secrets/fail2ban-env.age";
 
+  services.fail2ban.enable = true;
+
   systemd.services.fail2ban = {
     path = [
       pkgs.curl

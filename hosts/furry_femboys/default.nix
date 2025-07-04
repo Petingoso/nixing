@@ -9,7 +9,6 @@ _: {
     ./hardware-configuration.nix
     ./immich.nix
     ./pi400.nix
-    ./profile.nix
     ./system.nix
     ./searx.nix
     ./vaultwarden.nix

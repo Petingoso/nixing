@@ -20,4 +20,5 @@ in {
   "searx.age".publicKeys = personal;
   "gramps-env.age".publicKeys = personal;
   "fail2ban-env.age".publicKeys = personal;
+  "znc.nix.age".publicKeys = personal;
 }

@@ -12,7 +12,8 @@
     protocol = "cloudflare";
     zone = "undertale.uk";
     username = "token";
-    use = "web, web='https://cloudflare.com/cdn-cgi/trace',web-skip='ip='";
+    usev4 = "webv4, webv4='https://cloudflare.com/cdn-cgi/trace',web-skip='ip='";
+    usev6 = "webv6, webv6='https://cloudflare.com/cdn-cgi/trace',webv6-skip='ip='";
 
     extraConfig = ''
       ttl=1,

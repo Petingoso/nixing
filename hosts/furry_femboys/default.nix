@@ -4,6 +4,7 @@ _: {
     ./configuration.nix
     ./caddy.nix
     ./ddclient.nix
+    ./fail2ban
     ./gramps.nix
     ./hardware-configuration.nix
     ./immich.nix

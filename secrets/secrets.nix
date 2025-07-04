@@ -19,4 +19,5 @@ in {
   "vaultwarden-token.age".publicKeys = personal;
   "searx.age".publicKeys = personal;
   "gramps-env.age".publicKeys = personal;
+  "fail2ban-env.age".publicKeys = personal;
 }

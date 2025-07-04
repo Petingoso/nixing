@@ -11,7 +11,7 @@
     environmentFile = config.age.secrets.vaultwarden-token.path;
     config = {
       WEB_VAULT_ENABLED = true;
-      DOMAIN = "https://vault.pi.undertale.uk";
+      DOMAIN = "https://vault.undertale.uk";
       SIGNUPS_ALLOWED = false;
       INVITATIONS_ALLOWED = false;
     };

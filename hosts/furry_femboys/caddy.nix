@@ -5,7 +5,7 @@
   lib,
   ...
 }: let
-  base = "pi.undertale.uk";
+  base = "undertale.uk";
   vaultDomain = "vault.${base}";
   searchDomain = "search.${base}";
   zncDomain = "irc.${base}";
@@ -19,53 +19,47 @@
   immichServer = "http://localhost:8400";
 
   customCaddy = pkgs.caddy.withPlugins {
+    # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
     plugins = ["github.com/caddy-dns/cloudflare@v0.2.1"];
     hash = "sha256-Gsuo+ripJSgKSYOM9/yl6Kt/6BFCA6BuTDvPdteinAI=";
   };
+
   commonCaddy = ''
-    encode zstd gzip
+      encode zstd gzip
 
-     header / {
-        	X-Content-Type-Options nosniff
-        	X-Frame-Options SAMEORIGIN
-     -Server
-     }
+       header / {
+          	X-Content-Type-Options nosniff
+          	X-Frame-Options SAMEORIGIN
+       -Server
+       }
 
-     tls {
-     protocols tls1.2 tls1.3
-     dns cloudflare {env.CF_API_TOKEN}
-     }
+       tls {
+       protocols tls1.2 tls1.3
+       dns cloudflare {env.CF_API_TOKEN}
+       }
 
+
+    # coraza_waf {
+    # 		load_owasp_crs
+    # 		directives `
+    #  			Include @coraza.conf-recommended
+    #  			Include @crs-setup.conf.example
+    #  			Include @owasp_crs/*.conf
+    #  			SecRuleEngine On
+    #   `
+    # }
   '';
 in {
   age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
-
-  environment.etc = {
-    "fail2ban/filter.d/caddy.conf".text = ''
-      [Definition]
-      failregex = ^.*"remote_ip":"<HOST>",.*?"status":(?:401|403|500),.*$
-      ignoreregex =
-      datepattern = LongEpoch
-    '';
-  };
-
-  services.fail2ban.jails = {
-    "caddy" = ''
-      enabled = true
-      filter = caddy
-      findtime = 600
-      maxretry = 4
-      logpath = /var/log/caddy/access*.log
-      backend = auto
-    '';
-  };
 
   networking.firewall.allowedTCPPorts = [80 443];
   services.caddy = {
     enable = true;
     package = customCaddy;
     environmentFile = config.age.secrets.caddy-env.path;
-
+    globalConfig = ''
+      # order coraza_waf first
+    '';
     virtualHosts."${searchDomain}" = {
       extraConfig = ''
              	${commonCaddy}
@@ -75,7 +69,8 @@ in {
 
         }
                reverse_proxy ${searchServer} {
-                header_up X-Real-IP {remote_host}
+         header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                }
         }
       '';
@@ -86,7 +81,8 @@ in {
         ${commonCaddy}
 
         reverse_proxy ${grampsServer} {
-                header_up X-Real-IP {remote_host}
+         header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
         }
 
       '';
@@ -94,10 +90,11 @@ in {
 
     virtualHosts."${immichDomain}" = {
       extraConfig = ''
-        ${commonCaddy}
+              ${commonCaddy}
 
         reverse_proxy ${immichServer} {
-                header_up X-Real-IP {remote_host}
+		header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
         }
 
       '';
@@ -110,17 +107,21 @@ in {
                	tls
                	tls_insecure_skip_verify
         }
-               header_up X-Real-IP {remote_host}
+               # header_up X-Real-IP {remote_host}
+         header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
               }
       '';
     };
 
     virtualHosts."${vaultDomain}" = {
       extraConfig = ''
-        ${commonCaddy}
-               reverse_proxy ${vaultServer} {
-                 header_up X-Real-IP {remote_host}
-               }
+              ${commonCaddy}
+                     reverse_proxy ${vaultServer} {
+                       # header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                      header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                     }
       '';
     };
   };

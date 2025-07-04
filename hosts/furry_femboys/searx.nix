@@ -8,7 +8,7 @@
     enable = true;
     settings = {
       server = {
-        base_url = "https://search.pi.undertale.uk";
+        base_url = "https://search.undertale.uk";
         bind_address = "::1";
         port = "8100";
         public_instance = false;
@@ -30,7 +30,6 @@
         center_alignment = true;
         default_theme = "simple";
         theme_args.simple_style = "auto";
-        search_on_category_select = false;
         hotkeys = "vim";
       };
       search = {

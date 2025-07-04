@@ -26,7 +26,7 @@
       "GRAMPSWEB_CELERY_CONFIG__result_backend" = "redis://grampsweb_redis:6379/0";
       "GRAMPSWEB_GUNICORN_NUM_WORKERS" = "1";
       "GRAMPSWEB_RATELIMIT_STORAGE_URI" = "redis://grampsweb_redis:6379/1";
-      "GRAMPSWEB_BASE_URL" = "https://gramps.pi.undertale.uk";
+      "GRAMPSWEB_BASE_URL" = "https://gramps.undertale.uk";
     };
     volumes = [
       "gramps_gramps_cache:/app/cache:rw"

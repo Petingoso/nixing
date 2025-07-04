@@ -8,24 +8,6 @@
   }) {inherit system;};
   # while is broken https://github.com/nixos/nixpkgs/issues/418799
 in {
-  environment.etc = {
-    "fail2ban/filter.d/immich.conf".text = ''
-      [Definition]
-      failregex = Failed login attempt for user .* from ip address <HOST>
-    '';
-  };
-
-  services.fail2ban.jails = {
-    "immich" = ''
-      enabled = true
-      filter = immich
-      findtime = 600
-      maxretry = 4
-      backend = systemd
-      journalmatch = _SYSTEMD_UNIT=immich-server.service
-    '';
-  };
-
   services.immich = {
     enable = true;
     port = 8400;

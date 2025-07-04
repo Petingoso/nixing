@@ -8,7 +8,6 @@ _: {
     ./oomd.nix
     ./preserve-system.nix
     ./pt_locale.nix
-    ./switch-ng.nix
     ./unfree.nix
   ];
 }

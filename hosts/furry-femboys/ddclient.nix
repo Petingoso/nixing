@@ -8,7 +8,7 @@
   age.secrets.cloudflare.file = "${self}/secrets/cloudflare.age";
   services.ddclient = {
     enable = true;
-    domains = ["pi.undertale.uk"];
+    domains = ["undertale.uk"];
     protocol = "cloudflare";
     zone = "undertale.uk";
     username = "token";

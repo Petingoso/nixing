@@ -1,6 +1,6 @@
 _: {
   mystuff.other.system = {
-    hostname = "furry_femboys";
+    hostname = "furry-femboys";
     username = "pet";
     platform = "aarch64-linux";
   };

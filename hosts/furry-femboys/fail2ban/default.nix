@@ -40,7 +40,7 @@
       maxretry = 3
       logpath = /var/log/caddy/access*.log
       backend = auto
-      action = iptables[type=allports, protocol=all] cloudflare_custom
+      action = iptables[type=allports protocol=all] cloudflare_custom
     '';
 
     "immich" = ''
@@ -50,7 +50,7 @@
       maxretry = 3
       backend = systemd
       journalmatch = _SYSTEMD_UNIT=immich-server.service
-      action = iptables[type=allports, protocol=all] cloudflare_custom
+      action = iptables[type=allports protocol=all] cloudflare_custom
     '';
   };
 }

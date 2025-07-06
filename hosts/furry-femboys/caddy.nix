@@ -69,7 +69,7 @@ in {
 
         }
                reverse_proxy ${searchServer} {
-         header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+         	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
                 header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                }
         }
@@ -81,7 +81,7 @@ in {
         ${commonCaddy}
 
         reverse_proxy ${grampsServer} {
-         header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+         	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
                 header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
         }
 
@@ -93,8 +93,9 @@ in {
               ${commonCaddy}
 
         reverse_proxy ${immichServer} {
-		header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+               header_up X-Real-IP {remote_host}
+		# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+		# header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
         }
 
       '';
@@ -108,7 +109,7 @@ in {
                	tls_insecure_skip_verify
         }
                # header_up X-Real-IP {remote_host}
-         header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+         	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
                 header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
               }
       '';
@@ -117,10 +118,10 @@ in {
     virtualHosts."${vaultDomain}" = {
       extraConfig = ''
               ${commonCaddy}
-                     reverse_proxy ${vaultServer} {
-                       # header_up X-Real-IP {remote_host}
-        header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                      header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                reverse_proxy ${vaultServer} {
+                	# header_up X-Real-IP {remote_host}
+        		header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                      	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                      }
       '';
     };

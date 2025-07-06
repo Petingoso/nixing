@@ -57,7 +57,7 @@ in
       type = "desktop";
     }
     {
-      dir = ./furry_femboys;
+      dir = ./furry-femboys;
       type = "server";
     }
   ]

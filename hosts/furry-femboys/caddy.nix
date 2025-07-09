@@ -90,13 +90,13 @@ in {
 
     virtualHosts."${immichDomain}" = {
       extraConfig = ''
-              ${commonCaddy}
+                    ${commonCaddy}
 
-        reverse_proxy ${immichServer} {
-               header_up X-Real-IP {remote_host}
-		# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-		# header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
-        }
+              reverse_proxy ${immichServer} {
+                     header_up X-Real-IP {remote_host}
+        # header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+        # header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+              }
 
       '';
     };
@@ -117,12 +117,12 @@ in {
 
     virtualHosts."${vaultDomain}" = {
       extraConfig = ''
-              ${commonCaddy}
-                reverse_proxy ${vaultServer} {
-                	# header_up X-Real-IP {remote_host}
-        		header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                      	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
-                     }
+            ${commonCaddy}
+              reverse_proxy ${vaultServer} {
+              	# header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                    	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                   }
       '';
     };
   };

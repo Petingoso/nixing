@@ -15,7 +15,7 @@
       programs.firefox = {
         enable = true;
 
-        package = pkgs.wrapFirefox pkgs.firefox-esr-128-unwrapped {
+        package = pkgs.wrapFirefox pkgs.firefox-esr-140-unwrapped {
           extraPolicies = {
             CaptivePortal = false;
             DisableFirefoxStudies = true;
@@ -138,11 +138,20 @@
             ''
                 user_pref("browser.search.suggest.enabled",true);
                 user_pref("privacy.cpd.history" , false);
-              user_pref("privacy.clearOnShutdown_v2.historyFormDataAndDownloads", false);
-                user_pref("privacy.clearOnShutdown.history" , false);
+                user_pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", false);
+                user_pref("privacy.clearOnShutdown_v2.downloads", false);
+                user_pref("privacy.clearHistory.browsingHistoryAndDownloads", false);
+                user_pref("privacy.clearSiteData.browsingHistoryAndDownloads", false);
                 user_pref("browser.privatebrowsing.autostart" , false);
                 user_pref("places.history.enabled" , true);
                 user_pref("keyword.enabled" , true);
+
+               user_pref("browser.newtabpage.activity-stream.discoverystream.reportAds.enabled", false);
+               user_pref("browser.newtabpage.activity-stream.telemetry.privatePing.enabled", false);
+               user_pref("extensions.dataCollectionPermissions.enabled", false);
+               user_pref("privacy.antitracking.isolateContentScriptResources", false);
+               user_pref("privacy.baselineFingerprintingProtection", true);
+               user_pref("toolkit.aboutLogging.uploadProfileToCloud", false);
             ''
           ];
           userChrome = ''

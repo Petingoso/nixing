@@ -11,10 +11,10 @@ in {
   services = {
     xserver = {
       xkb.layout = "pt";
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
-      displayManager.gdm.autoSuspend = false;
     };
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    displayManager.gdm.autoSuspend = false;
   };
 
   environment.systemPackages = with pkgs.gnomeExtensions; [
@@ -73,5 +73,8 @@ in {
 
   services.printing.enable = true;
   services.samba.enable = true;
-  services.printing.drivers = [ pkgs.gutenprintBin (pkgs.writeTextDir "share/cups/model/yourppd.ppd" (builtins.readFile ./xeroxdsi006.ppd))];
+  services.printing.drivers = [
+    pkgs.gutenprintBin
+    (pkgs.writeTextDir "share/cups/model/yourppd.ppd" (builtins.readFile ./xeroxdsi006.ppd))
+  ];
 }

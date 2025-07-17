@@ -51,8 +51,7 @@ in {
     miru
     pcloud
 
-    pkgs.olympus.override
-    {celesteWrapper = steam-run;}
+    (olympus.override {celesteWrapper = steam-run;})
     (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
     ludusavi
     xdg-utils

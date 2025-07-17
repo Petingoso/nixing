@@ -20,7 +20,7 @@ local tools = {
 	{
 		"nvimtools/none-ls.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		event = "VeryLazy",
+		-- event = "VeryLazy",
 		config = function()
 			require("plugins.configs.formatter")
 		end,

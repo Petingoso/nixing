@@ -2,20 +2,29 @@
 --  This function gets run when an LSP connects to a particular buffer.
 local lspconfig = require("lspconfig")
 
-local on_attach = function(_, bufnr)
-	-- to define small helper and utility functions so you don't have to repeat yourself
-	-- many times.
-	--
-	-- In this case, we create a function that lets us more easily define mappings specific
-	-- for LSP related items. It sets the mode, buffer and description for us each time.
 
-	-- Change diagnostic symbols in the gutter
-	local signs = { Error = "󰅚 ", Warn = " ", Hint = "󰌶 ", Info = " " }
-	for type, icon in pairs(signs) do
-		local hl = "DiagnosticSign" .. type
-		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-	end
-end
+
+vim.diagnostic.config({
+  virtual_text = true,     -- inline message
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "󰅚 ",
+      [vim.diagnostic.severity.WARN]  = " ",
+      [vim.diagnostic.severity.HINT]  = "󰌶 ",
+      [vim.diagnostic.severity.INFO]  = " ",
+    },
+    -- Optionally highlight line numbers:
+    numhl = {
+      [vim.diagnostic.severity.ERROR] = "DiagnosticError",
+      [vim.diagnostic.severity.WARN]  = "DiagnosticWarn",
+      [vim.diagnostic.severity.INFO]  = "DiagnosticInfo",
+      [vim.diagnostic.severity.HINT]  = "DiagnosticHint",
+    },
+  },
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+})
 
 local function which_python()
 	local f = io.popen("env which python", "r") or error("Fail to execute 'env which python'")
@@ -29,7 +38,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protoc
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- generic config
-local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor", "tinymist", "pylsp" }
+local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor", "tinymist", "pylsp", "jdtls" }
 
 -- server-specific overrides
 local server_overrides = {

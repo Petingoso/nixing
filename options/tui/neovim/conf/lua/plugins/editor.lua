@@ -34,7 +34,7 @@ local editor = {
 		end,
 	},
 
-	{ "LunarWatcher/auto-pairs", event = "InsertEnter" }, --auto pair
+	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true}, --auto pair
 	{ "tpope/vim-surround", event = "VeryLazy" }, -- change surrounding symbols ez "a"->(a)
 
 	--better marks

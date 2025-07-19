@@ -4,6 +4,7 @@ _: {
     ./chrome-executable.nix
     ./dbus.nix
     ./diskstuff.nix
+    ./firmware.nix
     ./fonts.nix
     ./light.nix
     ./polkit.nix

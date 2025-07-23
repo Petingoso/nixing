@@ -60,6 +60,7 @@ local options = {
 	-- conceallevel = 1,
 
 	completeopt = { "menuone", "noselect" }, -- mostly just for cmp_luasnip
+
 }
 
 for key, value in pairs(options) do
@@ -94,13 +95,12 @@ vim.cmd([[let g:wiki_export = {
 --set pairs on vim pairs
 vim.g.AutoPairsMapBS = 1
 
-vim.api.nvim_create_autocmd({"BufRead","BufNewFile"}, {
-	group = vim.api.nvim_create_augroup('phtml files', { clear = true }),
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	group = vim.api.nvim_create_augroup("phtml files", { clear = true }),
 	pattern = "*.phtml",
-	command = "set filetype=php.html"
+	command = "set filetype=php.html",
 })
 -- vim.cmd([[augroup FormatAutogroup
 --   autocmd!
 --   autocmd BufWritePost * FormatWrite
 -- augroup END]])
-

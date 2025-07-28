@@ -3,11 +3,15 @@
   inputs,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.mystuff.other.system) username;
-in {
-  programs.kdeconnect.enable = true;
-
+in
+{
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
   services = {
     xserver = {
       xkb.layout = "pt";
@@ -26,6 +30,7 @@ in {
     mouse-follows-focus-2
   ];
 
+  programs.kdeconnect.enable = true;
   mystuff = {
     other.home-manager.enable = true;
     programs = {
@@ -53,7 +58,7 @@ in {
     };
   };
 
-  age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
+  age.identityPaths = [ "/home/${config.mystuff.other.system.username}/.ssh/id_ed25519" ];
   system.stateVersion = "23.11";
 
   networking.firewall.enable = true;
@@ -71,10 +76,10 @@ in {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe" # teto
   ];
 
-  services.printing.enable = true;
-  services.samba.enable = true;
-  services.printing.drivers = [
-    pkgs.gutenprintBin
-    (pkgs.writeTextDir "share/cups/model/yourppd.ppd" (builtins.readFile ./xeroxdsi006.ppd))
-  ];
+  # services.printing.enable = true;
+  # services.samba.enable = true;
+  # services.printing.drivers = [
+  #   pkgs.gutenprintBin
+  #   (pkgs.writeTextDir "share/cups/model/yourppd.ppd" (builtins.readFile ./xeroxdsi006.ppd))
+  # ];
 }

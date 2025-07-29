@@ -3,11 +3,9 @@
   inputs,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (config.mystuff.other.system) username;
-in
-{
+in {
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -58,7 +56,7 @@ in
     };
   };
 
-  age.identityPaths = [ "/home/${config.mystuff.other.system.username}/.ssh/id_ed25519" ];
+  age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
   system.stateVersion = "23.11";
 
   networking.firewall.enable = true;

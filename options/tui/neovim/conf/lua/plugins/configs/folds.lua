@@ -11,9 +11,16 @@ vim.o.foldlevelstart = 99
 
 local ufo = require("ufo")
 
--- vim.fn.sign_define("FoldClosed", { text = "▸", texthl = "Folded" })
--- vim.fn.sign_define("FoldOpen", { text = "▾", texthl = "Folded" })
--- vim.fn.sign_define("FoldSeparator", { text = " ", texthl = "Folded" })
+vim.keymap.set("n", "zR", require("ufo").openAllFolds)
+vim.keymap.set("n", "zM", require("ufo").closeAllFolds)
+vim.keymap.set("n", "zr", require("ufo").openFoldsExceptKinds)
+vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+vim.keymap.set("n", "K", function()
+	local winid = require("ufo").peekFoldedLinesUnderCursor()
+	if not winid then
+		vim.lsp.buf.hover()
+	end
+end)
 
 ufo.setup({
 	provider_selector = function()

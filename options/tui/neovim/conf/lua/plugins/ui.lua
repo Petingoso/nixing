@@ -93,14 +93,6 @@ local ui = {
 	},
 
 	{
-		"anuvyklack/fold-preview.nvim",
-		dependencies = "anuvyklack/keymap-amend.nvim",
-		event = "BufReadPost",
-		config = function()
-			require("fold-preview").setup({})
-		end,
-	},
-	{
 		"NvChad/nvim-colorizer.lua",
 		config = function()
 			require("plugins.configs.colorizer")

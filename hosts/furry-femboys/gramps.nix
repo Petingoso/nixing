@@ -24,9 +24,9 @@
     environment = {
       "GRAMPSWEB_CELERY_CONFIG__broker_url" = "redis://grampsweb_redis:6379/0";
       "GRAMPSWEB_CELERY_CONFIG__result_backend" = "redis://grampsweb_redis:6379/0";
-      "GRAMPSWEB_GUNICORN_NUM_WORKERS" = "1";
+      "GUNICORN_NUM_WORKERS" = "1"; #NOTE: for performance
       "GRAMPSWEB_RATELIMIT_STORAGE_URI" = "redis://grampsweb_redis:6379/1";
-      "GRAMPSWEB_BASE_URL" = "https://gramps.undertale.uk";
+      "GRAMPSWEB_BASE_URL" = "https://gramps.undertale.uk"; # NOTE: url
     };
     volumes = [
       "gramps_gramps_cache:/app/cache:rw"
@@ -39,7 +39,7 @@
       "gramps_gramps_users:/app/users:rw"
     ];
     ports = [
-      "8300:5000/tcp"
+      "8300:5000/tcp" # NOTE: outside port
     ];
     dependsOn = [
       "grampsweb_redis"
@@ -104,7 +104,7 @@
       "gramps_gramps_tmp:/tmp:rw"
       "gramps_gramps_users:/app/users:rw"
     ];
-    cmd = ["celery" "-A" "gramps_webapi.celery" "worker" "--loglevel=INFO" "--concurrency=2"];
+    cmd = ["celery" "-A" "gramps_webapi.celery" "worker" "--loglevel=INFO" "--concurrency=1"]; # NOTE: concurrency
     dependsOn = [
       "grampsweb_redis"
     ];

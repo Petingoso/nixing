@@ -6,7 +6,7 @@
   ...
 }: {
   imports = [inputs.nixos-hardware.nixosModules.lenovo-legion-15arh05h];
-  kernelParams = ["initcall_blacklist=acpi_cpufreq_init"];
+
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

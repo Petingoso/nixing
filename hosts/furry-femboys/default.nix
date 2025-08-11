@@ -8,6 +8,7 @@ _: {
     ./gramps.nix
     ./hardware-configuration.nix
     ./immich.nix
+    ./lanraragi.nix
     ./pi400.nix
     ./system.nix
     ./searx.nix

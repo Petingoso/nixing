@@ -13,6 +13,7 @@
         port = "8100";
         public_instance = false;
         secret_key = config.age.secrets.searx.path;
+	limiter = false;
       };
 
       general = {

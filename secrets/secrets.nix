@@ -13,12 +13,14 @@ let
   personal = Wired ++ HeadEmpty ++ furry_femboys;
 in {
   "test.age".publicKeys = Wired ++ HeadEmpty;
-  "wireguard.age".publicKeys = Wired ++ HeadEmpty;
-  "cloudflare.age".publicKeys = personal;
+
   "caddy-env.age".publicKeys = personal;
-  "vaultwarden-token.age".publicKeys = personal;
-  "searx.age".publicKeys = personal;
-  "gramps-env.age".publicKeys = personal;
+  "cloudflare.age".publicKeys = personal;
   "fail2ban-env.age".publicKeys = personal;
+  "gramps-env.age".publicKeys = personal;
+  "lanraragi.age".publicKeys = personal;
+  "searx.age".publicKeys = personal;
+  "vaultwarden-token.age".publicKeys = personal;
+  "wireguard.age".publicKeys = Wired ++ HeadEmpty;
   "znc.nix.age".publicKeys = personal;
 }

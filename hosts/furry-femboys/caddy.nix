@@ -11,12 +11,14 @@
   zncDomain = "irc.${base}";
   grampsDomain = "gramps.${base}";
   immichDomain = "photos.${base}";
+  lanraragiDomain = "lrr.${base}";
 
   vaultServer = "http://localhost:8000";
   searchServer = "http://localhost:8100";
   zncServer = "https://localhost:8200";
   grampsServer = "http://localhost:8300";
   immichServer = "http://localhost:8400";
+  lanraragiServer = "http://localhost:8500";
 
   customCaddy = pkgs.caddy.withPlugins {
     # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];

@@ -62,19 +62,20 @@ in {
     globalConfig = ''
       # order coraza_waf first
     '';
+
     virtualHosts."${searchDomain}" = {
       extraConfig = ''
-             	${commonCaddy}
-        route{
-        basic_auth {
-        	pet {env.HTTP_PASS}
+		${commonCaddy}
+        	route {
+        		basic_auth {
+        			pet {env.HTTP_PASS}
+				}
 
-        }
-               reverse_proxy ${searchServer} {
-         	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
-               }
-        }
+               		reverse_proxy ${searchServer} {
+         		header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+               		}
+        	}
       '';
     };
 
@@ -92,39 +93,53 @@ in {
 
     virtualHosts."${immichDomain}" = {
       extraConfig = ''
-                    ${commonCaddy}
+        ${commonCaddy}
 
-              reverse_proxy ${immichServer} {
-                     header_up X-Real-IP {remote_host}
-        # header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-        # header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+        reverse_proxy ${immichServer} {
+                header_up X-Real-IP {remote_host}
+        	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                # header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
               }
 
       '';
     };
     virtualHosts."${zncDomain}" = {
       extraConfig = ''
-            	${commonCaddy}
-              reverse_proxy ${zncServer} {
-        transport http {
-               	tls
-               	tls_insecure_skip_verify
-        }
-               # header_up X-Real-IP {remote_host}
-         	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+        ${commonCaddy}
+        
+	reverse_proxy ${zncServer} {
+        	transport http {
+               		tls
+               		tls_insecure_skip_verify
+        	}
+
+        	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+        	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
               }
       '';
     };
 
     virtualHosts."${vaultDomain}" = {
       extraConfig = ''
-            ${commonCaddy}
-              reverse_proxy ${vaultServer} {
-              	# header_up X-Real-IP {remote_host}
-        header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                    	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
-                   }
+        ${commonCaddy}
+        reverse_proxy ${vaultServer} {
+        	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                }
+      '';
+    };
+
+    virtualHosts."${lanraragiDomain}" = {
+      extraConfig = ''
+        ${commonCaddy}
+	request_body {
+		max_size 200MB
+	}
+
+        reverse_proxy ${lanraragiServer} {
+        	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                }
       '';
     };
   };

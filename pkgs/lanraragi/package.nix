@@ -9,16 +9,33 @@
   nixosTests,
   nix-update-script,
 }:
-
+let 
+Mojolicious = (buildPerlPackage {
+    pname = "Mojolicious";
+    version = "9.36";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/S/SR/SRI/Mojolicious-9.36.tar.gz";
+      hash = "sha256-UX7Pb9hqC3xhadVRAiOL+YUWGNt2L7ANTPDZTGJSAV8=";
+    };
+    meta = {
+      description = "Real-time web framework";
+      homepage = "https://mojolicious.org";
+      license = with lib.licenses; [ artistic2 ];
+      maintainers = with maintainers; [ marcusramberg sgo thoughtpolice ];
+      mainProgram = "mojo";
+    };
+  });
+in
+{
 buildNpmPackage rec {
   pname = "lanraragi";
-  version = "0.9.41";
+  version = "0.9.40";
 
   src = fetchFromGitHub {
     owner = "Difegue";
     repo = "LANraragi";
     tag = "v.${version}";
-    hash = "sha256-qYmuGuGsEYFFitU55xBgKGjrJ3oL31mUr0OACSJQ/Jo=";
+    hash = "sha256-HF2g8rrcV6f6ZTKmveS/yjil/mBxpvRUFyauv5f+qQ8=";
   };
 
   patches = [
@@ -68,6 +85,9 @@ buildNpmPackage rec {
       TimeLocal
       YAMLPP
       StringSimilarity
+
+      CacheFastMmap
+      LocaleMaketextLexicon
     ]
     ++ lib.optionals stdenv.hostPlatform.isLinux [ LinuxInotify2 ];
 
@@ -139,4 +159,5 @@ buildNpmPackage rec {
     maintainers = with lib.maintainers; [ tomasajt ];
     platforms = lib.platforms.unix;
   };
+}
 }

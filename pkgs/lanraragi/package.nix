@@ -8,28 +8,36 @@
   ghostscript,
   nixosTests,
   nix-update-script,
+  #NOTE: WORKAROUND
+  perlPackages,
+  fetchurl,
 }:
-let 
-Mojolicious = (buildPerlPackage {
+let
+  custom-Mojolicious = perlPackages.buildPerlPackage {
     pname = "Mojolicious";
-    version = "9.36";
+    version = "9.39";
     src = fetchurl {
-      url = "mirror://cpan/authors/id/S/SR/SRI/Mojolicious-9.36.tar.gz";
-      hash = "sha256-UX7Pb9hqC3xhadVRAiOL+YUWGNt2L7ANTPDZTGJSAV8=";
+      url = "mirror://cpan/authors/id/S/SR/SRI/Mojolicious-9.39.tar.gz";
+      hash = "sha256-EwpJDXfXYTn3NM4biU1Fm64DgF+x89/dWPxE/oKvPP0=";
     };
-    meta = {
-      description = "Real-time web framework";
-      homepage = "https://mojolicious.org";
-      license = with lib.licenses; [ artistic2 ];
-      maintainers = with maintainers; [ marcusramberg sgo thoughtpolice ];
-      mainProgram = "mojo";
+  };
+
+  custom-Minion = perlPackages.buildPerlPackage {
+    pname = "Minion";
+    version = "10.35";
+    src = fetchurl {
+      url = "mirror://cpan/authors/id/S/SR/SRI/Minion-10.31.tar.gz";
+      hash = "sha256-MGj5kDPmnfCBRbWEqR7iJPTpfcYkLhAiIegiCj8oUDs=";
     };
-  });
+    propagatedBuildInputs = [
+      custom-Mojolicious
+      perl.pkgs.YAMLLibYAML
+    ];
+  };
 in
-{
 buildNpmPackage rec {
   pname = "lanraragi";
-  version = "0.9.40";
+  version = "0.9.41";
 
   src = fetchFromGitHub {
     owner = "Difegue";
@@ -51,7 +59,11 @@ buildNpmPackage rec {
     makeBinaryWrapper
   ];
 
-  buildInputs =
+  buildInputs = [
+    custom-Mojolicious
+    custom-Minion
+  ]
+  ++ (
     with perl.pkgs;
     [
       perl
@@ -68,14 +80,14 @@ buildNpmPackage rec {
       FileReadBackwards
       URI
       LogfileRotate
-      Mojolicious
+      # Mojolicious
       MojoliciousPluginTemplateToolkit
       MojoliciousPluginRenderFile
       MojoliciousPluginStatus
       IOSocketSocks
       IOSocketSSL
       CpanelJSONXS
-      Minion
+      # Minion
       MinionBackendRedis
       ProcSimple
       ParallelLoops
@@ -86,10 +98,13 @@ buildNpmPackage rec {
       YAMLPP
       StringSimilarity
 
+      #NOTE: Workaround
+      CHI
       CacheFastMmap
       LocaleMaketextLexicon
     ]
-    ++ lib.optionals stdenv.hostPlatform.isLinux [ LinuxInotify2 ];
+    ++ lib.optionals stdenv.hostPlatform.isLinux [ LinuxInotify2 ]
+  );
 
   buildPhase = ''
     runHook preBuild
@@ -159,5 +174,4 @@ buildNpmPackage rec {
     maintainers = with lib.maintainers; [ tomasajt ];
     platforms = lib.platforms.unix;
   };
-}
 }

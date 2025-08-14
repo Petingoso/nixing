@@ -17,8 +17,6 @@
     hashedPassword="$6$T.zxcrxwu5lBt9hx$jh6sBk4Gi3hIDjMAom0ijRn.SwhbGNH51QOPPWQ3UsrgdVZKrL63SWVUEvihrmoTbt5chQ6w4Jr50yrQRb6Hp0";
   };
 
-  users.users.root.HashedPassword = "!"; #disable root account
-
   networking.firewall.allowedTCPPorts = [2200];
 
   services.openssh = {

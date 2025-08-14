@@ -20,11 +20,14 @@
   immichServer = "http://localhost:8400";
   lanraragiServer = "http://localhost:8500";
 
-  customCaddy = pkgs.caddy.withPlugins {
-    # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
-    plugins = ["github.com/caddy-dns/cloudflare@v0.2.1"];
-    hash = "sha256-Gsuo+ripJSgKSYOM9/yl6Kt/6BFCA6BuTDvPdteinAI=";
-  };
+  customCaddy = (pkgs.caddy.withPlugins {
+    plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
+    # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1"];
+    hash = "sha256-tLbQnICquzR7g1sxOzr6+6GyNEwIBfdYVDqcxexyfEI=";
+  }).overrideAttrs (finalAttr: prevAttrs: {
+    doInstallCheck = false; # until https://github.com/nixos/nixpkgs/issues/430090 gets merged
+})
+  ;
 
   commonCaddy = ''
       encode zstd gzip
@@ -41,15 +44,15 @@
        }
 
 
-    # coraza_waf {
-    # 		load_owasp_crs
-    # 		directives `
-    #  			Include @coraza.conf-recommended
-    #  			Include @crs-setup.conf.example
-    #  			Include @owasp_crs/*.conf
-    #  			SecRuleEngine On
-    #   `
-    # }
+    coraza_waf {
+    		load_owasp_crs
+    		directives `
+     			Include @coraza.conf-recommended
+     			Include @crs-setup.conf.example
+     			Include @owasp_crs/*.conf
+     			SecRuleEngine On
+      `
+    }
   '';
 in {
   age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
@@ -60,7 +63,7 @@ in {
     package = customCaddy;
     environmentFile = config.age.secrets.caddy-env.path;
     globalConfig = ''
-      # order coraza_waf first
+      order coraza_waf first
     '';
 
     virtualHosts."${searchDomain}" = {
@@ -72,8 +75,9 @@ in {
 				}
 
                		reverse_proxy ${searchServer} {
-         		header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                		header_up X-Real-IP {remote_host}
+         		# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+         		#      	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                		}
         	}
       '';
@@ -84,8 +88,9 @@ in {
         ${commonCaddy}
 
         reverse_proxy ${grampsServer} {
-         	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+		header_up X-Real-IP {remote_host}
+         	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+         	#       header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
         }
 
       '';
@@ -113,8 +118,9 @@ in {
                		tls_insecure_skip_verify
         	}
 
-        	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-        	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                header_up X-Real-IP {remote_host}
+        	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+        	# header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
               }
       '';
     };
@@ -123,8 +129,9 @@ in {
       extraConfig = ''
         ${commonCaddy}
         reverse_proxy ${vaultServer} {
-        	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                header_up X-Real-IP {remote_host}
+        	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+        	#        header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                 }
       '';
     };
@@ -137,8 +144,9 @@ in {
 	}
 
         reverse_proxy ${lanraragiServer} {
-        	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                header_up X-Real-IP {remote_host}
+        	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+        	#        header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                 }
       '';
     };

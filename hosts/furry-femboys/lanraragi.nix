@@ -8,6 +8,11 @@
 		passwordFile = config.age.secrets.lanraragi.path;
 	};
 
+	systemd.services.lanraragi.environment = {
+  		MOJO_REVERSE_PROXY = "1";
+	};
+
+
   	fileSystems."/var/lib/private/lanraragi" = {
 	  	device = "/data/lanraragi";
 		options = [ "bind" ];

@@ -1,63 +1,74 @@
-{inputs, ...}: let
-  inherit (inputs) self;
-  inherit (self) lib;
+{
+  inputs,
+  self,
+  ...
+}: let
+  mkHost = {
+    channel,
+    system ? "x86_64-linux",
+    hostDir,
+    extraModules ? [],
+    hostname,
+    enableHM ? false,
+  }: let
+    pkgs =
+      if channel == "stable"
+      then inputs.nixpkgs-stable
+      else inputs.nixpkgs-unstable;
+    lib = pkgs.lib;
 
-  inherit (lib.attrsets) listToAttrs;
-  inherit (lib.path) append;
+    hm =
+      if enableHM
+      then
+        (
+          if channel == "stable"
+          then inputs.home-manager-stable
+          else inputs.home-manager-unstable
+        )
+      else null;
 
-  createHost' = extraModules: hostDir:
-    lib.nixosSystem {
-      system = null;
+    hostExtraModules =
+      (import (hostDir + "/modules.nix") {
+        inherit self lib;
+      }).imports;
+  in
+    pkgs.lib.nixosSystem {
+      inherit system;
+
       specialArgs = {
-        inherit lib inputs self;
+        inherit
+          inputs
+          self
+          lib
+          ;
       };
+
       modules =
         [
           hostDir
-          ../options
-          ../modules/core
+          "${self}/modules/core"
+          (import "${self}/options" {}).imports
+
+          (
+            {
+              config,
+              lib,
+              ...
+            }: {
+              config.custom.enableHomeManager = enableHM;
+            }
+          )
         ]
+        ++ lib.optional enableHM hm.nixosModules.home-manager
+        ++ hostExtraModules
         ++ extraModules;
     };
-
-  createHost = createHost' [];
-  createDesktop = createHost' [../modules/desktop];
-  createServer = createHost' [];
-
-  createHosts = hosts:
-    listToAttrs (map (host: let
-        createFn =
-          {
-            desktop = createDesktop;
-            server = createServer;
-            generic = createHost;
-          }
-          ."${host.type}";
-        path' = append host.dir "system.nix";
-        cfg = (import path') {
-          inherit inputs;
-        };
-      in {
-        name = cfg.mystuff.other.system.hostname;
-        value = createFn host.dir;
-      })
-      hosts);
-in
-  createHosts [
-    {
-      dir = ./Wired;
-      type = "desktop";
-    }
-    {
-      dir = ./HeadEmpty;
-      type = "desktop";
-    }
-    {
-      dir = ./teto;
-      type = "desktop";
-    }
-    {
-      dir = ./furry-femboys;
-      type = "server";
-    }
-  ]
+in {
+  Wired = mkHost {
+    channel = "unstable";
+    hostname = "Wired";
+    hostDir = ./Wired;
+    enableHM = true;
+    extraModules = (import ../modules/desktop {}).imports;
+  };
+}

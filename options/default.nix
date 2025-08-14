@@ -1,9 +1,3 @@
 _: {
-  imports = [
-    ./cli
-    ./gui
-    ./other
-    ./services
-    ./tui
-  ];
+  imports = ./core.nix;
 }

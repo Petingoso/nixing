@@ -1,30 +1,27 @@
 {
   description = "petingoso's flake";
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: {
-    inherit (nixpkgs) lib;
-    nixosConfigurations = import ./hosts {inherit inputs self;};
-  };
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.05";
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
 
-    home-manager = {
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager-unstable = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-    };
-
+    # common
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     nix-alien.url = "github:thiagokokada/nix-alien";
-
     agenix.url = "github:ryantm/agenix";
-
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+  };
+
+  outputs = {self, ...} @ inputs: {
+    nixosConfigurations = import ./hosts { inherit self inputs; };
   };
 }

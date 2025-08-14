@@ -1,11 +1,8 @@
 {
   pkgs,
-  config,
   self,
   ...
-}: let
-  inherit (config.mystuff.other.system) username;
-in {
+}: {
   environment.systemPackages = with pkgs; [
     baobab
     btrbk
@@ -23,9 +20,9 @@ in {
     p7zip
     wdisplays
     # mcomix
-  ];
-
-  users.users.${username}.packages = with pkgs; [
+  # ];
+  #
+  # users.users.${username}.packages = with pkgs; [
     rclone
     bitwarden
     calibre
@@ -52,14 +49,15 @@ in {
     pcloud
 
     (olympus.override {celesteWrapper = steam-run;})
-    (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
+    # (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
     ludusavi
     xdg-utils
     gamescope
     r2modman
-    config.boot.kernelPackages.vhba
+    # config.boot.kernelPackages.vhba
   ];
   programs.steam.enable = true;
-  programs.cdemu.enable = true;
-  programs.cdemu.gui = true;
+  # programs.cdemu.enable = true;
+  # programs.cdemu.gui = true;
 }
+

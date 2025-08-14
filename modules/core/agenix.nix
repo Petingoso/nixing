@@ -3,12 +3,11 @@
   inputs,
   pkgs,
   ...
-}: let
-  inherit (config.mystuff.other.system) username;
-in {
-  imports = [inputs.agenix.nixosModules.default];
+}:
+{
+  imports = [ inputs.agenix.nixosModules.default ];
 
-  users.users.${username}.packages = [
+  environment.systemPackages = [
     inputs.agenix.packages.${pkgs.stdenv.system}.default
   ];
 }

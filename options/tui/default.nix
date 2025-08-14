@@ -1,6 +1,0 @@
-_: {
-  imports = [
-    ./neovim
-    ./ranger
-  ];
-}

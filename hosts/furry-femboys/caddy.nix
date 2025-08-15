@@ -44,15 +44,20 @@
        }
 
 
-    coraza_waf {
-    		load_owasp_crs
-    		directives `
-     			Include @coraza.conf-recommended
-     			Include @crs-setup.conf.example
-     			Include @owasp_crs/*.conf
-     			SecRuleEngine On
-      `
-    }
+	#    coraza_waf {
+	#    		load_owasp_crs
+	#    		directives `
+	#     			Include @coraza.conf-recommended
+	#     			Include @crs-setup.conf.example
+	#     			Include @owasp_crs/*.conf
+	#     			SecRuleEngine On
+	#      `
+	# }
+     handle_errors 403 {
+ 	header X-Blocked "true"
+ 	respond "Your request was blocked. Request ID: {http.request.header.x-request-id}"
+	close
+	}
   '';
 in {
   age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
@@ -63,8 +68,33 @@ in {
     package = customCaddy;
     environmentFile = config.age.secrets.caddy-env.path;
     globalConfig = ''
-      order coraza_waf first
+      # order coraza_waf first
     '';
+
+    virtualHosts."${base}" = {
+      extraConfig = ''
+      		${commonCaddy}
+
+		header Content-Type text/html
+
+		respond <<HTML
+			<html>
+				<head><title>Services Dashboard</title></head>
+				<body>
+					<ul>
+        					<li><a href="https://${vaultDomain}">Vault</a></li>
+        					<li><a href="https://${searchDomain}">SearXNG</a></li>
+        					<li><a href="https://${zncDomain}">ZNC Web</a></li>
+        					<li><a href="https://${grampsDomain}">Gramps</a></li>
+        					<li><a href="https://${immichDomain}">Immich</a></li>
+        					<li><a href="https://${lanraragiDomain}">LANraragi</a></li>
+    					</ul>
+
+				</body>
+			</html>
+			HTML 200
+      '';
+    };
 
     virtualHosts."${searchDomain}" = {
       extraConfig = ''

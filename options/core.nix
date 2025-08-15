@@ -1,9 +1,16 @@
 {
   lib,
   config,
+  hostname ? null,
+  system ? null,
   ...
 }:
-with lib; {
+let
+  inherit hostname system;
+  cfg = config.custom;
+in
+with lib;
+{
   options.custom = {
     username = mkOption {
       type = types.str;
@@ -11,20 +18,35 @@ with lib; {
       description = "The name of the primary user.";
     };
 
-    enableHomeManager = mkOption {
+    enableHM = mkOption {
       type = types.bool;
       default = false;
       description = "Enable Home Manager integration";
     };
+
+    hostname = mkOption {
+      type = types.str;
+      default = hostname;
+      description = "System Hostname";
+    };
+
+    platform = mkOption {
+      type = types.str;
+      default = system;
+      description = "System Architecture";
+    };
   };
 
   config = {
-    users.users.${config.custom.username} = {
+    networking.hostName = cfg.hostname;
+    nixpkgs.hostPlatform = cfg.platform;
+
+    users.users.${cfg.username} = {
       isNormalUser = true;
-      extraGroups = ["wheel"];
+      extraGroups = [ "wheel" ];
     };
 
-    home-manager.users.${config.custom.username}.home.stateVersion =
-      lib.mkIf config.custom.enableHomeManager config.system.stateVersion;
+    home-manager.users.${cfg.username}.home.stateVersion =
+      (lib.mkIf cfg.enableHM) config.system.stateVersion;
   };
 }

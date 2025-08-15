@@ -1,3 +1,10 @@
 _: {
-  imports = ./core.nix;
+  imports = [
+    ./core.nix
+    ./cli
+    ./gui
+    ./other
+    ./services
+    ./tui
+  ];
 }

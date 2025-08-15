@@ -47,7 +47,7 @@
         [
           hostDir
           "${self}/modules/core"
-          (import "${self}/options" {}).imports
+          (import "${self}/options" {inherit hostname system;}).imports
 
           (
             {
@@ -55,7 +55,7 @@
               lib,
               ...
             }: {
-              config.custom.enableHomeManager = enableHM;
+              config.custom.enableHM = enableHM;
             }
           )
         ]

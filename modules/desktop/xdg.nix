@@ -4,9 +4,9 @@
   ...
 }:
 let
-  inherit (config.custom) username enableHomeManager;
+  inherit (config.custom) username enableHM;
 
-  hmCfg = if enableHomeManager then config.home-manager.users.${username} else null;
+  hmCfg = if enableHM then config.home-manager.users.${username} else null;
 
   # https://specifications.freedesktop.org/basedir-spec/latest/
   XDG_CACHE_HOME = "$HOME/.cache";
@@ -14,7 +14,7 @@ let
   XDG_DATA_HOME = "$HOME/.local/share";
   XDG_STATE_HOME = "$HOME/.local/state";
 in
-lib.mkIf enableHomeManager {
+lib.mkIf enableHM {
   # most of the random ass env vars taken from `pkgs.xdg-ninja`
   environment.sessionVariables = {
     inherit

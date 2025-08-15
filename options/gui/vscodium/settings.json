@@ -1,0 +1,36 @@
+{
+  "_comment": "for nvim vscode",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "workbench.colorTheme": "Nord",
+  "[typst]": {
+    "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
+  },
+  "[typst-code]": {
+    "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono",
+  "terminal.integrated.fontSize": 16,
+  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/vs-nvim",
+  "security.workspace.trust.enabled": false,
+  "workbench.sideBar.location": "right",
+  "editor.columnSelection": true,
+  "editor.lineNumbers": "relative",
+  "nix.enableLanguageServer": true,
+"nix.formatterPath": "alejandra",
+"makefile.configureOnOpen": true,
+"makefile.launchConfigurations": [],
+"makefile.defaultLaunchConfiguration": {
+    "MIMode": "gdb",
+    "miDebuggerPath": "/usr/bin/gdb"
+},
+"[c]": {
+    "editor.defaultFormatter": "ms-vscode.cpptools"
+},
+"diffEditor.ignoreTrimWhitespace": false
+}
+

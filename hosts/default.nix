@@ -23,10 +23,10 @@ let
         else
           null;
 
-      hostExtraModules =
-        (import (hostDir + "/modules.nix") {
-          inherit self lib;
-        }).imports;
+      # hostExtraModules =
+      #   (import (hostDir + "/modules.nix") {
+      #     inherit self lib;
+      #   }).imports;
     in
     lib.nixosSystem {
       specialArgs = {
@@ -54,7 +54,7 @@ let
           )
         ]
         ++ lib.optional enableHM hm.nixosModules.home-manager
-        ++ hostExtraModules
+        # ++ hostExtraModules
         ++ extraModules;
     };
 in
@@ -65,5 +65,27 @@ in
     hostDir = ./Wired;
     enableHM = true;
     extraModules = (import ../modules/desktop { }).imports;
+  };
+  HeadEmpty = mkHost {
+    channel = "unstable";
+    hostname = "HeadEmpty";
+    hostDir = ./HeadEmpty;
+    enableHM = true;
+    extraModules = (import ../modules/desktop { }).imports;
+  };
+  teto = mkHost {
+    channel = "unstable";
+    hostname = "Wired";
+    hostDir = ./teto;
+    enableHM = true;
+    extraModules = (import ../modules/desktop { }).imports;
+  };
+  furry-femboys = mkHost {
+    channel = "stable";
+    hostname = "Wired";
+    hostDir = ./furry-femboys;
+    enableHM = false;
+    system = "aarch64-linux";
+
   };
 }

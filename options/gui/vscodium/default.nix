@@ -20,8 +20,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # home-manager.users.${username} = {config, ...}: {
-    home-manager.users.${username} =  mkIf enableHM{
+    home-manager.users.${username} = {config, ...}: mkIf enableHM {
       # makes it runtime editable, this is a crime
       xdg.configFile."VSCodium/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/settings.json";
       xdg.configFile."VSCodium/User/tasks.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/tasks.json";

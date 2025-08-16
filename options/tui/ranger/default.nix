@@ -3,17 +3,19 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   cfg = config.custom;
 in {
   options.custom.programs = {
     #NOTE: needs HM
     ranger.enable = lib.mkEnableOption "ranger";
   };
-  config = lib.mkIf (cfg.programs.ranger.enable && cfg.enableHM){
+  config = lib.mkIf (cfg.enableHM && cfg.programs.ranger.enable) {
     home-manager.users.${cfg.username} = {
-      home.packages = [pkgs.ranger pkgs.xdragon];
+      home.packages = [
+        pkgs.ranger
+        pkgs.xdragon
+      ];
       xdg.configFile = {
         "ranger/commands.py".source = ./conf/commands.py;
         "ranger/rc.conf".source = ./conf/rc.conf;

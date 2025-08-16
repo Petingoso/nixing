@@ -13,7 +13,7 @@ in
     neovim-config.enable = lib.mkEnableOption "neovim-config";
   };
   config = lib.mkIf cfg.neovim-config.enable {
-    home-manager.users.${username} = lib.mkIF enableHM{
+    home-manager.users.${username} = lib.mkIf enableHM{
       programs.neovim = {
         enable = true;
         extraPackages = with pkgs; [

@@ -1,16 +1,18 @@
 {
   pkgs,
+  config,
   ...
-}: {
+}: let
+  inherit (config.custom) username;
+in {
   environment.systemPackages = with pkgs; [
     baobab
-    btrbk
     compsize
     font-manager
     gnome-disk-utility
-    libreoffice
     lxappearance
     ncpamixer
+    libreoffice
     nemo
     nemo-fileroller
     piper
@@ -19,23 +21,16 @@
     p7zip
     wdisplays
     # mcomix
-  # ];
-  #
-  # users.users.${username}.packages = with pkgs; [
-    rclone
+  ];
+
+  users.users.${username}.packages = with pkgs; [
     bitwarden
-    calibre
-    ckan
     evince
     fastfetch
-    heroic
-    # hydrus
     krita
     lutris
     pavucontrol
     pcsx2
-    osu-lazer-bin
-    prismlauncher
     qalculate-gtk
     steamtinkerlaunch
     stremio
@@ -44,19 +39,13 @@
     ungoogled-chromium
     wineWowPackages.waylandFull
     youtube-music
-    miru
-    pcloud
-
-    (olympus.override {celesteWrapper = steam-run;})
-    # (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
-    ludusavi
     xdg-utils
-    gamescope
-    r2modman
-    # config.boot.kernelPackages.vhba
+    rclone
+    pcloud
+    ludusavi
   ];
-  programs.steam.enable = true;
-  # programs.cdemu.enable = true;
-  # programs.cdemu.gui = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+  };
 }
-

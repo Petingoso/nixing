@@ -3,7 +3,7 @@ _: {
     # ./firefox
     # ./kitty
     # ./swaync
-    ./themes
+    # ./themes
     ./vesktop
     ./vscodium
     # ./waybar

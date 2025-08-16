@@ -12,6 +12,7 @@ in {
     enable = mkOption {
       description = "enable networkmanager";
       type = bool;
+      default = false;
     };
 
     powersave = mkOption {

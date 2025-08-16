@@ -10,7 +10,7 @@
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) str;
 in {
-  options.mystuff.programs.nh = {
+  options.custom.programs.nh = {
     enable = mkEnableOption "nh";
     flake = mkOption {
       type = str;

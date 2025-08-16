@@ -4,7 +4,7 @@
   config,
   ...
 }: let
-  cfg = config.mystuff.programs.zsh;
+  cfg = config.custom.programs.zsh;
   inherit (config.custom) username enableHM;
 in {
   options.custom.programs = {

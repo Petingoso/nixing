@@ -7,7 +7,7 @@
 let
   cfg = config.custom;
 in {
-  options.mystuff.programs = {
+  options.custom.programs = {
     #NOTE: needs HM
     ranger.enable = lib.mkEnableOption "ranger";
   };

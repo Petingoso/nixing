@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.custom.programs.mpv;
-  inherit (config.custom.other.system) username enableHM;
+  inherit (config.custom) username enableHM;
 
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
@@ -13,7 +13,7 @@
   inherit (lib.types) nullOr str;
 in {
   #NOTE: needs HM
-  options.mystuff.programs.mpv = {
+  options.custom.programs.mpv = {
     enable = mkEnableOption "mpv";
     gpu = mkOption {
       description = "gpu used to render videos played through mpv";

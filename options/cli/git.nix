@@ -14,7 +14,7 @@
 
   delta = getExe pkgs.delta;
 in {
-  options.mystuff.programs.git = {
+  options.custom.programs.git = {
     #NOTE: needs HM
     enable = mkEnableOption "git";
     userName = mkOption {

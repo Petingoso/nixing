@@ -34,9 +34,16 @@
          encode zstd gzip
 
           header / {
+
+	  	Strict-Transport-Security "max-age=63072000"
              	X-Content-Type-Options nosniff
              	X-Frame-Options SAMEORIGIN
-          -Server
+          	-Server
+
+	  	Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;"
+		Permissions-Policy "accelerometer=(),camera=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),payment=(),usb=()"
+
+		Referrer-Policy "same-origin"
           }
 
           tls {
@@ -59,6 +66,7 @@
     	respond "Your request was blocked. Request ID: {http.request.header.x-request-id}"
     }
   '';
+  blockEngines = ''header X-Robots-Tag "noindex, nofollow, noarchive, nositelinkssearchbox, nosnippet, notranslate, noimageindex" '';
 in {
   age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
 
@@ -115,6 +123,7 @@ in {
     virtualHosts."${grampsDomain}" = {
       extraConfig = ''
               ${commonCaddy}
+	      ${blockEngines}
 
               reverse_proxy ${grampsServer} {
                	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
@@ -127,6 +136,7 @@ in {
     virtualHosts."${immichDomain}" = {
       extraConfig = ''
         ${commonCaddy}
+	${blockEngines}
 
         reverse_proxy ${immichServer} {
                 header_up X-Real-IP {remote_host}
@@ -137,6 +147,7 @@ in {
     virtualHosts."${zncDomain}" = {
       extraConfig = ''
                ${commonCaddy}
+	      ${blockEngines}
 
         reverse_proxy ${zncServer} {
                	transport http {
@@ -152,6 +163,7 @@ in {
     virtualHosts."${vaultDomain}" = {
       extraConfig = ''
         ${commonCaddy}
+	${blockEngines}
         reverse_proxy ${vaultServer} {
         	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
         	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
@@ -162,6 +174,7 @@ in {
     virtualHosts."${lanraragiDomain}" = {
       extraConfig = ''
         ${commonCaddy}
+	${blockEngines}
 
         request_body {
         	max_size 200MB
@@ -176,6 +189,7 @@ in {
     virtualHosts."${webdavDomain}" = {
       extraConfig = ''
                ${commonCaddy}
+	       ${blockEngines}
 	       root * /data/webDAV
               	route {
 			request_body {

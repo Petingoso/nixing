@@ -23,7 +23,7 @@
 
       general = {
         debug = false;
-        instance_name = "SearXNG @ Furry_Femboys";
+        instance_name = "SearXNG by pet :3";
         donation_url = false;
         contact_url = false;
         privacypolicy_url = false;

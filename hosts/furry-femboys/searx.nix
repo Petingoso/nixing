@@ -6,23 +6,28 @@
   age.secrets.searx.file = "${self}/secrets/searx.age";
   services.searx = {
     enable = true;
+    redisCreateLocally = true;
+    limiterSettings = {
+    	botdetection.ip_limit.link_token = true;
+    };
+
     settings = {
       server = {
         base_url = "https://search.undertale.uk";
         bind_address = "::1";
         port = "8100";
-        public_instance = false;
+        public_instance = true;
         secret_key = config.age.secrets.searx.path;
-	limiter = false;
+	limiter = true;
       };
 
       general = {
         debug = false;
-        instance_name = "Searx @ Furry_Femboys";
+        instance_name = "SearXNG @ Furry_Femboys";
         donation_url = false;
         contact_url = false;
         privacypolicy_url = false;
-        enable_metrics = false;
+        enable_metrics = true;
       };
       ui = {
         default_locale = "en";
@@ -43,6 +48,7 @@
       enabled_plugins = [
         "Basic Calculator"
         "Tor check plugin"
+	"Self Information"
         "Unit converter plugin"
         "Tracker URL remover"
       ];

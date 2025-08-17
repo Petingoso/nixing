@@ -12,6 +12,7 @@
   grampsDomain = "gramps.${base}";
   immichDomain = "photos.${base}";
   lanraragiDomain = "lrr.${base}";
+  webdavDomain = "dav.${base}";
 
   vaultServer = "http://localhost:8000";
   searchServer = "http://localhost:8100";
@@ -22,9 +23,9 @@
 
   customCaddy =
     (pkgs.caddy.withPlugins {
-      plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
-      # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1"];
-      hash = "sha256-tLbQnICquzR7g1sxOzr6+6GyNEwIBfdYVDqcxexyfEI=";
+      # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
+      plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"]; 
+      hash = "sha256-Cg12JxHtheR/sO5vRnrVyJPubDPHQuMsgaMnz1//G9g=";
     }).overrideAttrs (finalAttr: prevAttrs: {
       doInstallCheck = false; # until https://github.com/nixos/nixpkgs/issues/430090 gets merged
     });
@@ -98,15 +99,15 @@ in {
       extraConfig = ''
         ${commonCaddy}
               	route {
-              		basic_auth {
-              			pet {env.HTTP_PASS}
-        		}
+        		#     		basic_auth {
+        		#     			pet {env.HTTP_PASS}
+        		# }
 
-                     		reverse_proxy ${searchServer} {
+                     	reverse_proxy ${searchServer} {
                       		header_up X-Real-IP {remote_host}
-               		# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-               		#      	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
-                     		}
+               			# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+               			#      	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                     	}
               	}
       '';
     };
@@ -116,9 +117,8 @@ in {
               ${commonCaddy}
 
               reverse_proxy ${grampsServer} {
-        header_up X-Real-IP {remote_host}
-               	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-               	#       header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+               	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+               	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
               }
 
       '';
@@ -130,8 +130,6 @@ in {
 
         reverse_proxy ${immichServer} {
                 header_up X-Real-IP {remote_host}
-        	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                # header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
               }
 
       '';
@@ -146,10 +144,8 @@ in {
                       		tls_insecure_skip_verify
                	}
 
-                       header_up X-Real-IP {remote_host}
-               	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-               	# header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
-                     }
+                header_up X-Real-IP {remote_host}
+                }
       '';
     };
 
@@ -157,30 +153,49 @@ in {
       extraConfig = ''
         ${commonCaddy}
         reverse_proxy ${vaultServer} {
-                header_up X-Real-IP {remote_host}
-        	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-        	#        header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+        	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+        	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                 }
       '';
     };
 
     virtualHosts."${lanraragiDomain}" = {
       extraConfig = ''
-               ${commonCaddy}
+        ${commonCaddy}
+
         request_body {
         	max_size 200MB
         }
 
                reverse_proxy ${lanraragiServer} {
                        header_up X-Real-IP {remote_host}
-               	# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-               	#        header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                        }
       '';
     };
+
+    virtualHosts."${webdavDomain}" = {
+      extraConfig = ''
+               ${commonCaddy}
+	       root * /data/webDAV
+              	route {
+			request_body {
+				max_size 10GB
+			}
+
+              		basic_auth {
+              			pet {env.HTTP_PASS}
+        		}
+
+			webdav
+	
+              	}
+      '';
+    };
+
   };
 
   systemd.tmpfiles.rules = [
     "d /var/log/caddy 0755 caddy caddy - -"
+    "d /data/webDAV 0750 caddy caddy - -"
   ];
 }

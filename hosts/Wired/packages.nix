@@ -50,6 +50,7 @@ in {
     youtube-music
     miru
     pcloud
+    obsidian
 
     (olympus.override {celesteWrapper = steam-run;})
     (callPackage "${self}/pkgs/steam-run-ksp.nix" {})

@@ -1,10 +1,12 @@
 {
   self,
   config,
+  inputs,
   ...
 }: {
   age.secrets.searx.file = "${self}/secrets/searx.age";
   services.searx = {
+    package = inputs.nixpkgs-unstable-latest.searxng;
     enable = true;
     redisCreateLocally = true;
     limiterSettings = {

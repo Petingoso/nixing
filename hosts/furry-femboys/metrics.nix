@@ -1,5 +1,8 @@
 {self,config,...}:{
-  age.secrets.grafana-password.file = "${self}/secrets/grafana-password.age";
+  age.secrets.grafana-password = {
+  	file = "${self}/secrets/grafana-password.age";
+  	owner = "grafana";
+  };
 
   services.grafana = {
     enable = true;
@@ -11,7 +14,7 @@
       enable_gzip = true;
     };
     settings.security = {
-      admin_password = "$__file{${config.age.secrets.grafana-password}}";
+      admin_password = "$__file{${config.age.secrets.grafana-password.path}}";
     };
   };
 }

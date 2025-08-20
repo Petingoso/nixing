@@ -14,6 +14,7 @@
       DOMAIN = "https://vault.undertale.uk";
       SIGNUPS_ALLOWED = false;
       INVITATIONS_ALLOWED = false;
+      ROCKET_PORT = "8000";
     };
   };
 }

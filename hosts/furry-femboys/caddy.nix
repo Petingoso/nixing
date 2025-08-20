@@ -6,20 +6,25 @@
   ...
 }: let
   base = "undertale.uk";
-  vaultDomain = "vault.${base}";
-  searchDomain = "search.${base}";
-  zncDomain = "irc.${base}";
-  grampsDomain = "gramps.${base}";
-  immichDomain = "photos.${base}";
-  lanraragiDomain = "lrr.${base}";
-  webdavDomain = "dav.${base}";
 
-  vaultServer = "http://localhost:8000";
-  searchServer = "http://localhost:8100";
-  zncServer = "https://localhost:8200";
-  grampsServer = "http://localhost:8300";
-  immichServer = "http://localhost:8400";
-  lanraragiServer = "http://localhost:8500";
+  vaultDomain 		= "vault.${base}";
+  searchDomain 		= "search.${base}";
+  zncDomain 		= "irc.${base}";
+  grampsDomain 		= "gramps.${base}";
+  immichDomain 		= "photos.${base}";
+  lanraragiDomain	= "lrr.${base}";
+  webdavDomain 		= "dav.${base}";
+  grafanaDomain		= "grafana.${base}";
+
+
+  vaultServer 		= 	"http://localhost:${config.services.vaultwarden.config.ROCKET_PORT}";
+  searchServer 		= 	"http://localhost:${config.services.searx.settings.server.port}";
+  zncServer		=	"https://localhost:${ toString config.services.znc.config.Listener.web.Port}";
+  grampsServer 		= 	"http://localhost:8300";
+  immichServer		= 	"http://localhost:${ toString config.services.immich.port}";
+  lanraragiServer 	= 	"http://localhost:${ toString config.services.lanraragi.port}";
+  grafanaServer		= 	"http://localhost:${ toString config.services.grafana.settings.server.http_port}";
+
 
   customCaddy =
     (pkgs.caddy.withPlugins {
@@ -40,7 +45,6 @@
              	X-Frame-Options SAMEORIGIN
           	-Server
 
-	  	?Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;"
 		Permissions-Policy "accelerometer=(),camera=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),payment=(),usb=()"
 
 		Referrer-Policy "same-origin"
@@ -69,6 +73,13 @@
     	respond "Your request was blocked. Request ID: {http.request.header.x-request-id}"
     }
   '';
+
+  caddyCSP = ''
+  	header / {
+	  	Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:; media-src 'self' data:;"
+	}
+  '';
+
   blockEngines = ''header X-Robots-Tag "noindex, nofollow, noarchive, nositelinkssearchbox, nosnippet, notranslate, noimageindex" '';
 in {
   age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
@@ -85,6 +96,7 @@ in {
     virtualHosts."${base}" = {
       extraConfig = ''
           ${commonCaddy}
+	  ${caddyCSP}
 
           header Content-Type text/html
 
@@ -99,6 +111,7 @@ in {
               <li><a href="https://${grampsDomain}">Gramps</a></li>
               <li><a href="https://${immichDomain}">Immich</a></li>
               <li><a href="https://${lanraragiDomain}">LANraragi</a></li>
+              <li><a href="https://${grafanaDomain}">Grafana</a></li>
             </ul>
           </body>
         </html>
@@ -109,6 +122,7 @@ in {
     virtualHosts."${searchDomain}" = {
       extraConfig = ''
         ${commonCaddy}
+	${caddyCSP}
               	route {
         		#     		basic_auth {
         		#     			pet {env.HTTP_PASS}
@@ -127,7 +141,8 @@ in {
       extraConfig = ''
               ${commonCaddy}
 	      ${blockEngines}
-
+	      ${caddyCSP}
+	
               reverse_proxy ${grampsServer} {
                	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
                	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
@@ -142,7 +157,7 @@ in {
 	${blockEngines}
 
           header / {
-		Content-Security-Policy "script-src 'self' 'sha256-wLJx7Ib2MaFxhBI5LpH40lcj0iaiViv8uXI1T1qeKBw=' 'sha256-MtXRGQMzwmzbE87XBKi1xn/0fTPqdszSyfdSGmfvH7c='; upgrade-insecure-requests; default-src 'none'; media-src 'self' data:; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;"
+		Content-Security-Policy "script-src 'self' 'sha256-wLJx7Ib2MaFxhBI5LpH40lcj0iaiViv8uXI1T1qeKBw=' 'sha256-MtXRGQMzwmzbE87XBKi1xn/0fTPqdszSyfdSGmfvH7c='; upgrade-insecure-requests; default-src 'none';  style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;"
 	}
         reverse_proxy ${immichServer} {
                 header_up X-Real-IP {remote_host}
@@ -153,7 +168,8 @@ in {
     virtualHosts."${zncDomain}" = {
       extraConfig = ''
                ${commonCaddy}
-	      ${blockEngines}
+	       ${blockEngines}
+	       ${caddyCSP}
 
         reverse_proxy ${zncServer} {
                	transport http {
@@ -170,7 +186,21 @@ in {
       extraConfig = ''
         ${commonCaddy}
 	${blockEngines}
+	${caddyCSP}
+
         reverse_proxy ${vaultServer} {
+        	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+        	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                }
+      '';
+    };
+
+    virtualHosts."${grafanaDomain}" = {
+      extraConfig = ''
+        ${commonCaddy}
+	${blockEngines}
+
+        reverse_proxy ${grafanaServer} {
         	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
         	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                 }
@@ -200,6 +230,8 @@ in {
       extraConfig = ''
                ${commonCaddy}
 	       ${blockEngines}
+	       ${caddyCSP}
+
 	       root * /data/webDAV
               	route {
 			request_body {

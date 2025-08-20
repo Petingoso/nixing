@@ -7,7 +7,7 @@
 }: {
   age.secrets.searx.file = "${self}/secrets/searx.age";
   services.searx = {
-  package = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system}.searxng;
+    package = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system}.searxng;
     enable = true;
     redisCreateLocally = true;
     limiterSettings = {

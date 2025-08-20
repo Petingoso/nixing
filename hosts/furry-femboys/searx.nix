@@ -9,6 +9,7 @@
     redisCreateLocally = true;
     limiterSettings = {
     	botdetection.ip_limit.link_token = true;
+        botdetection.ip_lists.pass_searxng_org = true;
     };
 
     settings = {

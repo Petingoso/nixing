@@ -40,7 +40,7 @@
              	X-Frame-Options SAMEORIGIN
           	-Server
 
-	  	Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;"
+	  	?Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;"
 		Permissions-Policy "accelerometer=(),camera=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),payment=(),usb=()"
 
 		Referrer-Policy "same-origin"
@@ -141,6 +141,9 @@ in {
         ${commonCaddy}
 	${blockEngines}
 
+          header / {
+		Content-Security-Policy "script-src 'self' 'sha256-wLJx7Ib2MaFxhBI5LpH40lcj0iaiViv8uXI1T1qeKBw=' 'sha256-MtXRGQMzwmzbE87XBKi1xn/0fTPqdszSyfdSGmfvH7c='; upgrade-insecure-requests; default-src 'none'; media-src 'self' data:; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;"
+	}
         reverse_proxy ${immichServer} {
                 header_up X-Real-IP {remote_host}
               }
@@ -178,6 +181,10 @@ in {
       extraConfig = ''
         ${commonCaddy}
 	${blockEngines}
+
+          header / {
+		Content-Security-Policy "script-src 'self' 'sha256-OoQDL/bJ+0U5DRG/Gf2marQS7MdpsFwngCTUn61MxaA=' 'sha256-jzA8gqwuAq1IPzPXubmE5UrqEzlyxTdoeqlnuAyvk7s=' 'sha256-oJpMedizNrNIoquZUwAwHozCuYKWafI5OGKUO9nKKeI=' 'sha256-cjKAS7/CsK0UyncftDm+x0qm0vMPHEgmgRx0WQqXhuk=' 'sha256-C/xWb5FNATN+WzvVANy8grg+8qNBA2hsUbeBUoaVkxM=' 'sha256-4Wblzyn/O+t8YxfjfxLi52hbjISrI+Q6uAyFekagFkM=' 'sha256-C/xWb5FNATN+WzvVANy8grg+8qNBA2hsUbeBUoaVkxM='; upgrade-insecure-requests; default-src 'none'; media-src 'self' data:; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self' data:; frame-ancestors 'self'; base-uri 'self'; connect-src 'self' https://api.github.com/repos/difegue/lanraragi/ ; img-src * data:; frame-src https:;"
+	}
 
         request_body {
         	max_size 200MB

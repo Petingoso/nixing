@@ -28,7 +28,7 @@
 
    system.autoUpgrade = {
    	enable = true;
-   	flake = "path:/home/pet/flake#furry_femboys";
+   	flake = "path:/home/pet/flake";
         flags = ["--update-input" "nixpkgs-unstable-latest" "--no-write-lock-file" "-L"];
         dates = "daily";
         allowReboot = true;

@@ -9,6 +9,7 @@ _: {
     ./hardware-configuration.nix
     ./immich.nix
     ./lanraragi.nix
+    ./metrics.nix
     ./pi400.nix
     ./system.nix
     ./searx.nix

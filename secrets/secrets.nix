@@ -17,6 +17,7 @@ in {
   "caddy-env.age".publicKeys = personal;
   "cloudflare.age".publicKeys = personal;
   "fail2ban-env.age".publicKeys = personal;
+  "grafana-password.age".publicKeys = personal;
   "gramps-env.age".publicKeys = personal;
   "lanraragi.age".publicKeys = personal;
   "searx.age".publicKeys = personal;

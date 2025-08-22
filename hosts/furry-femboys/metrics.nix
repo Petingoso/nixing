@@ -1,10 +1,11 @@
 {
   self,
   config,
+  pkgs,
   ...
 }: {
-  age.secrets.grafana-password = {
-    file = "${self}/secrets/grafana-password.age";
+  age.secrets.grafana-env = {
+    file = "${self}/secrets/grafana-env.age";
     owner = "grafana";
   };
 
@@ -12,6 +13,8 @@
   	file = "${self}/secrets/searx-prometheus.age";
 	owner = "prometheus";
   };
+
+  systemd.services.grafana.serviceConfig.EnvironmentFile = config.age.secrets.grafana-env.path;
 
   services.grafana = {
     enable = true;
@@ -24,7 +27,15 @@
     };
 
     settings.security = {
-      admin_password = "$__file{${config.age.secrets.grafana-password.path}}";
+      admin_password = "$__env{GRAFANA_PASSWORD}";
+    };
+
+    settings.smtp = {
+    	enabled = true;
+    	user = "$__env{SMTP_USER}";
+    	password = "$__env{SMTP_PASSWORD}";
+    	host = "$__env{SMTP_HOST}";
+    	from_address = "$__env{SMTP_FROM}";
     };
 
     provision = {
@@ -41,10 +52,16 @@
     };
   };
 
+
   services.prometheus.exporters.node = {
     enable = true;
     port = 9999;
     enabledCollectors = ["systemd"];
+  };
+
+  services.prometheus.exporters.smartctl = {
+    enable = true;
+    port = 9998;
   };
 
   services.prometheus = {
@@ -57,6 +74,16 @@
           {
             targets = [
               "localhost:${toString config.services.prometheus.exporters.node.port}"
+            ];
+          }
+        ];
+      }
+      {
+        job_name = "smartctl";
+        static_configs = [
+          {
+            targets = [
+              "localhost:${toString config.services.prometheus.exporters.smartctl.port}"
             ];
           }
         ];

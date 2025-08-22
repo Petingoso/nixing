@@ -3,26 +3,35 @@
   config,
   pkgs,
   inputs,
+  lib,
   ...
 }: {
   age.secrets.searx.file = "${self}/secrets/searx.age";
+  age.secrets.searx-prometheus.file = "${self}/secrets/searx-prometheus.age";
+  systemd.tmpfiles.rules = [
+    "L+ /run/searx/limiter.toml - - - - /etc/searxng/limiter.toml"
+  ];
+
   services.searx = {
+    environmentFile = config.age.secrets.searx.path;
     package = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system}.searxng;
     enable = true;
     redisCreateLocally = true;
     limiterSettings = {
-    	botdetection.ip_limit.link_token = true;
-        botdetection.ip_lists.pass_searxng_org = true;
+      botdetection.ip_limit.filter_link_local = false;
+      botdetection.ip_limit.link_token = true;
+      botdetection.ip_lists.pass_searxng_org = true;
+      botdetection.ip_lists.pass_ip = ["127.0.0.1/32"];
     };
 
     settings = {
       server = {
         base_url = "https://search.undertale.uk";
-        bind_address = "::1";
+        bind_address = "localhost";
         port = "8100";
         public_instance = true;
-        secret_key = config.age.secrets.searx.path;
-	limiter = true;
+        # secret_key = ""; in SEARXNG_SECRET
+        limiter = true;
       };
 
       general = {
@@ -32,6 +41,9 @@
         contact_url = false;
         privacypolicy_url = false;
         enable_metrics = true;
+
+        #NOTE: BAD PRACTICE but it isnt that critical to be in nix store
+        open_metrics = lib.removeSuffix "\n"( builtins.readFile config.age.secrets.searx-prometheus.path);
       };
       ui = {
         default_locale = "en";
@@ -52,7 +64,7 @@
       enabled_plugins = [
         "Basic Calculator"
         "Tor check plugin"
-	"Self Information"
+        "Self Information"
         "Unit converter plugin"
         "Tracker URL remover"
       ];

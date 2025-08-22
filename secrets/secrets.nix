@@ -21,6 +21,7 @@ in {
   "gramps-env.age".publicKeys = personal;
   "lanraragi.age".publicKeys = personal;
   "searx.age".publicKeys = personal;
+  "searx-prometheus.age".publicKeys = personal;
   "vaultwarden-token.age".publicKeys = personal;
   "wireguard.age".publicKeys = Wired ++ HeadEmpty;
   "znc.nix.age".publicKeys = personal;

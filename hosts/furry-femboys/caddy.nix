@@ -36,16 +36,17 @@
   commonCaddy = ''
            encode zstd gzip
 
-            header /* {
+            header {
 
-		Strict-Transport-Security "max-age=15768000";
+	    	Strict-Transport-Security max-age=15768000;
                	X-Content-Type-Options nosniff
                	X-Frame-Options SAMEORIGIN
+
+    		Referrer-Policy "same-origin"
+    		Permissions-Policy "accelerometer=(),camera=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),payment=(),usb=()"
             	-Server
 
-    Permissions-Policy "accelerometer=(),camera=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),payment=(),usb=()"
 
-    Referrer-Policy "same-origin"
             }
 
             tls {
@@ -73,7 +74,7 @@
   '';
 
   caddyCSP = ''
-     	header / {
+     	header {
       	Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:; media-src 'self' data:;"
     }
   '';
@@ -83,15 +84,18 @@ in {
   age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
 
   networking.firewall.allowedTCPPorts = [80 443];
+  networking.firewall.allowedUDPPorts = [443];
   services.caddy = {
     enable = true;
     package = customCaddy;
     environmentFile = config.age.secrets.caddy-env.path;
     globalConfig = ''
-         	metrics {
-      	per_host
+    	# experimental_http3
+
+        metrics {
+      		per_host
       }
-           # order coraza_waf first
+      # order coraza_waf first
     '';
 
     virtualHosts."${base}" = {
@@ -123,7 +127,7 @@ in {
     virtualHosts."${searchDomain}" = {
       extraConfig = ''
                ${commonCaddy}
-        ${caddyCSP}
+               ${caddyCSP}
                      	route {
                		#     		basic_auth {
                		#     			pet {env.HTTP_PASS}

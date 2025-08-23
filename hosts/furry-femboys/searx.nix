@@ -30,6 +30,7 @@
         bind_address = "localhost";
         port = "8100";
         public_instance = true;
+	image_proxy = true;
         # secret_key = ""; in SEARXNG_SECRET
         limiter = true;
       };

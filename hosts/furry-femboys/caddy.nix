@@ -36,9 +36,9 @@
   commonCaddy = ''
            encode zstd gzip
 
-            header / {
+            header /* {
 
-     	Strict-Transport-Security "max-age=63072000"
+		Strict-Transport-Security "max-age=15768000";
                	X-Content-Type-Options nosniff
                	X-Frame-Options SAMEORIGIN
             	-Server

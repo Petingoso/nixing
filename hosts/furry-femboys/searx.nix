@@ -1,11 +1,13 @@
 {
   self,
   config,
-  pkgs,
   inputs,
   lib,
+  pkgs,
   ...
-}: {
+}: let
+  pkgs' = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system};
+in {
   age.secrets.searx.file = "${self}/secrets/searx.age";
   age.secrets.searx-prometheus.file = "${self}/secrets/searx-prometheus.age";
   systemd.tmpfiles.rules = [
@@ -14,7 +16,7 @@
 
   services.searx = {
     environmentFile = config.age.secrets.searx.path;
-    package = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system}.searxng;
+    package = pkgs.callPackage "${self}/pkgs/searx.nix" {};
     enable = true;
     redisCreateLocally = true;
     limiterSettings = {
@@ -30,7 +32,7 @@
         bind_address = "localhost";
         port = "8100";
         public_instance = true;
-	image_proxy = true;
+        image_proxy = true;
         # secret_key = ""; in SEARXNG_SECRET
         limiter = true;
       };
@@ -44,7 +46,7 @@
         enable_metrics = true;
 
         #NOTE: BAD PRACTICE but it isnt that critical to be in nix store
-        open_metrics = lib.removeSuffix "\n"( builtins.readFile config.age.secrets.searx-prometheus.path);
+        open_metrics = lib.removeSuffix "\n" (builtins.readFile config.age.secrets.searx-prometheus.path);
       };
       ui = {
         default_locale = "en";

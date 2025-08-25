@@ -4,7 +4,11 @@
   self,
   ...
 }: {
-  age.secrets.wireguard.file = "${self}/secrets/wireguard.age";
+ age.secrets.wireguard = {
+    file = "${self}/secrets/wireguard.age";
+    owner = config.users.users.systemd-network.name;
+    mode = "400";
+  };
 
   networking.firewall = let
     port = "34266";

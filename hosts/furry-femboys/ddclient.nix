@@ -4,8 +4,10 @@
   self,
   ...
 }: {
-  age.identityPaths = ["/home/pet/.ssh/id_ed25519"];
-  age.secrets.cloudflare.file = "${self}/secrets/cloudflare.age";
+  age.secrets.cloudflare = {
+  	file = "${self}/secrets/cloudflare.age";
+  };
+
   services.ddclient = {
     enable = true;
     domains = ["undertale.uk"];

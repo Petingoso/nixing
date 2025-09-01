@@ -8,7 +8,7 @@
     createHome = true;
   };
 
-  services.postgresql.package = pkgs.postgresql_16;
+  # services.postgresql.package = pkgs.postgresql_16;
   services.immich = {
     enable = true;
     port = 8400;

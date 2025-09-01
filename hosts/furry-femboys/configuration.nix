@@ -27,7 +27,7 @@
   };
 
   system.autoUpgrade = {
-    enable = true;
+    enable = false;
     flake = "path:/home/pet/flake";
     #NOTE: Impure for searx password workaround
     flags = ["--update-input" "nixpkgs-unstable-latest" "--no-write-lock-file" "-L" "--impure"];
@@ -40,5 +40,7 @@
   users.users.pet.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5 petingavasco@protonmail.com"
   ];
+
+  age.identityPaths = [ "/home/pet/.ssh/id_ed25519"];
   system.stateVersion = "25.11";
 }

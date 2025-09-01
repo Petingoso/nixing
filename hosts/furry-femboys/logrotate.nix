@@ -10,6 +10,7 @@
     	"d /data/logs/caddy 0755 caddy caddy - -"
   	];
 
+  systemd.services.logrotate.serviceConfig.ExecStopPost = "/usr/bin/env systemctl restart caddy";
     services.logrotate = {
     	enable = true;
 	settings = {

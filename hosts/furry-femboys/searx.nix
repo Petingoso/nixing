@@ -9,14 +9,17 @@
   pkgs' = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system};
 in {
   age.secrets.searx.file = "${self}/secrets/searx.age";
-  age.secrets.searx-prometheus.file = "${self}/secrets/searx-prometheus.age";
+  age.secrets.searx-prometheus = {
+  	file = "${self}/secrets/searx-prometheus.age";
+	mode = "444";
+  };
   systemd.tmpfiles.rules = [
     "L+ /run/searx/limiter.toml - - - - /etc/searxng/limiter.toml"
   ];
 
   services.searx = {
     environmentFile = config.age.secrets.searx.path;
-    package = pkgs.callPackage "${self}/pkgs/searx.nix" {};
+    package = pkgs'.callPackage "${self}/pkgs/searx.nix" {};
     enable = true;
     redisCreateLocally = true;
     limiterSettings = {

@@ -24,6 +24,7 @@
     "/data/immich/library"
     "/data/immich/upload"
     "/data/lanraragi/content"
+    "/data/webDAV"
     ];
     doInit = true;
     repo = "/backups/repo";

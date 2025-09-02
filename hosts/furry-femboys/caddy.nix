@@ -161,9 +161,9 @@ in {
                ${commonCaddy}
         ${blockEngines}
 
-                 header / {
-        	Content-Security-Policy "script-src 'self' 'sha256-wLJx7Ib2MaFxhBI5LpH40lcj0iaiViv8uXI1T1qeKBw=' 'sha256-MtXRGQMzwmzbE87XBKi1xn/0fTPqdszSyfdSGmfvH7c='; upgrade-insecure-requests; default-src 'none';  style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;"
-        }
+        #          header / {
+        # 	Content-Security-Policy "script-src 'self' 'sha256-wLJx7Ib2MaFxhBI5LpH40lcj0iaiViv8uXI1T1qeKBw=' 'sha256-MtXRGQMzwmzbE87XBKi1xn/0fTPqdszSyfdSGmfvH7c='; upgrade-insecure-requests; default-src 'none';  style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:;"
+        # }
                reverse_proxy ${immichServer} {
                        header_up X-Real-IP {remote_host}
                      }

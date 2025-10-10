@@ -39,6 +39,9 @@ in {
     qt.enable = true;
   };
 
+  services.desktopManager.cosmic.enable = true;
+
+
   age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
   age.secrets.test.file = ../../secrets/test.age;
   system.stateVersion = "23.11";

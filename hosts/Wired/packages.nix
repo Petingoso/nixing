@@ -42,13 +42,13 @@ in {
     prismlauncher
     qalculate-gtk
     steamtinkerlaunch
-    stremio
+    # stremio
     texliveMedium
     tor-browser
     ungoogled-chromium
     wineWowPackages.waylandFull
     youtube-music
-    miru
+    # miru
     pcloud
     obsidian
 

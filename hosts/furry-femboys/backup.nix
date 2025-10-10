@@ -19,10 +19,7 @@
     paths = [
     "/data/backup/gramps"
     "/data/backup/vaultwarden"
-    "/data/immich/backups"
-    "/data/immich/profile"
-    "/data/immich/library"
-    "/data/immich/upload"
+    "/data/immich/"
     "/data/lanraragi/content"
     "/data/webDAV"
     ];

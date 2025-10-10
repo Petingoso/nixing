@@ -67,6 +67,9 @@ in {
         ban_time_on_fail = 5;
         max_ban_time_on_fail = 120;
       };
+      engines = {
+      	
+      };
       enabled_plugins = [
         "Basic Calculator"
         "Tor check plugin"

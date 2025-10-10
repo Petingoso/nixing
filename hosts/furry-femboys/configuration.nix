@@ -43,4 +43,13 @@
 
   age.identityPaths = [ "/home/pet/.ssh/id_ed25519"];
   system.stateVersion = "25.11";
+
+  networking.tempAddresses = "disabled";
+  boot.kernel.sysctl = {
+  "net.ipv6.conf.all.accept_ra" = 0;
+  "net.ipv6.conf.all.autoconf" = 0;
+  "net.ipv6.conf.end0.accept_ra" = 0;
+};
+
+
 }

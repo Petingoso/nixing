@@ -1,9 +1,9 @@
 _: {
   imports = [
     ./firefox
-    # ./kitty
+    ./kitty
     # ./swaync
-    # ./themes
+    ./themes
     ./vesktop
     ./vscodium
     # ./waybar

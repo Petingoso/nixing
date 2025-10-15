@@ -15,10 +15,22 @@
     };
 
     # common
+
+    #hardware support
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    #running dynamic apps easily
     nix-alien.url = "github:thiagokokada/nix-alien";
+
+    #secret management
     agenix.url = "github:ryantm/agenix";
+
+    #vscode extensions
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
+    #theme generation
+    matugen.url = "github:/InioX/Matugen";
+
   };
 
   outputs = {self, ...} @ inputs: {

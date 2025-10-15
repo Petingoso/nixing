@@ -3,15 +3,22 @@
   pkgs,
   config,
   ...
-}: {
-  options.mystuff.programs = {
+}:
+let
+  cfg = config.custom.programs.kitty;
+  inherit (config.custom) username enableHM;
+
+  inherit (lib.modules) mkIf;
+  inherit (lib.options) mkEnableOption;
+in {
+  options.custom.programs = {
     kitty.enable = lib.mkEnableOption "kitty";
   };
 
-  config = lib.mkIf config.mystuff.programs.kitty.enable {
-    home-manager.users.${config.mystuff.other.system.username} = {
+  # NOTE: Needs home manager
+  config = lib.mkIf cfg.enable && enableHM {
+    home-manager.users.${username} = {
       programs.kitty.enable = true;
-      programs.kitty.extraConfig = "include /tmp/themes/kitty/kitty_theme";
 
       programs.kitty = {
         settings = {

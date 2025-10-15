@@ -75,14 +75,14 @@ in
   };
   teto = mkHost {
     channel = "unstable";
-    hostname = "Wired";
+    hostname = "teto";
     hostDir = ./teto;
     enableHM = true;
     extraModules = (import ../modules/desktop { }).imports;
   };
   furry-femboys = mkHost {
     channel = "stable";
-    hostname = "Wired";
+    hostname = "furry-femboys";
     hostDir = ./furry-femboys;
     enableHM = false;
     system = "aarch64-linux";

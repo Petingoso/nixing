@@ -14,8 +14,10 @@ let
   inherit (lib.options) mkEnableOption;
   xdg = config.home-manager.users.${username}.xdg;
   themePath = "$HOME/.cache/";
-  matugenCommand=''${config.programs.matugen.package}/bin/matugen image "${themePath}/wallpaper" \
-    --config ${config.programs.matugen.theme.files}/matugen-config.toml'';
+  matugenCommand = ''
+    ${config.programs.matugen.package}/bin/matugen image "${themePath}/wallpaper" \
+    --config ${config.programs.matugen.theme.files}/matugen-config.toml
+  '';
 
   setupScript = ''
     #find the first wallpaper (placeholder)
@@ -48,10 +50,20 @@ in
           kitty = {
             input_path = ./matugen-themes/templates/kitty-colors.conf;
             output_path = "${themePath}/kitty.conf";
+            post_hook = "pkill -SIGUSR1 kitty";
           };
-          gtk = {
+          gtk3 = {
             input_path = ./matugen-themes/templates/gtk-colors.css;
-            output_path = "${themePath}/gtk.css";
+            output_path = "${xdg.configHome}/gtk-3.0/gtk.css";
+            post_hook = "gsettings set org.gnome.desktop.interface gtk-theme " "; gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3-{{mode}}"; # TODO: make this cleaner
+          };
+          gtk4 = {
+            input_path = ./matugen-themes/templates/gtk-colors.css;
+            output_path = "${xdg.configHome}/gtk-4.0/gtk.css";
+          };
+          qt = {
+            input_path = ./matugen-themes/templates/qtct-colors.conf;
+            output_path = "${themePath}/qt.conf";
           };
           nvim = {
             input_path = ./matugen-themes/templates/nvim.lua;
@@ -75,6 +87,13 @@ in
         ]
       );
 
+      # qt
+      xdg.configFile."qt6ct/qt6ct.conf" = ''
+        [Appearance]
+        color_scheme_path=${themePath}/qt.conf
+        custom_palette=true
+      '';
+
       # kitty
       programs.kitty.extraConfig = mkIf cfg'.kitty.enable "include ${themePath}/kitty.conf";
 
@@ -87,7 +106,7 @@ in
         Unit = {
           Description = "Setup theme files for programs";
         };
-        wantedBy = ["graphical.target"];
+        wantedBy = [ "graphical.target" ];
         script = setupScript;
         reload = matugenCommand;
       };

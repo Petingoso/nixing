@@ -74,6 +74,7 @@ in {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe" # teto
   ];
 
+  users.users.petnix.extraGroups = ["kvm"];
   # services.printing.enable = true;
   # services.samba.enable = true;
   # services.printing.drivers = [

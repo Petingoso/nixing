@@ -1,6 +1,6 @@
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
-local lspconfig = vim.lsp.config
+local lspconfig = vim.lsp
 
 vim.diagnostic.config({
 	virtual_text = true, -- inline message
@@ -38,15 +38,19 @@ local function which_python()
 end
 
 -- nvim-cmp
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities(lspconfig.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- List of servers you want to enable via default config
-local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor", "tinymist", "pylsp", "jdtls" }
+local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor", "tinymist", "pylsp", "java_language_server" }
 
 -- Overrides per-server
+--
 local server_overrides = {
-	-- e.g. tinymist = { settings = { formatterMode = "typstyle" } },
+	["java_language_server"] = {
+		cmd = { "java-language-server"}
+	}
+-- 	-- e.g. tinymist = { settings = { formatterMode = "typstyle" } },
 }
 
 for _, lsp_server in ipairs(servers) do
@@ -64,20 +68,21 @@ for _, lsp_server in ipairs(servers) do
 		end
 	end
 
-	vim.lsp.config(lsp_server, config)
-	vim.lsp.enable(lsp_server)
+	lspconfig.config(lsp_server, config)
+	lspconfig.enable(lsp_server)
 end
 
 -- For servers whose default root logic is “bad”, override it:
 local function setup_root(server)
-	vim.lsp.config(server, {
+	lspconfig.config(server, {
 		root_markers = { ".git" },
 
 		-- define root_dir function to override default behavior
 		root_dir = function(bufnr, on_dir)
 			local name = vim.api.nvim_buf_get_name(bufnr)
 			-- Try root_pattern via the built‑in util
-			local marker_root = vim.lsp.util.root_pattern(".git")(name)
+			local root_patterns = { ".git" }
+			local marker_root = vim.fs.dirname(vim.fs.find(root_patterns, { upward = true })[1])
 			if marker_root then
 				on_dir(marker_root)
 			else
@@ -85,7 +90,7 @@ local function setup_root(server)
 			end
 		end,
 	})
-	vim.lsp.enable(server)
+	lspconfig.enable(server)
 end
 
 setup_root("phpactor")

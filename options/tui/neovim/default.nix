@@ -42,7 +42,7 @@
           phpactor
           tinymist
           nil
-          jdt-language-server
+          java-language-server
         ];
       };
 

@@ -21,9 +21,8 @@
     };
 
     gestures = {
-      gesture = [
-        "3,horizontal,workspace"
-      ];
+      workspace_swipe = true;
+      workspace_swipe_fingers = 3;
     };
 
     general = {

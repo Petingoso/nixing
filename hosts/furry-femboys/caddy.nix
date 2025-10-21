@@ -27,11 +27,16 @@
   customCaddy =
     (pkgs.caddy.withPlugins {
       # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
-      plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"];
-      hash = "sha256-rHb1iq+cwcsH9KgmQf47tqtteM38EjDOksIb/UKIZ3U=";
-    }).overrideAttrs (finalAttr: prevAttrs: {
-      doInstallCheck = false; # until https://github.com/nixos/nixpkgs/issues/430090 gets merged
-    });
+      # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"];
+      plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" 
+      		 "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90" 
+		 "github.com/mholt/caddy-ratelimit@v0.0.0-20250915152450-04ea34edc0c4"];
+      hash = "sha256-TEnFZhxVlFOxo5VlgGzehCN5EKvkwZ3JTaBUSLy3h1A=";
+      # hash = lib.fakeHash;
+      });
+    # }).overrideAttrs (finalAttr: prevAttrs: {
+    #   doInstallCheck = false; # until https://github.com/nixos/nixpkgs/issues/430090 gets merged
+    # });
 
   commonCaddy = ''
            encode zstd gzip
@@ -129,9 +134,23 @@ in {
                ${commonCaddy}
                ${caddyCSP}
                      	route {
-               		#     		basic_auth {
-               		#     			pet {env.HTTP_PASS}
-               		# }
+                   		basic_auth {
+                   			pet {env.HTTP_PASS}
+             		}
+
+				rate_limit {
+					zone searx {
+						match {
+							path /
+						}
+						key    "{http.request.remote.host}"
+						window 1m
+						events 50
+					}
+
+					log_key
+					sweep_interval 5m
+				}
 
                             	reverse_proxy ${searchServer} {
                              		header_up X-Real-IP {remote_host}

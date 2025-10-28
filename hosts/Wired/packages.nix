@@ -42,23 +42,23 @@ in {
     prismlauncher
     qalculate-gtk
     steamtinkerlaunch
-    stremio
+    # stremio
     texliveMedium
     tor-browser
     ungoogled-chromium
     wineWowPackages.waylandFull
     youtube-music
-    miru
+    # miru
     pcloud
+    obsidian
 
-    (callPackage "${self}/pkgs/olympus/package.nix" {celesteWrapper = pkgs.steam-run;})
+    (olympus.override {celesteWrapper = steam-run;})
     (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
     ludusavi
     xdg-utils
     gamescope
     r2modman
     config.boot.kernelPackages.vhba
-
   ];
   programs.steam.enable = true;
   programs.cdemu.enable = true;

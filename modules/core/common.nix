@@ -6,6 +6,7 @@
     lynx
     nh
     alejandra
+    ranger
   ];
 
   environment.sessionVariables = {

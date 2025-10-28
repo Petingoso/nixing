@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.mystuff.services.networkmanager;
@@ -26,8 +27,8 @@ in {
       networkmanager = {
         enable = true;
         wifi.powersave = cfg.powersave;
+        plugins = [pkgs.networkmanager-openvpn];
       };
     };
-
   };
 }

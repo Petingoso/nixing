@@ -15,7 +15,7 @@
       programs.firefox = {
         enable = true;
 
-        package = pkgs.wrapFirefox pkgs.firefox-esr-128-unwrapped {
+        package = pkgs.wrapFirefox pkgs.firefox-esr-140-unwrapped {
           extraPolicies = {
             CaptivePortal = false;
             DisableFirefoxStudies = true;
@@ -81,10 +81,10 @@
               "SearX" = {
                 urls = [
                   {
-                    template = builtins.readFile(./search_url.txt);
+                    template = "https://search.undertale.uk/search?q={searchTerms}";
                   }
                 ];
-                icon = "https://searx.be/static/themes/oscar/img/favicon.png";
+                icon = "https://search.undertale.uk/static/themes/oscar/img/favicon.png";
                 updateInterval = 24 * 60 * 60 * 1000;
               };
               "Nix Packages" = {
@@ -131,18 +131,27 @@
           extraConfig = lib.strings.concatStrings [
             "${builtins.readFile (fetchGit {
                 url = "https://github.com/arkenfox/user.js";
-                rev = "f906f7f3b41fe3f6aaa744980431f4fdcd086379"; #128.0
+                rev = "3d76c74c80485931425464fec0e59d6cb461677a"; #135.0
               }
               + "/user.js")}\n"
 
             ''
-                user_pref("browser.search.suggest.enabled",true);
-                user_pref("privacy.cpd.history" , false);
-              user_pref("privacy.clearOnShutdown_v2.historyFormDataAndDownloads", false);
-                user_pref("privacy.clearOnShutdown.history" , false);
-                user_pref("browser.privatebrowsing.autostart" , false);
-                user_pref("places.history.enabled" , true);
-                user_pref("keyword.enabled" , true);
+               user_pref("browser.search.suggest.enabled",true);
+               user_pref("privacy.cpd.history" , false);
+               user_pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", false);
+               user_pref("privacy.clearOnShutdown_v2.downloads", false);
+               user_pref("privacy.clearHistory.browsingHistoryAndDownloads", false);
+               user_pref("privacy.clearSiteData.browsingHistoryAndDownloads", false);
+               user_pref("browser.privatebrowsing.autostart" , false);
+               user_pref("places.history.enabled" , true);
+               user_pref("keyword.enabled" , true);
+
+              user_pref("browser.newtabpage.activity-stream.discoverystream.reportAds.enabled", false);
+              user_pref("browser.newtabpage.activity-stream.telemetry.privatePing.enabled", false);
+              user_pref("extensions.dataCollectionPermissions.enabled", false);
+              user_pref("privacy.antitracking.isolateContentScriptResources", false);
+              user_pref("privacy.baselineFingerprintingProtection", true);
+              user_pref("toolkit.aboutLogging.uploadProfileToCloud", false);
             ''
           ];
           userChrome = ''

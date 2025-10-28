@@ -22,7 +22,7 @@
 
     gestures = {
       workspace_swipe = true;
-      workspace_swipe_invert = true;
+      workspace_swipe_fingers = 3;
     };
 
     general = {
@@ -58,14 +58,10 @@
     misc.vfr = true;
 
     windowrule = [
-      "opacity 0.95,^(discord)$"
-      "opacity 1,^(NoteKit)$"
-      "tile,^(huiontablet)$"
-      "float,qalculate"
-      "float,Rofi"
-      "float,ncmpcpp"
-      "float,viewnior"
-      "float,feh"
+      "opacity 0.95,title:^(discord)$"
+      "tile,title:^(huiontablet)$"
+      "float,title:^(qalculate)"
+      "float,title:^(Rofi)"
     ];
 
     windowrulev2 = [

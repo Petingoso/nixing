@@ -42,6 +42,7 @@
           phpactor
           tinymist
           nil
+          java-language-server
         ];
       };
 

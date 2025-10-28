@@ -6,7 +6,7 @@ local function check_formatter_exit_code(code, stderr)
 
 	if not success then
 		vim.schedule(function()
-			logger:warn(("failed to run formatter: %s"):format(stderr))
+			vim.notify(("failed to run formatter: %s"):format(stderr), vim.log.levels.WARN)
 		end)
 	end
 
@@ -27,12 +27,9 @@ end
 local special_sources = {
 	null_ls.builtins.formatting.clang_format.with({
 		extra_args = {
-			'--style="{BasedOnStyle: LLVM, '
-				.. "AllowShortFunctionsOnASingleLine: All, "
-				.. "IndentWidth: 4, "
-				.. 'TabWidth: 4}"',
+			"--style={BasedOnStyle: LLVM, AllowShortFunctionsOnASingleLine: All, IndentWidth: 4, TabWidth: 4}",
 		},
-		check_exit_code = check_formatter_exit_code, -- Apply check function
+		check_exit_code = check_formatter_exit_code,
 	}),
 }
 

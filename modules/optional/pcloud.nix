@@ -11,7 +11,7 @@
       sha256 = "sha256-3I089F2kgGMidR4hntxz5CKzZh5xoiUwUsUwLFUEXqE=";
     };
   });
-  pcloudFixes = pkgs.pcloud.overrideAttrs (_finalAttrs:previousAttrs: {
+  pcloudFixes = pkgs.pcloud.overrideAttrs (_finalAttrs: previousAttrs: {
     nativeBuildInputs = previousAttrs.nativeBuildInputs ++ [patchelfFixes];
   });
 in {

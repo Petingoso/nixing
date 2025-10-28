@@ -6,15 +6,17 @@
 }: let
   inherit (config.mystuff.other.system) username;
 in {
-  programs.kdeconnect.enable = true;
-
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
   services = {
-      xserver = {
-        xkb.layout = "pt";
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
-      displayManager.gdm.autoSuspend = false;
+    xserver = {
+      xkb.layout = "pt";
     };
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    displayManager.gdm.autoSuspend = false;
   };
 
   environment.systemPackages = with pkgs.gnomeExtensions; [
@@ -26,7 +28,7 @@ in {
     mouse-follows-focus-2
   ];
 
-
+  programs.kdeconnect.enable = true;
   mystuff = {
     other.home-manager.enable = true;
     programs = {
@@ -68,7 +70,15 @@ in {
   services.fail2ban.enable = true;
 
   users.users.petnix.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5" # main
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe" # teto
   ];
+
+  users.users.petnix.extraGroups = ["kvm"];
+  # services.printing.enable = true;
+  # services.samba.enable = true;
+  # services.printing.drivers = [
+  #   pkgs.gutenprintBin
+  #   (pkgs.writeTextDir "share/cups/model/yourppd.ppd" (builtins.readFile ./xeroxdsi006.ppd))
+  # ];
 }

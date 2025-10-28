@@ -1,43 +1,56 @@
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
-local lspconfig = require("lspconfig")
+local lspconfig = vim.lsp
 
-local on_attach = function(_, bufnr)
-	-- to define small helper and utility functions so you don't have to repeat yourself
-	-- many times.
-	--
-	-- In this case, we create a function that lets us more easily define mappings specific
-	-- for LSP related items. It sets the mode, buffer and description for us each time.
-
-	-- Change diagnostic symbols in the gutter
-	local signs = { Error = "󰅚 ", Warn = " ", Hint = "󰌶 ", Info = " " }
-	for type, icon in pairs(signs) do
-		local hl = "DiagnosticSign" .. type
-		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-	end
-end
+vim.diagnostic.config({
+	virtual_text = true, -- inline message
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = "󰅚 ",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.HINT] = "󰌶 ",
+			[vim.diagnostic.severity.INFO] = " ",
+		},
+		-- Optionally highlight line numbers:
+		numhl = {
+			[vim.diagnostic.severity.ERROR] = "DiagnosticError",
+			[vim.diagnostic.severity.WARN] = "DiagnosticWarn",
+			[vim.diagnostic.severity.INFO] = "DiagnosticInfo",
+			[vim.diagnostic.severity.HINT] = "DiagnosticHint",
+		},
+	},
+	underline = true,
+	update_in_insert = false,
+	severity_sort = false,
+})
 
 local function which_python()
-	local f = io.popen("env which python", "r") or error("Fail to execute 'env which python'")
-	local s = f:read("*a") or error("Fail to read from io.popen result")
+	local f = io.popen("env which python", "r")
+	if not f then
+		error("Fail to execute 'env which python'")
+	end
+	local s = f:read("*a")
 	f:close()
+	if not s then
+		error("Fail to read from io.popen result")
+	end
 	return string.gsub(s, "%s+$", "")
 end
 
--- nvim-cmp supports additional completion capabilities
-local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- nvim-cmp
+local capabilities = require("cmp_nvim_lsp").default_capabilities(lspconfig.protocol.make_client_capabilities())
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
--- generic config
-local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor", "tinymist", "pylsp" }
+-- List of servers you want to enable via default config
+local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor", "tinymist", "pylsp", "java_language_server" }
 
--- server-specific overrides
+-- Overrides per-server
+--
 local server_overrides = {
-	-- tinymist = {
-	-- 	settings = {
-	-- 		formatterMode = "typstyle",
-	-- 	},
-	-- },
+	["java_language_server"] = {
+		cmd = { "java-language-server"}
+	}
+-- 	-- e.g. tinymist = { settings = { formatterMode = "typstyle" } },
 }
 
 for _, lsp_server in ipairs(servers) do
@@ -47,26 +60,37 @@ for _, lsp_server in ipairs(servers) do
 		flags = {},
 	}
 
-	-- Apply server-specific overrides if they exist
-	if server_overrides[lsp_server] then
-		for k, v in pairs(server_overrides[lsp_server]) do
+	-- apply overrides
+	local override = server_overrides[lsp_server]
+	if override then
+		for k, v in pairs(override) do
 			config[k] = v
 		end
 	end
 
-	-- print("Config for " .. lsp_server .. ":")
-	-- print(vim.inspect(config))
-
-	lspconfig[lsp_server].setup(config)
+	lspconfig.config(lsp_server, config)
+	lspconfig.enable(lsp_server)
 end
 
--- for servers with bad root_dir functions
+-- For servers whose default root logic is “bad”, override it:
 local function setup_root(server)
-	lspconfig[server].setup({
-		root_dir = function(fname)
-			return require("lspconfig/util").find_git_ancestor(fname) or vim.fn.getcwd()
+	lspconfig.config(server, {
+		root_markers = { ".git" },
+
+		-- define root_dir function to override default behavior
+		root_dir = function(bufnr, on_dir)
+			local name = vim.api.nvim_buf_get_name(bufnr)
+			-- Try root_pattern via the built‑in util
+			local root_patterns = { ".git" }
+			local marker_root = vim.fs.dirname(vim.fs.find(root_patterns, { upward = true })[1])
+			if marker_root then
+				on_dir(marker_root)
+			else
+				on_dir(vim.fn.getcwd())
+			end
 		end,
 	})
+	lspconfig.enable(server)
 end
 
 setup_root("phpactor")

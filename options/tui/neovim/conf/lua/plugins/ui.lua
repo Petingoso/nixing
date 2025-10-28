@@ -66,11 +66,29 @@ local ui = {
 		end,
 	}, --todo comments magic
 
-	--folds that look nice
 	{
-		"anuvyklack/pretty-fold.nvim",
+		"kevinhwang91/nvim-ufo",
+		dependencies = {
+			"kevinhwang91/promise-async",
+			{
+
+				"luukvbaal/statuscol.nvim",
+				config = function()
+					local builtin = require("statuscol.builtin")
+					require("statuscol").setup({
+						relculright = true,
+						segments = {
+							{ text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+							{ text = { "%s" }, click = "v:lua.ScSa" },
+							{ text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+						},
+					})
+				end,
+			},
+		},
+		event = "BufReadPost",
 		config = function()
-			require("plugins.configs.pretty-fold")
+			require("plugins.configs.folds")
 		end,
 	},
 

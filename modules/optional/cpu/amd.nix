@@ -1,6 +1,6 @@
 {config, ...}: {
   hardware.cpu.amd.updateMicrocode = true;
-
+  powerManagement.enable = true;
   boot = {
     # https://github.com/NixOS/nixos-hardware/blob/master/common/cpu/amd/pstate.nix
     kernelParams = ["amd_pstate=active"];

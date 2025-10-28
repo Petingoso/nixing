@@ -1,4 +1,8 @@
-{config,pkgs, ...}: let
+{
+  config,
+  pkgs,
+  ...
+}: let
   inherit (config.mystuff.other.system) username;
 in {
   programs.kdeconnect.enable = true;
@@ -34,6 +38,9 @@ in {
     gtk.enable = true;
     qt.enable = true;
   };
+
+  services.desktopManager.cosmic.enable = true;
+
 
   age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
   age.secrets.test.file = ../../secrets/test.age;

@@ -15,5 +15,6 @@ in {
     "piper.nix"
     "wayland.nix"
     "wireguard.nix"
+    "opentabletdriver.nix"
   ];
 }

@@ -20,7 +20,7 @@
 				rotate = 3;
 				missingok = true;
 				create = true;
-				postrotate = "find /var/log/caddy/ -name '*.log.*' -exec mv -t /data/logs/caddy {} +";
+				postrotate = "find /var/log/caddy/ -name '*.log*' -exec mv -t /data/logs/caddy {} +";
 			};
 		};
     };

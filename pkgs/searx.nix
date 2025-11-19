@@ -18,38 +18,38 @@
           hash = "sha256-BAT+oupy4MCSjeZ4hFtSKMkGU9xZtc7Phnz1mIsb2Kc=";
         };
       });
-      setproctitle = prev.setproctitle.overrideAttrs (old: rec {
-        version = "1.3.7";
-        src = fetchPypi {
-          pname = "setproctitle";
-          inherit version;
-          hash = "sha256-vCvJF2kcFTfVubyhRoQ3F2gJx+EeVpTKeanKEjRdy54=";
-        };
-      });
-      pyyaml = prev.pyyaml.overrideAttrs (old: rec {
-        version = "6.0.3";
-        src = fetchFromGitHub {
-          owner = "yaml";
-          repo = "pyyaml";
-          tag = version;
-          hash = "sha256-jUooIBp80cLxvdU/zLF0X8Yjrf0Yp9peYeiFjuV8AHA=";
-        };
-      });
+      # setproctitle = prev.setproctitle.overrideAttrs (old: rec {
+      #   version = "1.3.7";
+      #   src = fetchPypi {
+      #     pname = "setproctitle";
+      #     inherit version;
+      #     hash = "sha256-vCvJF2kcFTfVubyhRoQ3F2gJx+EeVpTKeanKEjRdy54=";
+      #   };
+      # });
+      # pyyaml = prev.pyyaml.overrideAttrs (old: rec {
+      #   version = "6.0.3";
+      #   src = fetchFromGitHub {
+      #     owner = "yaml";
+      #     repo = "pyyaml";
+      #     tag = version;
+      #     hash = "sha256-jUooIBp80cLxvdU/zLF0X8Yjrf0Yp9peYeiFjuV8AHA=";
+      #   };
+      # });
     };
   };
 in
   python.pkgs.toPythonModule (
     python.pkgs.buildPythonApplication rec {
       pname = "searxng";
-      version = "0-unstable-2025-10-10";
+      version = "0-unstable-2025-11-10";
       pyproject = true;
 
       src = fetchFromGitHub {
         owner = "searxng";
         repo = "searxng";
-        rev = "613c1aa8ebe3b22e5be01dad03ed52cc0fe0d729";
+        rev = "7a1b959646c45a81d3495148b1fa6c2da585eb59";
         # hash = lib.fakeHash;
-        hash = "sha256-LUme9Hmpuxtf25JPNSWh7ieLWNUwqFnU3Gw/9TPguNg=";
+        hash = "sha256-CCOnyLbJXnP1PypGixu1kkBFH35PUkV3YrgqHnQkXSQ=";
       };
 
       nativeBuildInputs = with python.pkgs; [pythonRelaxDepsHook];

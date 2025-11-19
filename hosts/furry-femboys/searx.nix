@@ -48,8 +48,8 @@ in {
         privacypolicy_url = false;
         enable_metrics = true;
 
-        #NOTE: BAD PRACTICE but it isnt that critical to be in nix store
-        open_metrics = lib.removeSuffix "\n" (builtins.readFile config.age.secrets.searx-prometheus.path);
+        #FIXME: use environmentFile and "@SEARX_SECRET_KEY@";
+	open_metrics = lib.removeSuffix "\n" (builtins.readFile config.age.secrets.searx-prometheus.path);
       };
       ui = {
         default_locale = "en";
@@ -66,10 +66,13 @@ in {
         autocomplete = "duckduckgo";
         ban_time_on_fail = 5;
         max_ban_time_on_fail = 120;
-      };
-      engines = {
-      	
-      };
+      };      
+	#      engines = lib.singleton { 
+	#       	name = "brave";
+	#        engine = "brave";
+	# using_tor_proxy = "true";
+	#    };
+
       enabled_plugins = [
         "Basic Calculator"
         "Tor check plugin"

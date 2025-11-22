@@ -17,13 +17,13 @@ in {
   options.mystuff.programs.git = {
     enable = mkEnableOption "git";
     userName = mkOption {
-      type = nullOr str;
-      default = null;
+      type = str;
+      default = "";
       description = "git username";
     };
     userEmail = mkOption {
-      type = nullOr str;
-      default = null;
+      type = str;
+      default = "";
       description = "git email";
     };
     signingKey = mkOption {

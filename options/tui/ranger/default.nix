@@ -9,7 +9,7 @@
   };
   config = lib.mkIf config.mystuff.programs.ranger.enable {
     home-manager.users.${config.mystuff.other.system.username} = {
-      home.packages = [pkgs.ranger pkgs.xdragon];
+      home.packages = [pkgs.ranger pkgs.dragon-drop];
       xdg.configFile = {
         "ranger/commands.py".source = ./conf/commands.py;
         "ranger/rc.conf".source = ./conf/rc.conf;

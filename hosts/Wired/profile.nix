@@ -21,5 +21,6 @@ in {
     # "podman.nix"
     "wayland.nix"
     "wireguard.nix"
+    "sdrangel.nix"
   ];
 }

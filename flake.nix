@@ -28,5 +28,7 @@
     agenix.url = "github:ryantm/agenix";
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
   };
 }

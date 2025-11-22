@@ -20,10 +20,9 @@
       touchpad.disable_while_typing = false;
     };
 
-    gestures = {
-      workspace_swipe = true;
-      workspace_swipe_fingers = 3;
-    };
+    gesture = [
+    "3, horizontal, workspace"
+    ];
 
     general = {
       gaps_in = 5;

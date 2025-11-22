@@ -27,7 +27,7 @@ in {
 
   users.users.${username}.packages = with pkgs; [
     rclone
-    bitwarden
+    bitwarden-desktop
     calibre
     ckan
     evince

@@ -1,16 +1,14 @@
-
 bots:
- - name: searx-checker
-   action: ALLOW
-   expression:
-    remote_addresses: [
-    "167.235.158.251/32",
-     "2a01:4f8:1c1c:8fc2::1/128",
-    ]
 
   # You can import the entire default config with this macro:
   - import: (data)/meta/default-config.yaml
 
+
+  - name: searx-checker
+    action: ALLOW
+    remote_addresses:
+      - 167.235.158.251/32
+      - 2a01:4f8:1c1c:8fc2::1/128
 
 dnsbl: true
 
@@ -50,8 +48,7 @@ thresholds:
       algorithm: metarefresh
       difficulty: 1
       report_as: 1
-  # For clients that are browser-like but have either gained points from custom rules or
-  # report as a standard browser.
+
   - name: moderate-suspicion
     expression:
       all:

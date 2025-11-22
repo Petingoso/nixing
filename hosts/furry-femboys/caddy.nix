@@ -23,7 +23,7 @@
   immichServer = "http://localhost:${toString config.services.immich.port}";
   lanraragiServer = "http://localhost:${toString config.services.lanraragi.port}";
   grafanaServer = "http://localhost:${toString config.services.grafana.settings.server.http_port}";
-  anubisServer = config.services.anubis.instances."default".settings.BIND;
+  anubisServer = config.services.anubis.instances.default.settings.BIND;
 
   customCaddy =
     (pkgs.caddy.withPlugins {

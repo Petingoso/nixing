@@ -23,6 +23,7 @@
   immichServer = "http://localhost:${toString config.services.immich.port}";
   lanraragiServer = "http://localhost:${toString config.services.lanraragi.port}";
   grafanaServer = "http://localhost:${toString config.services.grafana.settings.server.http_port}";
+  anubisServer = config.services.anubis.instances."default".settings.BIND;
 
   customCaddy =
     (pkgs.caddy.withPlugins {
@@ -78,18 +79,41 @@
       }
   '';
 
+  #anubis scripts in src too
   caddyCSP = ''
+
      	header {
-      	Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:; media-src 'self' data:;"
+      	Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self' 
+
+	'sha256-H7MtLKNZEjKa2jTwBFfTOjKDlZUerMTvvhDkvFdWuao=' 
+	'sha256-QwkgZPbODoZGxJysvc7jp747eLhJ5VYlwX39KuYmcSI='
+	'sha256-QwkgZPbODoZGxJysvc7jp747eLhJ5VYlwX39KuYmcSI=';
+	worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:; media-src 'self' data:;"
     }
   '';
 
   blockEngines = ''header X-Robots-Tag "noindex, nofollow, noarchive, nositelinkssearchbox, nosnippet, notranslate, noimageindex" '';
+  rateLimit = '' rate_limit {
+					zone searx {
+						match {
+							path /
+						}
+						key    "{http.request.remote.host}"
+						window 1m
+						events 50
+					}
+
+					log_key
+					sweep_interval 5m
+				}
+	'';
+
 in {
   age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
 
   networking.firewall.allowedTCPPorts = [80 443];
   networking.firewall.allowedUDPPorts = [443];
+  users.users.caddy.extraGroups = [ config.users.groups.anubis.name ];
   services.caddy = {
     enable = true;
     package = customCaddy;
@@ -134,36 +158,18 @@ in {
                ${commonCaddy}
                ${caddyCSP}
                      	route {
-                   		basic_auth {
-                   			pet {env.HTTP_PASS}
-             		}
-
-				rate_limit {
-					zone searx {
-						match {
-							path /
-						}
-						key    "{http.request.remote.host}"
-						window 1m
-						events 50
-					}
-
-					log_key
-					sweep_interval 5m
+	       			${rateLimit}
+				reverse_proxy ${anubisServer} {
+				      header_up X-Real-IP {remote_host}
+				      header_up X-Http-Version {http.request.proto}
 				}
-
-                            	reverse_proxy ${searchServer} {
-                             		header_up X-Real-IP {remote_host}
-                      			# header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
-                      			#      	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
-                            	}
                      	}
       '';
     };
 
     virtualHosts."${grampsDomain}" = {
       extraConfig = ''
-               ${commonCaddy}
+        ${commonCaddy}
         ${blockEngines}
         ${caddyCSP}
 
@@ -177,7 +183,7 @@ in {
 
     virtualHosts."${immichDomain}" = {
       extraConfig = ''
-               ${commonCaddy}
+        ${commonCaddy}
         ${blockEngines}
 
         #          header / {
@@ -191,7 +197,7 @@ in {
     };
     virtualHosts."${zncDomain}" = {
       extraConfig = ''
-               ${commonCaddy}
+        ${commonCaddy}
         ${blockEngines}
         ${caddyCSP}
 
@@ -208,7 +214,7 @@ in {
 
     virtualHosts."${vaultDomain}" = {
       extraConfig = ''
-               ${commonCaddy}
+        ${commonCaddy}
         ${blockEngines}
         ${caddyCSP}
 

@@ -156,14 +156,29 @@ in {
     virtualHosts."${searchDomain}" = {
       extraConfig = ''
                ${commonCaddy}
-               ${caddyCSP}
-                     	route {
-	       			${rateLimit}
-				reverse_proxy ${anubisServer} {
-				      header_up X-Real-IP {remote_host}
-				      header_up X-Http-Version {http.request.proto}
-				}
-                     	}
+       	       ${caddyCSP}
+		route /search* {
+			${rateLimit}
+			reverse_proxy ${anubisServer} {
+		      		header_up X-Real-IP {remote_host}
+		      		header_up X-Http-Version {http.request.proto}
+			}
+		}
+
+                route  {
+	       		${rateLimit}
+			reverse_proxy ${searchServer} {
+				header_up X-Real-IP {remote_host}
+			}
+                }
+
+		route /.within.website/* {
+			reverse_proxy ${anubisServer}
+		}
+
+		route /.x/* {
+			reverse_proxy ${anubisServer}
+		}
       '';
     };
 

@@ -97,6 +97,14 @@
         ];
       }
       {
+        job_name = "anubis";
+        static_configs = [
+          {
+            targets = ["localhost:9091"];
+          }
+        ];
+      }
+      {
         job_name = "searxng";
         static_configs = [
           {

@@ -18,14 +18,18 @@
           hash = "sha256-BAT+oupy4MCSjeZ4hFtSKMkGU9xZtc7Phnz1mIsb2Kc=";
         };
       });
-      # setproctitle = prev.setproctitle.overrideAttrs (old: rec {
-      #   version = "1.3.7";
-      #   src = fetchPypi {
-      #     pname = "setproctitle";
-      #     inherit version;
-      #     hash = "sha256-vCvJF2kcFTfVubyhRoQ3F2gJx+EeVpTKeanKEjRdy54=";
-      #   };
-      # });
+      msgspec = prev.msgspec.overrideAttrs (old: rec {
+  	version = "0.20.0";
+  	src = fetchPypi {
+	  pname = "msgspec";
+          inherit version;
+    	  hash = "sha256-aSNJ5Yj94yKHX40wJawBaJ/q1ZAef7GNaHCkRRnWKik=";
+  	};
+	nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
+    		prev.setuptools
+    		prev.setuptools-scm
+  	];
+     });
       # pyyaml = prev.pyyaml.overrideAttrs (old: rec {
       #   version = "6.0.3";
       #   src = fetchFromGitHub {
@@ -41,15 +45,15 @@ in
   python.pkgs.toPythonModule (
     python.pkgs.buildPythonApplication rec {
       pname = "searxng";
-      version = "0-unstable-2025-11-10";
+      version = "0-unstable-2025-12-07";
       pyproject = true;
 
       src = fetchFromGitHub {
         owner = "searxng";
         repo = "searxng";
-        rev = "7a1b959646c45a81d3495148b1fa6c2da585eb59";
+        rev = "9d3ec9a2a2e914fb642ac43246814ccf78774f94";
         # hash = lib.fakeHash;
-        hash = "sha256-CCOnyLbJXnP1PypGixu1kkBFH35PUkV3YrgqHnQkXSQ=";
+        hash = "sha256-6XQeGm1vvjX9ErXpqpMSlWvaLr7RjOF4fBltShoFHZ8=";
       };
 
       nativeBuildInputs = with python.pkgs; [pythonRelaxDepsHook];
@@ -109,6 +113,8 @@ in
           uvloop
           valkey
           whitenoise
+
+	  setuptools-scm
         ]
         ++ httpx.optional-dependencies.http2
         ++ httpx-socks.optional-dependencies.asyncio;

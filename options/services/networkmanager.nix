@@ -5,7 +5,7 @@
   ...
 }: let
   cfg = config.mystuff.services.networkmanager;
-
+  inherit (config.mystuff.other.system) username;
   inherit (lib.options) mkOption;
   inherit (lib.types) bool;
 in {
@@ -23,6 +23,7 @@ in {
   };
 
   config = {
+    users.users."${username}".extraGroups = [ "networkmanager" ];
     networking = {
       networkmanager = {
         enable = true;

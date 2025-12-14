@@ -8,7 +8,7 @@ in {
     "scripts/default.nix"
     "afs.nix"
     "direnv.nix"
-    #"docker.nix"
+    "docker.nix"
     "dualsense.nix"
     "fcitx.nix"
     "kleopatra.nix"
@@ -21,6 +21,6 @@ in {
     # "podman.nix"
     "wayland.nix"
     "wireguard.nix"
-    "sdrangel.nix"
+    # "sdrangel.nix"
   ];
 }

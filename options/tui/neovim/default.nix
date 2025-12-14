@@ -28,6 +28,7 @@
 
           # formatters
           stylua
+          ccls
           clang-tools
           shfmt
           prettierd
@@ -36,13 +37,14 @@
           # LSPs
           lua-language-server
           vscode-langservers-extracted
-          vscode-extensions.ms-vscode.cpptools
+          # vscode-extensions.ms-vscode.cpptools
           python3Packages.python-lsp-server
           python3Packages.jedi-language-server
           phpactor
           tinymist
           nil
           java-language-server
+          rust-analyzer
         ];
       };
 

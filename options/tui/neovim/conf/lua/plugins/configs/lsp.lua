@@ -42,7 +42,7 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities(lspconfig.prot
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- List of servers you want to enable via default config
-local servers = { "nil_ls", "clangd", "cssls", "html", "phpactor", "tinymist", "pylsp", "java_language_server" }
+local servers = { "nil_ls", "ccls", "cssls", "html", "phpactor", "tinymist", "pylsp", "java_language_server", "rust_analyzer"}
 
 -- Overrides per-server
 --

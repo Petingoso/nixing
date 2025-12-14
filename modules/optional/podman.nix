@@ -12,14 +12,15 @@ in {
       enable = true;
 
       # Create a `docker` alias for podman, to use it as a drop-in replacement
-      dockerCompat = false;
+      dockerCompat = true;
 
       # Required for containers under podman-compose to be able to talk to each other.
       defaultNetwork.settings.dns_enabled = true;
     };
   };
 
-  users.extraGroups.podman.members = ["${username}"];
+  users.users."${username}".extraGroups = ["podman"];
+  # users.extraGroups.podman.members = ["${username}"];
 
   # Useful other development tools
   environment.systemPackages = with pkgs; [

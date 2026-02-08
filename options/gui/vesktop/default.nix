@@ -31,7 +31,7 @@ in {
       }))
     ];
 
-    home-manager.users.${username} = mkIf enableHM{
+    home-manager.users.${username} = mkIf enableHM {
       xdg.configFile."vesktop/settings.json".text = builtins.toJSON {
         discordBranch = "ptb";
         firstLaunch = false;

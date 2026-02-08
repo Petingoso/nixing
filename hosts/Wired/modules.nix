@@ -1,4 +1,8 @@
-{lib,self, ...}: let
+{
+  lib,
+  self,
+  ...
+}: let
   inherit (lib.lists) map;
 in {
   imports = map (name: "${self}/modules/optional/${name}") [
@@ -23,4 +27,3 @@ in {
     "wireguard.nix"
   ];
 }
-

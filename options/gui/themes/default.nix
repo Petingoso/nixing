@@ -4,8 +4,7 @@
   inputs,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.theme_switching;
   cfg' = config.custom.programs;
   inherit (config.custom) username enableHM;
@@ -27,18 +26,16 @@ let
 
     ${matugenCommand}
   '';
-in
-{
+in {
   options.theme_switching = {
     enable = mkEnableOption "Activate the facilities for mutagen themes";
   };
 
   imports = [
-      inputs.matugen.nixosModules.default
+    inputs.matugen.nixosModules.default
   ];
 
   config = mkIf cfg.enable {
-
     home-manager.users.${username} = mkIf (enableHM && cfg.enable) {
       # templates
       programs.matugen = {
@@ -107,7 +104,7 @@ in
         Unit = {
           Description = "Setup theme files for programs";
         };
-        wantedBy = [ "graphical.target" ];
+        wantedBy = ["graphical.target"];
         script = setupScript;
         reload = matugenCommand;
       };

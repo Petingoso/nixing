@@ -1,4 +1,4 @@
-{ stdenv }:
+{stdenv}:
 stdenv.mkDerivation {
   pname = "custom-scripts";
   version = "1.0";
@@ -12,4 +12,3 @@ stdenv.mkDerivation {
     done
   '';
 }
-

@@ -36,7 +36,7 @@ in {
         command =
           if cfg.cage
           then "${cage} -s -- ${greeter}"
-          else "${greeter} --cmd ${builtins.elemAt cfg.environments 0 }";
+          else "${greeter} --cmd ${builtins.elemAt cfg.environments 0}";
 
         user = username;
       };

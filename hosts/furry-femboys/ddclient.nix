@@ -5,7 +5,7 @@
   ...
 }: {
   age.secrets.cloudflare = {
-  	file = "${self}/secrets/cloudflare.age";
+    file = "${self}/secrets/cloudflare.age";
   };
 
   services.ddclient = {

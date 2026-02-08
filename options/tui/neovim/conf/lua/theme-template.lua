@@ -1,7 +1,18 @@
--- AUTO-GENERATED FILE
--- Do not edit
+-- helper to darken a hex color by `amount` (0.0–1.0)
+local function darken(hex, amount)
+  local r = tonumber(hex:sub(2,3), 16)
+  local g = tonumber(hex:sub(4,5), 16)
+  local b = tonumber(hex:sub(6,7), 16)
+
+  r = math.floor(r * (1 - amount))
+  g = math.floor(g * (1 - amount))
+  b = math.floor(b * (1 - amount))
+
+  return string.format("#%02X%02X%02X", r, g, b)
+end
+
 require("base16-colorscheme").setup {
-  base00 = "{{colors.surface.default.hex}}",
+  base00 = darken("{{colors.surface.default.hex}}", 0.02),  -- slightly darker
   base01 = "{{colors.surface_container.default.hex}}",
   base02 = "{{colors.surface_container_high.default.hex}}",
   base03 = "{{colors.outline.default.hex}}",

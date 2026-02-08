@@ -9,7 +9,7 @@
       trusted-users = [
         "root"
         config.custom.username
-        ];
+      ];
       auto-optimise-store = true;
       keep-outputs = true;
       # keep-derivations = true;

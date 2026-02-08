@@ -7,7 +7,6 @@
   cfg = config.custom.services.networkmanager;
   inherit (config.custom) username;
 
-
   inherit (lib.options) mkOption;
   inherit (lib.types) bool;
 in {
@@ -26,7 +25,7 @@ in {
   };
 
   config = {
-    users.users."${username}".extraGroups = [ "networkmanager" ];
+    users.users."${username}".extraGroups = ["networkmanager"];
     networking = {
       networkmanager = {
         enable = cfg.enable;

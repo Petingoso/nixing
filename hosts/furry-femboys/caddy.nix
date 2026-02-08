@@ -25,106 +25,106 @@
   grafanaServer = "http://localhost:${toString config.services.grafana.settings.server.http_port}";
   anubisServer = config.services.anubis.instances.default.settings.BIND;
 
-  customCaddy =
-    (pkgs.caddy.withPlugins {
-      # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
-      # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"];
-      plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" 
-      		 "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90" 
-		 "github.com/mholt/caddy-ratelimit@v0.0.0-20250915152450-04ea34edc0c4"];
-      hash = "sha256-TEnFZhxVlFOxo5VlgGzehCN5EKvkwZ3JTaBUSLy3h1A=";
-      # hash = lib.fakeHash;
-      });
-    # }).overrideAttrs (finalAttr: prevAttrs: {
-    #   doInstallCheck = false; # until https://github.com/nixos/nixpkgs/issues/430090 gets merged
-    # });
+  customCaddy = pkgs.caddy.withPlugins {
+    # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
+    # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"];
+    plugins = [
+      "github.com/caddy-dns/cloudflare@v0.2.1"
+      "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"
+      "github.com/mholt/caddy-ratelimit@v0.0.0-20250915152450-04ea34edc0c4"
+    ];
+    hash = "sha256-TEnFZhxVlFOxo5VlgGzehCN5EKvkwZ3JTaBUSLy3h1A=";
+    # hash = lib.fakeHash;
+  };
+  # }).overrideAttrs (finalAttr: prevAttrs: {
+  #   doInstallCheck = false; # until https://github.com/nixos/nixpkgs/issues/430090 gets merged
+  # });
 
   commonCaddy = ''
-           encode zstd gzip
+          encode zstd gzip
 
-            header {
+           header {
 
-	    	Strict-Transport-Security max-age=15768000;
-               	X-Content-Type-Options nosniff
-               	X-Frame-Options SAMEORIGIN
+    	Strict-Transport-Security max-age=15768000;
+              	X-Content-Type-Options nosniff
+              	X-Frame-Options SAMEORIGIN
 
-    		Referrer-Policy "same-origin"
-    		Permissions-Policy "accelerometer=(),camera=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),payment=(),usb=()"
-            	-Server
-
-
-            }
-
-            tls {
-     ciphers TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
-      	  curves x25519 secp256r1 secp384r1
-
-            protocols tls1.2 tls1.3
-            dns cloudflare {env.CF_API_TOKEN}
-            }
+    	Referrer-Policy "same-origin"
+    	Permissions-Policy "accelerometer=(),camera=(),geolocation=(),gyroscope=(),magnetometer=(),microphone=(),payment=(),usb=()"
+           	-Server
 
 
-      #    coraza_waf {
-      #    		load_owasp_crs
-      #    		directives `
-      #     			Include @coraza.conf-recommended
-      #     			Include @crs-setup.conf.example
-      #     			Include @owasp_crs/*.conf
-      #     			SecRuleEngine On
-      #      `
-      # }
-          handle_errors 403 {
-      	header X-Blocked "true"
-      	respond "Your request was blocked. Request ID: {http.request.header.x-request-id}"
-      }
+           }
+
+           tls {
+    ciphers TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256 TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+     	  curves x25519 secp256r1 secp384r1
+
+           protocols tls1.2 tls1.3
+           dns cloudflare {env.CF_API_TOKEN}
+           }
+
+
+     #    coraza_waf {
+     #    		load_owasp_crs
+     #    		directives `
+     #     			Include @coraza.conf-recommended
+     #     			Include @crs-setup.conf.example
+     #     			Include @owasp_crs/*.conf
+     #     			SecRuleEngine On
+     #      `
+     # }
+         handle_errors 403 {
+     	header X-Blocked "true"
+     	respond "Your request was blocked. Request ID: {http.request.header.x-request-id}"
+     }
   '';
 
   #anubis scripts in src too
   caddyCSP = ''
 
-     	header {
-      	Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self' 
+        	header {
+         	Content-Security-Policy "upgrade-insecure-requests; default-src 'none'; script-src 'self'
 
-	'sha256-H7MtLKNZEjKa2jTwBFfTOjKDlZUerMTvvhDkvFdWuao=' 
-	'sha256-QwkgZPbODoZGxJysvc7jp747eLhJ5VYlwX39KuYmcSI='
-	'sha256-QwkgZPbODoZGxJysvc7jp747eLhJ5VYlwX39KuYmcSI=';
-	worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:; media-src 'self' data:;"
-    }
+    'sha256-H7MtLKNZEjKa2jTwBFfTOjKDlZUerMTvvhDkvFdWuao='
+    'sha256-QwkgZPbODoZGxJysvc7jp747eLhJ5VYlwX39KuYmcSI='
+    'sha256-QwkgZPbODoZGxJysvc7jp747eLhJ5VYlwX39KuYmcSI=';
+    worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; form-action 'self' https:; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; connect-src 'self'; img-src * data:; frame-src https:; media-src 'self' data:;"
+       }
   '';
 
   blockEngines = ''header X-Robots-Tag "noindex, nofollow, noarchive, nositelinkssearchbox, nosnippet, notranslate, noimageindex" '';
-  rateLimit = '' rate_limit {
-					zone searx {
-						match {
-							path /
-						}
-						key    "{http.request.remote.host}"
-						window 1m
-						events 50
-					}
+  rateLimit = ''    rate_limit {
+    				zone searx {
+    					match {
+    						path /
+    					}
+    					key    "{http.request.remote.host}"
+    					window 1m
+    					events 50
+    				}
 
-					log_key
-					sweep_interval 5m
-				}
-	'';
-
+    				log_key
+    				sweep_interval 5m
+    			}
+  '';
 in {
   age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
 
   networking.firewall.allowedTCPPorts = [80 443];
   networking.firewall.allowedUDPPorts = [443];
-  users.users.caddy.extraGroups = [ config.users.groups.anubis.name ];
+  users.users.caddy.extraGroups = [config.users.groups.anubis.name];
   services.caddy = {
     enable = true;
     package = customCaddy;
     environmentFile = config.age.secrets.caddy-env.path;
     globalConfig = ''
-    	# experimental_http3
+      # experimental_http3
 
-        metrics {
-      		per_host
-      }
-      # order coraza_waf first
+         metrics {
+       		per_host
+       }
+       # order coraza_waf first
     '';
 
     virtualHosts."${base}" = {
@@ -155,30 +155,30 @@ in {
 
     virtualHosts."${searchDomain}" = {
       extraConfig = ''
-               ${commonCaddy}
-       	       ${caddyCSP}
-		route /search* {
-			${rateLimit}
-			reverse_proxy ${anubisServer} {
-		      		header_up X-Real-IP {remote_host}
-		      		header_up X-Http-Version {http.request.proto}
-			}
-		}
+                     ${commonCaddy}
+             	       ${caddyCSP}
+        route /search* {
+        	${rateLimit}
+        	reverse_proxy ${anubisServer} {
+              		header_up X-Real-IP {remote_host}
+              		header_up X-Http-Version {http.request.proto}
+        	}
+        }
 
-                route  {
-	       		${rateLimit}
-			reverse_proxy ${searchServer} {
-				header_up X-Real-IP {remote_host}
-			}
-                }
+                      route  {
+              		${rateLimit}
+        	reverse_proxy ${searchServer} {
+        		header_up X-Real-IP {remote_host}
+        	}
+                      }
 
-		route /.within.website/* {
-			reverse_proxy ${anubisServer}
-		}
+        route /.within.website/* {
+        	reverse_proxy ${anubisServer}
+        }
 
-		route /.x/* {
-			reverse_proxy ${anubisServer}
-		}
+        route /.x/* {
+        	reverse_proxy ${anubisServer}
+        }
       '';
     };
 

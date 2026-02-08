@@ -37,10 +37,9 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     noctalia.url = "github:noctalia-dev/noctalia-shell";
-
   };
 
   outputs = {self, ...} @ inputs: {
-    nixosConfigurations = import ./hosts { inherit self inputs; };
+    nixosConfigurations = import ./hosts {inherit self inputs;};
   };
 }

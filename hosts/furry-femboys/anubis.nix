@@ -4,7 +4,7 @@
   lib,
   pkgs,
   ...
-}:{
+}: {
   services.anubis.instances.default = {
     enable = true;
     settings = {

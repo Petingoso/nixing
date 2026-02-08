@@ -11,17 +11,16 @@
       weekly = 2;
       monthly = -1; # Keep at least one archive for each month
     };
-    exclude = [ "/data/backup/gramps" ];  # Prevent self-backing
-
-    };
+    exclude = ["/data/backup/gramps"]; # Prevent self-backing
+  };
 
   services.borgbackup.jobs.archive = {
     paths = [
-    "/data/backup/gramps"
-    "/data/backup/vaultwarden"
-    "/data/immich/"
-    "/data/lanraragi/content"
-    "/data/webDAV"
+      "/data/backup/gramps"
+      "/data/backup/vaultwarden"
+      "/data/immich/"
+      "/data/lanraragi/content"
+      "/data/webDAV"
     ];
     doInit = true;
     repo = "/backups/repo";

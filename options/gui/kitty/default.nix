@@ -2,8 +2,7 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   cfg = config.custom.programs.kitty;
   inherit (config.custom) username enableHM;
 

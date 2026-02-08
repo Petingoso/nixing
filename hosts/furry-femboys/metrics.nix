@@ -10,8 +10,8 @@
   };
 
   age.secrets.searx-prometheus = {
-  	file = "${self}/secrets/searx-prometheus.age";
-	owner = "prometheus";
+    file = "${self}/secrets/searx-prometheus.age";
+    owner = "prometheus";
   };
 
   systemd.services.grafana.serviceConfig.EnvironmentFile = config.age.secrets.grafana-env.path;
@@ -31,11 +31,11 @@
     };
 
     settings.smtp = {
-    	enabled = true;
-    	user = "$__env{SMTP_USER}";
-    	password = "$__env{SMTP_PASSWORD}";
-    	host = "$__env{SMTP_HOST}";
-    	from_address = "$__env{SMTP_FROM}";
+      enabled = true;
+      user = "$__env{SMTP_USER}";
+      password = "$__env{SMTP_PASSWORD}";
+      host = "$__env{SMTP_HOST}";
+      from_address = "$__env{SMTP_FROM}";
     };
 
     provision = {
@@ -51,7 +51,6 @@
       ];
     };
   };
-
 
   services.prometheus.exporters.node = {
     enable = true;

@@ -7,7 +7,6 @@
   inherit (config.custom) username enableHM;
 
   inherit (lib.modules) mkIf;
-
 in {
   config = mkIf enableHM {
     environment.sessionVariables = rec {

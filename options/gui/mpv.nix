@@ -23,7 +23,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.${username} = mkIf enableHM{
+    home-manager.users.${username} = mkIf enableHM {
       programs.mpv = {
         enable = true;
         config = {

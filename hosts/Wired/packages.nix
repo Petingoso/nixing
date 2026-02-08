@@ -20,9 +20,9 @@
     p7zip
     wdisplays
     # mcomix
-  # ];
-  #
-  # users.users.${username}.packages = with pkgs; [
+    # ];
+    #
+    # users.users.${username}.packages = with pkgs; [
     rclone
     bitwarden-desktop
     calibre
@@ -60,4 +60,3 @@
   # programs.cdemu.enable = true;
   # programs.cdemu.gui = true;
 }
-

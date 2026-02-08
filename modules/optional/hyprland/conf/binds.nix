@@ -44,9 +44,9 @@ in {
         "${mod}, S,layoutmsg,swapwithmaster"
 
         "${mod},P,exec,playerctl play-pause"
-        ",XF86AudioRaiseVolume,exec,amixer set Master 5%+"
-        ",XF86AudioLowerVolume,exec,amixer set Master 5%-"
-        ",XF86AudioMute,exec,amixer  set Master 1+ toggle"
+        # ",XF86AudioRaiseVolume,exec,amixer set Master 5%+"
+        # ",XF86AudioLowerVolume,exec,amixer set Master 5%-"
+        # ",XF86AudioMute,exec,amixer  set Master 1+ toggle"
         ",XF86Calculator,exec,qalculate-gtk"
 
         "${mod}, tab, workspace, +1"

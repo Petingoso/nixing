@@ -64,17 +64,19 @@
 
         "match:class ^(qalculate-gtk)$, float on"
       ]
-      ++ [{
-        name = "xwayland-video-bridge-fixes";
-        "match:class" = "xwaylandvideobridge";
+      ++ [
+        {
+          name = "xwayland-video-bridge-fixes";
+          "match:class" = "xwaylandvideobridge";
 
-        no_initial_focus = true;
-        no_focus = true;
-        no_anim = true;
-        no_blur = true;
-        max_size = "1 1";
-        opacity = 0.0;
-      }];
+          no_initial_focus = true;
+          no_focus = true;
+          no_anim = true;
+          no_blur = true;
+          max_size = "1 1";
+          opacity = 0.0;
+        }
+      ];
 
     # layerrule = ["blur, swaync-control-center" "ignorezero, swaync-control-center"];
 

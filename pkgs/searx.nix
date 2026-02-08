@@ -19,17 +19,19 @@
         };
       });
       msgspec = prev.msgspec.overrideAttrs (old: rec {
-  	version = "0.20.0";
-  	src = fetchPypi {
-	  pname = "msgspec";
+        version = "0.20.0";
+        src = fetchPypi {
+          pname = "msgspec";
           inherit version;
-    	  hash = "sha256-aSNJ5Yj94yKHX40wJawBaJ/q1ZAef7GNaHCkRRnWKik=";
-  	};
-	nativeBuildInputs = (old.nativeBuildInputs or []) ++ [
-    		prev.setuptools
-    		prev.setuptools-scm
-  	];
-     });
+          hash = "sha256-aSNJ5Yj94yKHX40wJawBaJ/q1ZAef7GNaHCkRRnWKik=";
+        };
+        nativeBuildInputs =
+          (old.nativeBuildInputs or [])
+          ++ [
+            prev.setuptools
+            prev.setuptools-scm
+          ];
+      });
       # pyyaml = prev.pyyaml.overrideAttrs (old: rec {
       #   version = "6.0.3";
       #   src = fetchFromGitHub {
@@ -114,7 +116,7 @@ in
           valkey
           whitenoise
 
-	  setuptools-scm
+          setuptools-scm
         ]
         ++ httpx.optional-dependencies.http2
         ++ httpx-socks.optional-dependencies.asyncio;

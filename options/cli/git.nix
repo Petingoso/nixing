@@ -49,12 +49,12 @@ in {
     };
   };
 
-  config = mkIf (cfg.enable && enableHM ){
+  config = mkIf (cfg.enable && enableHM) {
     home-manager.users.${username} = {
       programs.git = {
         enable = true;
-        settings.user.name= cfg.userName;
-        settings.user.email= cfg.userEmail;
+        settings.user.name = cfg.userName;
+        settings.user.email = cfg.userEmail;
         inherit (cfg) includes;
         settings = {
           core = {

@@ -1,7 +1,6 @@
 _: {
   imports = [
     ./bluetooth.nix
-    ./chrome-executable.nix
     ./dbus.nix
     ./diskstuff.nix
     ./firmware.nix

@@ -3,7 +3,7 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "workbench.colorTheme": "Nord",
+  "workbench.colorTheme": "NoctaliaTheme",
   "[typst]": {
     "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
   },
@@ -31,6 +31,7 @@
 "[c]": {
     "editor.defaultFormatter": "ms-vscode.cpptools"
 },
-"diffEditor.ignoreTrimWhitespace": false
+"diffEditor.ignoreTrimWhitespace": false,
+"C_Cpp.intelliSenseEngine": "disabled"
 }
 

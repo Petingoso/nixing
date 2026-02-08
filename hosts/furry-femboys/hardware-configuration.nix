@@ -35,6 +35,12 @@
     options = ["noatime"];
   };
 
+  fileSystems."/backups" = {
+    device = "/dev/disk/by-uuid/76c25d16-238d-4206-9e3e-cb50ed2792b4";
+    fsType = "ext4";
+    options = ["noatime"];
+  };
+
   swapDevices = [
     {
       device = "/data/swapfile";
@@ -50,6 +56,4 @@
   # networking.interfaces.end0.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp1s0u1u2.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
-
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }

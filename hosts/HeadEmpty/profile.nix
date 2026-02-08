@@ -2,16 +2,19 @@
   inherit (lib.lists) map;
 in {
   imports = map (name: "${../../modules/optional/${name}}") [
-    "cpu/amd.nix"
-    # "scripts/default.nix"
+    "cpu/intel.nix"
+    "hyprland/default.nix"
+    "scripts/default.nix"
     "afs.nix"
     "direnv.nix"
-    "docker.nix"
     "fcitx.nix"
     "kleopatra.nix"
-    "libvirt.nix"
     "nix-alien.nix"
+    "libvirt.nix"
     "opensnitch.nix"
+    "piper.nix"
     "wayland.nix"
+    "wireguard.nix"
+    "opentabletdriver.nix"
   ];
 }

@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
@@ -16,7 +15,7 @@ in {
   };
 
   # NOTE: Needs home manager
-  config = lib.mkIf cfg.enable && enableHM {
+  config = lib.mkIf (cfg.enable && enableHM) {
     home-manager.users.${username} = {
       programs.kitty.enable = true;
 

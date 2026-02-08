@@ -1,9 +1,10 @@
 {
   pkgs,
   config,
+  self,
   ...
 }: let
-  inherit (config.custom) username;
+  inherit (config.mystuff.other.system) username;
 in {
   environment.systemPackages = with pkgs; [
     baobab

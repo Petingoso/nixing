@@ -2,8 +2,9 @@ _: {
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
+    ./profile.nix
     ./packages.nix
-    ./modules.nix
+    ./system.nix
     ./t480.nix
   ];
 }

@@ -9,10 +9,10 @@ local editor = {
 
 	--cool movement, use sChar1Char2[Char3]
 	{
-		"ggandor/leap.nvim",
+		"https://codeberg.org/andyg/leap.nvim",
 		event = "BufEnter",
 		config = function()
-			require("leap").add_default_mappings()
+			require("plugins.configs.leap")
 		end,
 	},
 

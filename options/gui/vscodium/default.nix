@@ -12,7 +12,7 @@
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   # inherit (lib.types) nullOr str;
-  nix-vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.hostPlatform.system};
+  nix-vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system};
 in {
   options.custom.programs.vscode = {
     #NOTE: needs HM

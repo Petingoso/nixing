@@ -14,9 +14,9 @@
     '';
 
     "fail2ban/filter.d/lanraragi.conf".text = ''
-	[Definition]
-	failregex = ^.*Failed login attempt with password '.*' from <ADDR>$
-	ignoreregex =
+      [Definition]
+      failregex = ^.*Failed login attempt with password '.*' from <ADDR>$
+      ignoreregex =
     '';
 
     "fail2ban/filter.d/immich.conf".text = ''
@@ -60,13 +60,13 @@
     '';
 
     "lanraragi" = ''
-       enabled = true
-       filter = lanraragi
-       findtime=600
-       maxretry = 3
-       backend = systemd
-       journalmatch = _SYSTEMD_UNIT=lanraragi.service
-       action = iptables[type=allports, protocol=all] cloudflare_custom
+      enabled = true
+      filter = lanraragi
+      findtime=600
+      maxretry = 3
+      backend = systemd
+      journalmatch = _SYSTEMD_UNIT=lanraragi.service
+      action = iptables[type=allports, protocol=all] cloudflare_custom
     '';
   };
 }

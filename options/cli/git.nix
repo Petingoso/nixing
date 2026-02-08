@@ -18,13 +18,13 @@ in {
     #NOTE: needs HM
     enable = mkEnableOption "git";
     userName = mkOption {
-      type = nullOr str;
-      default = null;
+      type = str;
+      default = "";
       description = "git username";
     };
     userEmail = mkOption {
-      type = nullOr str;
-      default = null;
+      type = str;
+      default = "";
       description = "git email";
     };
     signingKey = mkOption {
@@ -53,8 +53,10 @@ in {
     home-manager.users.${username} = {
       programs.git = {
         enable = true;
-        inherit (cfg) userName userEmail includes;
-        extraConfig = {
+        settings.user.name= cfg.userName;
+        settings.user.email= cfg.userEmail;
+        inherit (cfg) includes;
+        settings = {
           core = {
             inherit (cfg) editor;
             pager = "${delta}";

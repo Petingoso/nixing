@@ -2,7 +2,8 @@ _: {
   imports = [
     ./configuration.nix
     ./hardware-configuration.nix
-    ./modules.nix
+    ./profile.nix
     ./packages.nix
+    ./system.nix
   ];
 }

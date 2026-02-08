@@ -2,7 +2,8 @@ _: {
   imports = [
     ./firefox
     ./kitty
-    ./themes
+    # ./themes
+    ./quickshell
     ./vesktop
     ./vscodium
     ./mpv.nix

@@ -6,7 +6,7 @@ local function check_formatter_exit_code(code, stderr)
 
 	if not success then
 		vim.schedule(function()
-			logger:warn(("failed to run formatter: %s"):format(stderr))
+			vim.notify(("failed to run formatter: %s"):format(stderr), vim.log.levels.WARN)
 		end)
 	end
 
@@ -15,9 +15,9 @@ end
 
 -- Function to automatically add check_exit_code to normal sources
 local function add_check_exit_code_to_sources(sources)
-	for _, source in ipairs(sources) do
-		if source.with then
-			source = source.with({ check_exit_code = check_formatter_exit_code })
+	for i, source in ipairs(sources) do
+		if source._type == "formatter" or source._type == "diagnostic" then
+			sources[i] = source:with({ check_exit_code = check_formatter_exit_code })
 		end
 	end
 	return sources
@@ -27,12 +27,9 @@ end
 local special_sources = {
 	null_ls.builtins.formatting.clang_format.with({
 		extra_args = {
-			'--style="{BasedOnStyle: LLVM, '
-				.. "AllowShortFunctionsOnASingleLine: All, "
-				.. "IndentWidth: 4, "
-				.. 'TabWidth: 4}"',
+			"--style={BasedOnStyle: LLVM, AllowShortFunctionsOnASingleLine: All, IndentWidth: 4, TabWidth: 4}",
 		},
-		check_exit_code = check_formatter_exit_code, -- Apply check function
+		check_exit_code = check_formatter_exit_code,
 	}),
 }
 
@@ -40,6 +37,7 @@ local special_sources = {
 local normal_sources = {
 	null_ls.builtins.formatting.stylua,
 	null_ls.builtins.completion.spell,
+	null_ls.builtins.formatting.black,
 	null_ls.builtins.formatting.prettierd,
 	null_ls.builtins.formatting.alejandra,
 	null_ls.builtins.formatting.shfmt,

@@ -1,12 +1,11 @@
 {
   config,
+  inputs,
   pkgs,
   ...
 }: let
-  username = "petnix";
+  inherit (config.mystuff.other.system) username;
 in {
-  custom.username = username;
-
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -30,7 +29,8 @@ in {
   ];
 
   programs.kdeconnect.enable = true;
-  custom = {
+  mystuff = {
+    other.home-manager.enable = true;
     programs = {
       git = {
         enable = true;
@@ -42,8 +42,8 @@ in {
       };
       nh.enable = true;
       nh.flake = "/home/${username}/flake";
-      # firefox-config.enable = true;
-      # kitty.enable = true;
+      firefox-config.enable = true;
+      kitty.enable = true;
       mpv.enable = true;
       neovim-config.enable = true;
       vscode.enable = true;
@@ -69,11 +69,12 @@ in {
 
   services.fail2ban.enable = true;
 
-  users.users.${username}.openssh.authorizedKeys.keys = [
+  users.users.petnix.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5" # main
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe" # teto
   ];
 
+  users.users.petnix.extraGroups = ["kvm"];
   # services.printing.enable = true;
   # services.samba.enable = true;
   # services.printing.drivers = [

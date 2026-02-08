@@ -1,10 +1,10 @@
 {config, ...}: let
-  username = "petnix";
+  inherit (config.mystuff.other.system) username;
 in {
-  custom.username = username;
   programs.kdeconnect.enable = true;
 
-  custom = {
+  mystuff = {
+    other.home-manager.enable = true;
     programs = {
       git = {
         enable = true;
@@ -18,11 +18,11 @@ in {
       };
       nh.enable = true;
       nh.flake = "/home/${username}/flake";
-      # firefox-config.enable = true;
-      # kitty.enable = true;
-      # rofi.enable = true;
-      # swaync.enable = true;
-      # waybar.enable = true;
+      firefox-config.enable = true;
+      kitty.enable = true;
+      rofi.enable = true;
+      swaync.enable = true;
+      waybar.enable = true;
       mpv.enable = true;
       vscode.enable = true;
       neovim-config.enable = true;
@@ -32,11 +32,11 @@ in {
     services = {
       networkmanager.enable = true;
     };
-    # gtk.enable = true;
-    # qt.enable = true;
+    gtk.enable = true;
+    qt.enable = true;
   };
 
-  age.identityPaths = ["/home/${config.custom.username}/.ssh/id_ed25519"];
+  age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
 
   system.stateVersion = "24.05";
 }

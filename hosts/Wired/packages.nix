@@ -1,10 +1,11 @@
 {
   pkgs,
+  self,
   ...
 }: {
   environment.systemPackages = with pkgs; [
     baobab
-    btrbk
+    # btrbk
     compsize
     font-manager
     gnome-disk-utility
@@ -23,7 +24,7 @@
   #
   # users.users.${username}.packages = with pkgs; [
     rclone
-    bitwarden
+    bitwarden-desktop
     calibre
     ckan
     evince
@@ -38,17 +39,17 @@
     prismlauncher
     qalculate-gtk
     steamtinkerlaunch
-    stremio
+    # stremio
     texliveMedium
     tor-browser
     ungoogled-chromium
     wineWowPackages.waylandFull
-    youtube-music
-    miru
+    pear-desktop
+    # miru
     pcloud
-
+    obsidian
     (olympus.override {celesteWrapper = steam-run;})
-    # (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
+    (callPackage "${self}/pkgs/scripts" {})
     ludusavi
     xdg-utils
     gamescope

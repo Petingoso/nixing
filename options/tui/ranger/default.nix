@@ -14,7 +14,7 @@ in {
     home-manager.users.${cfg.username} = {
       home.packages = [
         pkgs.ranger
-        pkgs.xdragon
+        pkgs.dragon-drop
       ];
       xdg.configFile = {
         "ranger/commands.py".source = ./conf/commands.py;

@@ -35,11 +35,17 @@ with lib;
       default = system;
       description = "System Architecture";
     };
+
+    programs.shell = mkOption {
+      type = types.str;
+      default = "zsh";
+      description = "Shell program (used in greetd)";
+    };
   };
 
   config = {
     networking.hostName = cfg.hostname;
-    nixpkgs.hostPlatform = cfg.platform;
+    nixpkgs.system = cfg.platform;
 
     users.users.${cfg.username} = {
       isNormalUser = true;

@@ -7,7 +7,7 @@
 }:
 let
   cfg = config.theme_switching;
-  cfg' = config.mystuff.programs;
+  cfg' = config.custom.programs;
   inherit (config.custom) username enableHM;
 
   inherit (lib.modules) mkIf;
@@ -33,10 +33,11 @@ in
     enable = mkEnableOption "Activate the facilities for mutagen themes";
   };
 
-  config = mkIf cfg.enable {
-    imports = [
+  imports = [
       inputs.matugen.nixosModules.default
-    ];
+  ];
+
+  config = mkIf cfg.enable {
 
     home-manager.users.${username} = mkIf (enableHM && cfg.enable) {
       # templates

@@ -4,7 +4,7 @@
 }: let
   steam-run =
     (steam.override {
-      extraPkgs = pkgs: [pkgs.corefonts pkgs.vistafonts];
+      extraPkgs = pkgs: [pkgs.corefonts pkgs.vista-fonts];
     })
     .run;
 in

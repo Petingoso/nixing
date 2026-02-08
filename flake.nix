@@ -31,6 +31,13 @@
     #theme generation
     matugen.url = "github:/InioX/Matugen";
 
+    # fetch Mozilla extension ids
+    mozid.url = "github:tupakkatapa/mozid";
+
+    nix-flatpak.url = "github:gmodena/nix-flatpak";
+
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
+
   };
 
   outputs = {self, ...} @ inputs: {

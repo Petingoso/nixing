@@ -16,7 +16,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home-manager.users.${username} = mkIf enableHM{
+    home-manager.users.${username} = {config,mozid, ...}: mkIf enableHM {
       # xdg.configFile."firefox/treestyle-tab.json".source = ./tst.json; ## source manually in extensions
       xdg.configFile."firefox/tabnine.json".source = ./tab-nine.json; ## source manually in extensions
       programs.firefox = {
@@ -45,41 +45,67 @@ in {
               ExtensionRecommendations = false;
               SkipOnboarding = true;
             };
-            ExtensionSettings = let
-              extension = shortId: uuid: {
-                name = uuid;
-                value = {
-                  install_url = "https://addons.mozilla.org/firefox/downloads/latest/${shortId}/latest.xpi";
-                  installation_mode = "normal_installed";
-                };
-              };
-            in
-              builtins.listToAttrs [
-                # (extension "auto-tab-discard" "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}") no longern needed
-                (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
-                (extension "buster-captcha-solver" "{e58d3966-3d76-4cd9-8552-1582fbc800c1}")
-                (extension "chameleon-ext" "{3579f63b-d8ee-424f-bbb6-6d0ce3285e6a}")
-                (extension "cookie-editor" "{c3c10168-4186-445c-9c5b-63f12b8e2c87}")
-                (extension "darkreader" "addon@darkreader.org")
-                (extension "noscript" "{73a6fe31-595d-460b-a920-fcc0f8843232}")
-                (extension "prettier-lichess" "{8ad4bea8-ad8d-4e98-b434-a76065dee6cb}")
-                (extension "s3_translator" "s3@translator")
-                (extension "skip-redirect" "skipredirect@sblask")
-                (extension "smart-referer" "smart-referer@meh.paranoid.pk")
-                (extension "tab-session-manager" "Tab-Session-Manager@sienori")
-                (extension "tampermonkey" "firefox@tampermonkey.net")
-                # (extension "tree-style-tab" "treestyletab@piro.sakura.ne.jp")
-                # (extension "tst-search" "@tst-search")
-                # (extension "tst-fade-old-tabs" "tst_fade_old_tabs@emvaized.com")
-                (extension "ublock-origin" "uBlock0@raymondhill.net")
-                (extension "tab-nine" "extension@tab-nine.xsfs.xyz")
-                (extension "vimium-ff" "{d7742d87-e61d-4b78-b8a1-b469842139fa}")
+            ExtensionSettings =
+            {
+              "*".installation_mode = "blocked";
 
-                {name = "tsukihi@lanraragi.extension";
-                 value.install_url = "https://github.com/Difegue/Tsukihi/releases/download/v2.0/Tsukihi-2.0.xpi";
-                 value.installation_mode = "normal_installed";
-                }
-              ];
+              "tsukihi@lanraragi.extension" = {
+                    install_url = "https://github.com/Difegue/Tsukihi/releases/download/v2.0/Tsukihi-2.0.xpi";
+                    installation_mode = "normal_installed";
+              };
+            }
+            // mozid.lib.mkExtensions [
+            "vimium-ff"
+            "ublock-origin"
+            "bitwarden-password-manager"
+            "buster-captcha-solver"
+            "chameleon-ext"
+            "cookie-editor"
+            "darkreader"
+            "noscript"
+            "prettier-lichess"
+            "skip-redirect"
+            "smart-referer"
+            "tab-session-manager"
+            "tampermonkey"
+            "tab-nine"
+            ];
+
+
+            #   extension = shortId: uuid: {
+            #     name = uuid;
+            #     value = {
+            #       install_url = "https://addons.mozilla.org/firefox/downloads/latest/${shortId}/latest.xpi";
+            #       installation_mode = "normal_installed";
+            #     };
+            #   };
+            # in
+            #   builtins.listToAttrs [
+            #     # (extension "auto-tab-discard" "{c2c003ee-bd69-42a2-b0e9-6f34222cb046}") no longern needed
+            #     (extension "bitwarden-password-manager" "{446900e4-71c2-419f-a6a7-df9c091e268b}")
+            #     (extension "buster-captcha-solver" "{e58d3966-3d76-4cd9-8552-1582fbc800c1}")
+            #     (extension "chameleon-ext" "{3579f63b-d8ee-424f-bbb6-6d0ce3285e6a}")
+            #     (extension "cookie-editor" "{c3c10168-4186-445c-9c5b-63f12b8e2c87}")
+            #     (extension "darkreader" "addon@darkreader.org")
+            #     (extension "noscript" "{73a6fe31-595d-460b-a920-fcc0f8843232}")
+            #     (extension "prettier-lichess" "{8ad4bea8-ad8d-4e98-b434-a76065dee6cb}")
+            #     (extension "s3_translator" "s3@translator")
+            #     (extension "skip-redirect" "skipredirect@sblask")
+            #     (extension "smart-referer" "smart-referer@meh.paranoid.pk")
+            #     (extension "tab-session-manager" "Tab-Session-Manager@sienori")
+            #     (extension "tampermonkey" "firefox@tampermonkey.net")
+            #     # (extension "tree-style-tab" "treestyletab@piro.sakura.ne.jp")
+            #     # (extension "tst-search" "@tst-search")
+            #     # (extension "tst-fade-old-tabs" "tst_fade_old_tabs@emvaized.com")
+            #     (extension "ublock-origin" "uBlock0@raymondhill.net")
+            #     (extension "tab-nine" "extension@tab-nine.xsfs.xyz")
+            #     (extension "vimium-ff" "{d7742d87-e61d-4b78-b8a1-b469842139fa}")
+            #
+            #     {name = "tsukihi@lanraragi.extension";
+            #      value.install_url = "https://github.com/Difegue/Tsukihi/releases/download/v2.0/Tsukihi-2.0.xpi";
+            #      value.installation_mode = "normal_installed";
+            #     }
+            #   ];
             # To add additional extensions, find it on addons.mozilla.org, find
             # the short ID in the url (like https://addons.mozilla.org/en-US/firefox/addon/!SHORT_ID!/)
             # Then, download the XPI by filling it in to the install_url template, unzip it,
@@ -144,18 +170,28 @@ in {
           extraConfig = lib.strings.concatStrings [
             "${builtins.readFile (fetchGit {
                 url = "https://github.com/arkenfox/user.js";
-                rev = "9e8ead84c847519b2333f384a5ac908c4afbd452"; #140.0
+                rev = "0f14e030b3a9391e761c03ce3c260730a78a4db6"; #140.1
               }
               + "/user.js")}\n"
 
             ''
                # user_pref("browser.search.suggest.enabled",true);
 
+
+
+
                user_pref("privacy.cpd.history" , false);
+
+               user_pref("privacy.clearOnShutdown_v2.historyFormDataAndDownloads", false);
                user_pref("privacy.clearOnShutdown_v2.browsingHistoryAndDownloads", false);
                user_pref("privacy.clearOnShutdown_v2.downloads", false);
+
+               user_pref("privacy.clearHistory.historyFormDataAndDownloads", false);
                user_pref("privacy.clearHistory.browsingHistoryAndDownloads", false);
+
+               user_pref("privacy.clearSiteData.historyFormDataAndDownloads", false);
                user_pref("privacy.clearSiteData.browsingHistoryAndDownloads", false);
+
                user_pref("browser.privatebrowsing.autostart" , false);
                user_pref("places.history.enabled" , true);
 

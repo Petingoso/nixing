@@ -3,17 +3,12 @@
   pkgs,
   config,
   ...
-}: let
-    inherit (config.custom) username enableHM;
-    cfg = config.custom.programs;
-in
-{
+}: {
   options.custom.programs = {
-    #NOTE: needs Home manager
     neovim-config.enable = lib.mkEnableOption "neovim-config";
   };
-  config = lib.mkIf cfg.neovim-config.enable {
-    home-manager.users.${username} = lib.mkIf enableHM{
+  config = lib.mkIf config.custom.programs.neovim-config.enable {
+    home-manager.users.${config.custom.username} = {
       programs.neovim = {
         enable = true;
         extraPackages = with pkgs; [
@@ -27,12 +22,13 @@ in
           ripgrep
 
           # browsersync
-          nodePackages.browser-sync
+          # nodePackages.browser-sync
           yarn
           nodejs
 
           # formatters
           stylua
+          ccls
           clang-tools
           shfmt
           prettierd
@@ -41,13 +37,14 @@ in
           # LSPs
           lua-language-server
           vscode-langservers-extracted
-          vscode-extensions.ms-vscode.cpptools
-          python3Packages.python-lsp-server
-          python3Packages.jedi-language-server
+          # vscode-extensions.ms-vscode.cpptools
+          black
+          basedpyright
           phpactor
           tinymist
           nil
-          jdt-language-server
+          java-language-server
+          rust-analyzer
         ];
       };
 

@@ -32,12 +32,12 @@ in {
     #win-spice
   ];
 
-  # home-manager.users.${username} = {
-  #   dconf.settings = {
-  #     "org/virt-manager/virt-manager/connections" = {
-  #       autoconnect = ["qemu:///system"];
-  #       uris = ["qemu:///system"];
-  #     };
-  #   };
-  # };
+  home-manager.users.${username} = {
+    dconf.settings = {
+      "org/virt-manager/virt-manager/connections" = {
+        autoconnect = ["qemu:///system"];
+        uris = ["qemu:///system"];
+      };
+    };
+  };
 }

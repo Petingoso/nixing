@@ -15,7 +15,7 @@ in {
     "docker.nix"
     "dualsense.nix"
     "fcitx.nix"
-    # "kleopatra.nix"
+    "kleopatra.nix"
     "libvirt.nix"
     # "nix-alien.nix"
     "opensnitch.nix"
@@ -25,5 +25,6 @@ in {
     # # "podman.nix"
     "wayland.nix"
     "wireguard.nix"
+    "tmux.nix"
   ];
 }

@@ -110,7 +110,7 @@ local tools = {
 		ft = { "markdown" },
 	},
 
-	{ "lervag/vimtex", ft = {"latex"} }, --latex completion and previewing
+	{ "lervag/vimtex", ft = { "latex" } }, --latex completion and previewing
 
 	{ "lervag/wiki.vim" }, --vim wiki, markdown collection
 	{ "alvan/vim-closetag" }, --close html tags
@@ -146,6 +146,19 @@ local tools = {
 		config = function()
 			require("typst-preview").setup()
 		end,
+	},
+	{
+		"Julian/lean.nvim",
+		event = { "BufReadPre *.lean", "BufNewFile *.lean" },
+
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+
+		---@type lean.Config
+		opts = { -- see below for full configuration options
+			mappings = true,
+		},
 	},
 }
 

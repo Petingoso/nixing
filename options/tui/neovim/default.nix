@@ -33,6 +33,7 @@
           shfmt
           prettierd
           typstyle
+          rustfmt
 
           # LSPs
           lua-language-server

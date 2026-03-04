@@ -53,6 +53,11 @@
         "outerCorners": true,
         "position": "left",
         "screenOverrides": [
+            {
+                "enabled": false,
+                "name": "eDP-2",
+                "position": "right"
+            }
         ],
         "showCapsule": true,
         "showOutline": false,
@@ -76,7 +81,7 @@
                     "reverseScroll": false,
                     "showApplications": false,
                     "showBadge": true,
-                    "showLabelsOnlyWhenOccupied": true,
+                    "showLabelsOnlyWhenOccupied": false,
                     "unfocusedIconsOpacity": 1
                 }
             ],
@@ -215,7 +220,7 @@
                 "id": "calendar-month-card"
             },
             {
-                "enabled": false,
+                "enabled": true,
                 "id": "weather-card"
             }
         ]
@@ -292,8 +297,26 @@
     },
     "desktopWidgets": {
         "enabled": false,
-        "gridSnap": false,
+        "gridSnap": true,
         "monitorWidgets": [
+            {
+                "name": "eDP-2",
+                "widgets": [
+                    {
+                        "clockColor": "primary",
+                        "clockStyle": "binary",
+                        "customFont": "",
+                        "format": "HH:mm\\nd MMMM yyyy",
+                        "id": "Clock",
+                        "roundedCorners": true,
+                        "scale": 1.773103414097292,
+                        "showBackground": true,
+                        "useCustomFont": false,
+                        "x": 1160,
+                        "y": 100
+                    }
+                ]
+            }
         ]
     },
     "dock": {
@@ -359,7 +382,7 @@
     "location": {
         "analogClockInCalendar": false,
         "firstDayOfWeek": -1,
-        "hideWeatherCityName": false,
+        "hideWeatherCityName": true,
         "hideWeatherTimezone": false,
         "name": "Lisbon",
         "showCalendarEvents": true,
@@ -367,22 +390,22 @@
         "showWeekNumberInCalendar": false,
         "use12hourFormat": false,
         "useFahrenheit": false,
-        "weatherEnabled": false,
-        "weatherShowEffects": true
+        "weatherEnabled": true,
+        "weatherShowEffects": false
     },
     "network": {
         "bluetoothDetailsViewMode": "grid",
         "bluetoothHideUnnamedDevices": false,
         "bluetoothRssiPollIntervalMs": 10000,
         "bluetoothRssiPollingEnabled": false,
-        "wifiDetailsViewMode": "list",
+        "wifiDetailsViewMode": "grid",
         "wifiEnabled": true
     },
     "nightLight": {
         "autoSchedule": true,
         "dayTemp": "6500",
         "enabled": true,
-        "forced": true,
+        "forced": false,
         "manualSunrise": "06:30",
         "manualSunset": "18:30",
         "nightTemp": "4500"
@@ -566,7 +589,7 @@
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "fillColor": "#000000",
-        "fillMode": "center",
+        "fillMode": "crop",
         "hideWallpaperFilenames": false,
         "monitorDirectories": [
         ],

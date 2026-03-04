@@ -49,6 +49,7 @@ in {
           ",XF86AudioRaiseVolume,exec,${ipc} volume increase"
           ",XF86AudioLowerVolume,exec,${ipc} volume decrease"
           ",XF86AudioMute,exec,${ipc} muteOutput"
+          "ALT,b,exec,${ipc} bar toggle"
         ];
       };
 

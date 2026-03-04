@@ -74,7 +74,7 @@ in
     extraModules = (import ../modules/desktop { }).imports;
   };
   teto = mkHost {
-    channel = "unstable";
+    channel = "stable";
     hostname = "teto";
     hostDir = ./teto;
     enableHM = true;

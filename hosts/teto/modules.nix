@@ -2,8 +2,11 @@
   inherit (lib.lists) map;
 in {
   imports = map (name: "${../../modules/optional/${name}}") [
-    "cpu/amd.nix"
-    "scripts/default.nix"
+    "cpu/"
+    "hyprland/"
+    "scripts/"
+
+    "auto-update.nix"
     "afs.nix"
     "direnv.nix"
     "docker.nix"

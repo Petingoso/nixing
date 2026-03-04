@@ -17,6 +17,8 @@ in {
     qbittorrent
     p7zip
     wdisplays
+    inetools
+    dig
     # mcomix
   ];
 
@@ -29,9 +31,9 @@ in {
     pavucontrol
     qalculate-gtk
     wineWowPackages.waylandFull
-    pcloud
+    # pcloud
 
     xdg-utils
-    hydrapaper
+    # hydrapaper
   ];
 }

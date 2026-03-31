@@ -12,12 +12,14 @@ in {
   };
 
   services = {
-    xserver = {
-      xkb.layout = "pt";
-    };
+    # xserver = {
+    #   xkb.layout = "pt";
+    # };
+    desktopManager.plasma6.enable = true;
+    displayManager.sddm.enable = false;
     # displayManager.gdm.enable = true;
-    displayManager.gdm.enable = false;
-    desktopManager.gnome.enable = true;
+    # displayManager.gdm.enable = false;
+    # desktopManager.gnome.enable = true;
     # displayManager.gdm.autoSuspend = false;
   };
 
@@ -30,7 +32,6 @@ in {
     mouse-follows-focus-2
   ];
 
-  programs.kdeconnect.enable = true;
   custom = {
     username = "petnix";
     programs = {
@@ -44,6 +45,7 @@ in {
       };
 
       nh.enable = true;
+      nh.clean.enable  = false; # auto-update.nix does it
       nh.flake = "/home/${username}/flake";
 
       quickshell.enable = true;
@@ -81,7 +83,6 @@ in {
 
   users.users.petnix.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5" # main
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe" # teto
   ];
 
   users.users.petnix.extraGroups = ["kvm"];

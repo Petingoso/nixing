@@ -1,5 +1,5 @@
 {
-  # inputs,
+  inputs,
   config,
   lib,
   ...
@@ -30,7 +30,7 @@ in {
 
     home-manager.users.${config.custom.username} = {
       imports = [
-        # inputs.hyprland.homeManagerModules.default
+        inputs.hyprland.homeManagerModules.default
         ./conf/binds.nix
         ./conf/exports.nix
         ./conf/startup.nix

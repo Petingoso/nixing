@@ -1,10 +1,9 @@
 {
   pkgs,
   config,
-  self,
   ...
 }: let
-  inherit (config.mystuff.other.system) username;
+  inherit (config.custom) username;
 in {
   environment.systemPackages = with pkgs; [
     baobab
@@ -17,14 +16,14 @@ in {
     qbittorrent
     p7zip
     wdisplays
-    inetools
+    inetutils
     dig
     # mcomix
   ];
 
   users.users.${username}.packages = with pkgs; [
     rclone
-    bitwarden
+    bitwarden-desktop
     evince
     fastfetch
     krita

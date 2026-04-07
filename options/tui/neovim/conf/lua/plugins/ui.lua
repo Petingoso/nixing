@@ -92,12 +92,12 @@ local ui = {
 		end,
 	},
 
-	{
-		"NvChad/nvim-colorizer.lua",
-		config = function()
-			require("plugins.configs.colorizer")
-		end,
-	}, --preview colors
+	-- {
+	-- 	"NvChad/nvim-colorizer.lua",
+	-- 	config = function()
+	-- 		require("plugins.configs.colorizer")
+	-- 	end,
+	-- }, --preview colors
 
 	--Github
 	{

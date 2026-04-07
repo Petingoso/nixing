@@ -6,7 +6,10 @@
   wayland.windowManager.hyprland.settings = {
     # source = "/tmp/themes/hyperland/hypr_theme";
 
-    monitor = ",preferred,auto,1";
+    monitor = [
+      "desc:Ancor Communications Inc ASUS VS247 F8LMTF187560, preferred, auto, 1, transform, 1"
+      ",preferred,auto,1"
+    ];
 
     cursor.no_hardware_cursors = true;
 
@@ -58,26 +61,24 @@
     #   disable_hyprland_logo = true;
     # };
 
-    windowrule =
-      [
-        "match:title (.*?), idle_inhibit fullscreen" # dont block if any app is on fullscreen
-
-        "match:class ^(qalculate-gtk)$, float on"
-      ]
-      ++ [
-        {
-          name = "xwayland-video-bridge-fixes";
-          "match:class" = "xwaylandvideobridge";
-
-          no_initial_focus = true;
-          no_focus = true;
-          no_anim = true;
-          no_blur = true;
-          max_size = "1 1";
-          opacity = 0.0;
-        }
-      ];
-
+    # wayland.windowManager.hyprland.settings.windowrule = (
+    #   let
+    #     xwaylandBridgeClass = "class:^(xwaylandvideobridge)$";
+    #   in (
+    #     [
+    #       "idleinhibit fullscreen, title:^(.*)$"
+    #       "float, class:^(qalculate-gtk)$"
+    #     ]
+    #     ++ (map (rule: "${rule}, ${xwaylandBridgeClass}") [
+    #       "noinitialfocus"
+    #       "nofocus"
+    #       "noanim"
+    #       "noblur"
+    #       "maxsize 1 1"
+    #       "opacity 0.0 override"
+    #     ])
+    #   )
+    # );
     # layerrule = ["blur, swaync-control-center" "ignorezero, swaync-control-center"];
 
     # workspace = ["w[t1], gapsout:0, border:0"];

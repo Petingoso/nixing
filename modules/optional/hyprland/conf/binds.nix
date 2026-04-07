@@ -37,7 +37,7 @@ in {
         "${mod} SHIFT, P, exec, ${lock-cmd}"
         "${mod} CONTROL, X, exec, ${power-cmd}"
 
-        "${mod}, V, togglesplit"
+        # "${mod}, V, togglesplit"
         "${mod} SHIFT, V, togglegroup"
         "${mod}, N ,changegroupactive,f"
         "${mod} SHIFT,N,changegroupactive,b"
@@ -56,10 +56,10 @@ in {
         "${mod} SHIFT,period,movewindow,mon:r"
         "${mod} SHIFT,comma,movewindow,mon:l"
 
-        "${mod} CONTROL,left,splitratio,-0.1"
-        "${mod} CONTROL,right,splitratio,+0.1"
-        "${mod} CONTROL,h,splitratio,-0.1"
-        "${mod} CONTROL,l,splitratio,+0.1"
+        # "${mod} CONTROL,left,splitratio,-0.1"
+        # "${mod} CONTROL,right,splitratio,+0.1"
+        # "${mod} CONTROL,h,splitratio,-0.1"
+        # "${mod} CONTROL,l,splitratio,+0.1"
 
         "${mod}, left, movefocus, l"
         "${mod}, right, movefocus, r"

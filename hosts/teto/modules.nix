@@ -1,10 +1,16 @@
-{lib, ...}: let
+{
+  lib,
+  self,
+  ...
+}: let
   inherit (lib.lists) map;
 in {
-  imports = map (name: "${../../modules/optional/${name}}") [
+  imports = map (name: "${self}/modules/optional/${name}") [
     "cpu/amd.nix"
-    "scripts/default.nix"
-    "afs.nix"
+    "hyprland/default.nix"
+
+    "auto-update.nix"
+    # "afs.nix"
     "direnv.nix"
     "docker.nix"
     "fcitx.nix"

@@ -12,6 +12,7 @@
 in {
   options.custom.programs.nh = {
     enable = mkEnableOption "nh";
+    clean.enable = mkEnableOption "enable gc";
     flake = mkOption {
       type = str;
       description = "flake directory";
@@ -23,7 +24,7 @@ in {
       enable = true;
       inherit (cfg) flake;
       clean = {
-        enable = true;
+        enable = cfg.clean.enable;
         dates = "weekly";
         extraArgs = "--keep 10";
       };

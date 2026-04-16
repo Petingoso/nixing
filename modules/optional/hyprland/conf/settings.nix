@@ -1,8 +1,5 @@
+{ ... }:
 {
-  config,
-  pkgs,
-  ...
-}: {
   wayland.windowManager.hyprland.settings = {
     # source = "/tmp/themes/hyperland/hypr_theme";
 
@@ -44,6 +41,7 @@
 
     decoration = {
       rounding = 3;
+      blur.enabled = false;
       blur.ignore_opacity = true;
 
       shadow = {
@@ -61,6 +59,9 @@
     #   disable_hyprland_logo = true;
     # };
 
+    windowrule = [
+      "match:title ^(.*)$, idle_inhibit fullscreen"
+    ];
     # wayland.windowManager.hyprland.settings.windowrule = (
     #   let
     #     xwaylandBridgeClass = "class:^(xwaylandvideobridge)$";

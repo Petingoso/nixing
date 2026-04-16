@@ -25,6 +25,8 @@ in {
     # # "podman.nix"
     "wayland.nix"
     "wireguard.nix"
+    "sdrangel.nix"
     "tmux.nix"
+    "waydroid.nix"
   ];
 }

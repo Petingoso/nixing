@@ -32,6 +32,7 @@
         ],
         "preferredPlayer": "mpv",
         "spectrumFrameRate": 30,
+        "spectrumMirrored": true,
         "visualizerType": "linear",
         "volumeFeedback": false,
         "volumeFeedbackSoundFile": "",
@@ -49,7 +50,6 @@
         "density": "spacious",
         "displayMode": "always_visible",
         "enableExclusionZoneInset": true,
-        "floating": false,
         "fontScale": 1,
         "frameRadius": 12,
         "frameThickness": 8,
@@ -61,7 +61,9 @@
         "middleClickFollowMouse": false,
         "monitors": [
             "DP-1",
-            "HDMI-A-2"
+            "HDMI-A-2",
+            "eDP-1",
+            "HDMI-A-1"
         ],
         "mouseWheelAction": "none",
         "mouseWheelWrap": true,
@@ -207,6 +209,9 @@
                             "icon": "noctalia",
                             "id": "ControlCenter",
                             "useDistroLogo": false
+                        },
+                        {
+                            "id": "plugin:timer"
                         }
                     ]
                 }
@@ -341,6 +346,9 @@
                             "icon": "noctalia",
                             "id": "ControlCenter",
                             "useDistroLogo": false
+                        },
+                        {
+                            "id": "plugin:timer"
                         }
                     ]
                 }
@@ -369,7 +377,7 @@
                     "occupiedColor": "secondary",
                     "pillSize": 0.6,
                     "showApplications": false,
-                    "showApplicationsHover": false,
+                    "showApplicationsHover": true,
                     "showBadge": true,
                     "showLabelsOnlyWhenOccupied": false,
                     "unfocusedIconsOpacity": 1
@@ -378,6 +386,7 @@
             "left": [
                 {
                     "colorizeSystemIcon": "none",
+                    "colorizeSystemText": "none",
                     "customIconPath": "",
                     "enableColorization": false,
                     "icon": "rocket",
@@ -423,6 +432,7 @@
                     "maxWidth": 145,
                     "scrollingMode": "hover",
                     "showIcon": true,
+                    "showText": true,
                     "textColor": "none",
                     "useFixedWidth": false
                 },
@@ -465,6 +475,15 @@
                 },
                 {
                     "defaultSettings": {
+                        "compactMode": false,
+                        "defaultDuration": 0,
+                        "iconColor": "none",
+                        "textColor": "none"
+                    },
+                    "id": "plugin:timer"
+                },
+                {
+                    "defaultSettings": {
                         "activeColor": "primary",
                         "enableToast": true,
                         "hideInactive": false,
@@ -500,6 +519,7 @@
                 {
                     "colorizeDistroLogo": false,
                     "colorizeSystemIcon": "none",
+                    "colorizeSystemText": "none",
                     "customIconPath": "",
                     "enableColorization": false,
                     "icon": "noctalia",
@@ -540,6 +560,7 @@
         "monitorForColors": "",
         "predefinedScheme": "Gruvbox",
         "schedulingMode": "off",
+        "syncGsettings": true,
         "useWallpaperColors": true
     },
     "controlCenter": {
@@ -723,6 +744,7 @@
         "showHibernateOnLockScreen": false,
         "showScreenCorners": false,
         "showSessionButtonsOnLockScreen": false,
+        "smoothScrollEnabled": true,
         "telemetryEnabled": false
     },
     "hooks": {
@@ -747,12 +769,13 @@
         "resumeScreenOffCommand": "",
         "resumeSuspendCommand": "",
         "screenOffCommand": "",
-        "screenOffTimeout": 300,
+        "screenOffTimeout": 0,
         "suspendCommand": "",
-        "suspendTimeout": 0
+        "suspendTimeout": 600
     },
     "location": {
         "analogClockInCalendar": false,
+        "autoLocate": false,
         "firstDayOfWeek": -1,
         "hideWeatherCityName": true,
         "hideWeatherTimezone": false,
@@ -763,10 +786,10 @@
         "use12hourFormat": false,
         "useFahrenheit": false,
         "weatherEnabled": true,
-        "weatherShowEffects": false
+        "weatherShowEffects": false,
+        "weatherTaliaMascotAlways": false
     },
     "network": {
-        "airplaneModeEnabled": false,
         "bluetoothAutoConnect": true,
         "bluetoothDetailsViewMode": "grid",
         "bluetoothHideUnnamedDevices": false,
@@ -774,8 +797,7 @@
         "bluetoothRssiPollingEnabled": false,
         "disableDiscoverability": false,
         "networkPanelView": "wifi",
-        "wifiDetailsViewMode": "grid",
-        "wifiEnabled": true
+        "wifiDetailsViewMode": "grid"
     },
     "nightLight": {
         "autoSchedule": true,
@@ -970,7 +992,6 @@
         "fontDefaultScale": 1,
         "fontFixed": "JetBrainsMono NF",
         "fontFixedScale": 1,
-        "networkPanelView": "ethernet",
         "panelBackgroundOpacity": 0.93,
         "panelsAttachedToBar": true,
         "scrollbarAlwaysVisible": true,
@@ -981,7 +1002,7 @@
     },
     "wallpaper": {
         "automationEnabled": false,
-        "directory": "/home/petnix/.config/wallpapers",
+        "directory": "/home/petnix/.config/wallpaper",
         "enableMultiMonitorDirectories": false,
         "enabled": true,
         "favorites": [
@@ -989,6 +1010,7 @@
         "fillColor": "#000000",
         "fillMode": "crop",
         "hideWallpaperFilenames": false,
+        "linkLightAndDarkWallpapers": true,
         "monitorDirectories": [
         ],
         "overviewBlur": 0.4,
@@ -1011,6 +1033,7 @@
             "pixelate",
             "honeycomb"
         ],
+        "useOriginalImages": false,
         "useSolidColor": false,
         "useWallhaven": false,
         "viewMode": "recursive",

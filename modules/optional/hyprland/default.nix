@@ -3,10 +3,12 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   inherit (lib.options) mkOption;
   inherit (lib.types) str;
-in {
+in
+{
   options.custom.programs = {
     launcher = mkOption {
       description = "launcher program";
@@ -26,6 +28,11 @@ in {
   };
 
   config = {
+    nix.settings = {
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    };
     programs.hyprland.enable = true;
 
     home-manager.users.${config.custom.username} = {

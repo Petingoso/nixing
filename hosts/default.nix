@@ -12,6 +12,7 @@ let
       extraModules ? [ ],
       hostname,
       enableHM ? false,
+      ignoreOverride ? [ ],
     }:
     let
       pkgs = if channel == "stable" then inputs.nixpkgs-stable else inputs.nixpkgs-unstable;
@@ -34,14 +35,14 @@ let
           inputs
           self
           lib
-          system
           hostname
+          system
           ;
+        nixpkgs = pkgs;
       };
 
       modules =
         lib.flatten [
-          # for the options nested list
           hostDir
           "${self}/modules/core"
           (import "${self}/options" { }).imports
@@ -49,7 +50,22 @@ let
           (
             { config, ... }:
             {
-              config.custom.enableHM = enableHM;
+              config = {
+                nix.registry =
+                  let
+                    # We map over all inputs, but skip the ones in ignoreOverride
+                    shouldOverride = name: !(builtins.elem name ignoreOverride);
+                  in
+                  {
+                    nixpkgs.flake = pkgs;
+                  }
+                  // (lib.mapAttrs (name: value: { flake = value; }) (
+                    lib.filterAttrs (name: _: shouldOverride name) inputs
+                  ));
+
+                nix.nixPath = [ "nixpkgs=${pkgs}" ];
+                custom.enableHM = enableHM;
+              };
             }
           )
         ]
@@ -57,6 +73,7 @@ let
         ++ hostExtraModules
         ++ extraModules;
     };
+  ignoreOverride = [ "hyprland" ];
 in
 {
   Wired = mkHost {
@@ -65,6 +82,7 @@ in
     hostDir = ./Wired;
     enableHM = true;
     extraModules = (import ../modules/desktop { }).imports;
+    ignoreOverride = ignoreOverride;
   };
   HeadEmpty = mkHost {
     channel = "unstable";
@@ -72,6 +90,7 @@ in
     hostDir = ./HeadEmpty;
     enableHM = true;
     extraModules = (import ../modules/desktop { }).imports;
+    ignoreOverride = ignoreOverride;
   };
   teto = mkHost {
     channel = "stable";
@@ -79,6 +98,7 @@ in
     hostDir = ./teto;
     enableHM = true;
     extraModules = (import ../modules/desktop { }).imports;
+    ignoreOverride = ignoreOverride;
   };
   furry-femboys = mkHost {
     channel = "stable";
@@ -86,6 +106,6 @@ in
     hostDir = ./furry-femboys;
     enableHM = false;
     system = "aarch64-linux";
-
+    ignoreOverride = ignoreOverride;
   };
 }

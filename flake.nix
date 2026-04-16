@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-25.11";
+
     home-manager-stable = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -19,7 +20,10 @@
     #hardware support
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
+
     hyprland.url = "github:hyprwm/Hyprland";
+
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
 
     #running dynamic apps easily
     nix-alien.url = "github:thiagokokada/nix-alien";
@@ -35,7 +39,6 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
-    noctalia.url = "github:noctalia-dev/noctalia-shell";
   };
 
   outputs = {self, ...} @ inputs: {

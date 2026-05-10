@@ -1,6 +1,4 @@
-{...}: {
-  programs.light = {
-    enable = true;
-    brightnessKeys.enable = true;
-  };
+{ ... }:
+{
+  hardware.acpilight.enable = true;
 }

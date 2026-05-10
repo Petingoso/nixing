@@ -4,8 +4,8 @@
       experimental-features = [
         "flakes"
         "nix-command"
-        "no-url-literals"
       ];
+      lint-url-literals = "fatal";
       trusted-users = [
         "root"
         config.custom.username

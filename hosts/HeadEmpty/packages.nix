@@ -1,11 +1,5 @@
+{ pkgs,self, ... }:
 {
-  pkgs,
-  config,
-  self,
-  ...
-}: let
-  inherit (config.mystuff.other.system) username;
-in {
   environment.systemPackages = with pkgs; [
     baobab
     compsize
@@ -22,28 +16,26 @@ in {
     p7zip
     wdisplays
     # mcomix
-  ];
-
-  users.users.${username}.packages = with pkgs; [
-    bitwarden
+    bitwarden-desktop
     evince
     fastfetch
     krita
-    lutris
+    # lutris
     pavucontrol
     pcsx2
     qalculate-gtk
     steamtinkerlaunch
-    stremio
+    # stremio
     texliveMedium
     tor-browser
     ungoogled-chromium
-    wineWowPackages.waylandFull
-    youtube-music
+    wine
+    pear-desktop
     xdg-utils
     rclone
     pcloud
     ludusavi
+    (callPackage "${self}/pkgs/scripts" { })
   ];
   programs.steam = {
     enable = true;

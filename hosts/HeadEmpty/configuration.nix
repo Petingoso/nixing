@@ -1,42 +1,47 @@
-{config, ...}: let
-  inherit (config.mystuff.other.system) username;
+{
+  config,
+  pkgs,
+  ...
+}: let
+  inherit (config.custom) username;
 in {
   programs.kdeconnect.enable = true;
 
-  mystuff = {
-    other.home-manager.enable = true;
+  custom = {
+    username = "petnix";
     programs = {
       git = {
         enable = true;
         defaultBranch = "master";
-        userName = "Petingoso";
-        userEmail = "petingavasco@protonmail.com";
       };
       zsh = {
         enable = true;
         zinit.enable = true;
       };
-      nh.enable = true;
-      nh.flake = "/home/${username}/flake";
+      nh = {
+        enable = true;
+        flake = "/home/${username}/flake";
+      };
+
+      quickshell.enable = true;
       firefox-config.enable = true;
       kitty.enable = true;
-      rofi.enable = true;
-      swaync.enable = true;
-      waybar.enable = true;
       mpv.enable = true;
-      vscode.enable = true;
       neovim-config.enable = true;
+      vscode.enable = true;
       ranger.enable = true;
       vesktop.enable = true;
     };
     services = {
+      greetd.enable = true;
+      #TODO: modularize?
+      greetd.greeter = "tuigreet";
+      greetd.cage = false;
       networkmanager.enable = true;
+      networkmanager.powersave = true;
     };
-    gtk.enable = true;
-    qt.enable = true;
   };
 
-  age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
-
+  age.identityPaths = ["/home/${username}/.ssh/id_ed25519"];
   system.stateVersion = "24.05";
 }

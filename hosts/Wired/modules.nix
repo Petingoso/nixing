@@ -27,6 +27,8 @@ in {
     "wireguard.nix"
     "sdrangel.nix"
     "tmux.nix"
-    "waydroid.nix"
+    # "waydroid.nix"
+    "roblox.nix"
+    "stm.nix"
   ];
 }

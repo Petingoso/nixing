@@ -39,6 +39,7 @@
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
+    stm-nix.url = "github:fdnt7/stm32cubeide-nix";
   };
 
   outputs = {self, ...} @ inputs: {

@@ -17,6 +17,7 @@ in
     flags = [
       "--commit-lock-file"
     ];
+    allowReboot = true;
   };
 
   #https://wiki.nixos.org/wiki/Automatic_system_upgrades#Troubleshooting

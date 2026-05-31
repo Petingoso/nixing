@@ -5,4 +5,8 @@
 }: {
   imports = [inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480];
   services.tlp.enable = true;
+  services.thinkfan = {
+    enable = true;
+
+  };
 }

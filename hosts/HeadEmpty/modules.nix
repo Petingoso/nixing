@@ -15,5 +15,7 @@ in {
     "wayland.nix"
     "wireguard.nix"
     "opentabletdriver.nix"
+    "steamlink.nix"
+    "stm.nix"
   ];
 }

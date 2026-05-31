@@ -3,7 +3,7 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "workbench.colorTheme": "NoctaliaTheme",
+  "workbench.colorTheme": "Gruvbox Dark Soft",
   "[typst]": {
     "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
   },
@@ -17,7 +17,6 @@
   "terminal.integrated.fontSize": 16,
   "vscode-neovim.neovimInitVimPaths.linux": "~/.config/vs-nvim",
   "security.workspace.trust.enabled": false,
-  "workbench.sideBar.location": "right",
   "editor.lineNumbers": "relative",
   "nix.enableLanguageServer": true,
 "nix.formatterPath": "alejandra",
@@ -50,6 +49,11 @@
 ],
 "[cpp]": {
   "editor.defaultFormatter": "xaver.clang-format"
-}
+},
+"[html]": {
+  "editor.defaultFormatter": "vscode.html-language-features"
+},
+"workbench.sideBar.location": "right",
+"p2p-live-share.trystero": {}
 }
 

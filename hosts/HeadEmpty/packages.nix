@@ -35,10 +35,7 @@
     rclone
     pcloud
     ludusavi
+    syncthing
     (callPackage "${self}/pkgs/scripts" { })
   ];
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  };
 }

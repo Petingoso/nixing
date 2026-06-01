@@ -5,7 +5,6 @@
         "flakes"
         "nix-command"
       ];
-      lint-url-literals = "fatal";
       trusted-users = [
         "root"
         config.custom.username

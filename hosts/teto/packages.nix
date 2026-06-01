@@ -23,13 +23,12 @@ in {
 
   users.users.${username}.packages = with pkgs; [
     rclone
-    bitwarden-desktop
     evince
     fastfetch
     krita
     pavucontrol
     qalculate-gtk
-    wineWowPackages.waylandFull
+    wine
     # pcloud
 
     xdg-utils

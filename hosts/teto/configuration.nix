@@ -2,10 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.custom) username;
-in {
-
+in
+{
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -24,6 +25,7 @@ in {
   };
 
   services.xserver.enable = true;
+  services.xserver.displayManager.startx.enable = true;
 
   environment.systemPackages = with pkgs.gnomeExtensions; [
     blur-my-shell
@@ -47,7 +49,7 @@ in {
       };
 
       nh.enable = true;
-      nh.clean.enable  = false; # auto-update.nix does it
+      nh.clean.enable = false; # auto-update.nix does it
       nh.flake = "/home/${username}/flake";
 
       quickshell.enable = true;
@@ -70,7 +72,7 @@ in {
     };
   };
 
-  age.identityPaths = ["/home/${username}/.ssh/id_ed25519"];
+  age.identityPaths = [ "/home/${username}/.ssh/id_ed25519" ];
   system.stateVersion = "23.11";
 
   networking.firewall.enable = true;
@@ -87,7 +89,16 @@ in {
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5" # main
   ];
 
-  users.users.petnix.extraGroups = ["kvm"];
+  users.users.petnix.extraGroups = [ "kvm" "uinput" ];
+
+  hardware.uinput.enable = true;
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
+    openFirewall = true;
+  };
+
   # services.printing.enable = true;
   # services.samba.enable = true;
   # services.printing.drivers = [

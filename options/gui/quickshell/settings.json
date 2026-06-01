@@ -63,7 +63,8 @@
             "DP-1",
             "HDMI-A-2",
             "eDP-1",
-            "HDMI-A-1"
+            "HDMI-A-1",
+            "test"
         ],
         "mouseWheelAction": "none",
         "mouseWheelWrap": true,
@@ -352,6 +353,10 @@
                         }
                     ]
                 }
+            },
+            {
+                "enabled": false,
+                "name": "test"
             }
         ],
         "showCapsule": true,
@@ -377,9 +382,9 @@
                     "occupiedColor": "secondary",
                     "pillSize": 0.6,
                     "showApplications": false,
-                    "showApplicationsHover": true,
+                    "showApplicationsHover": false,
                     "showBadge": true,
-                    "showLabelsOnlyWhenOccupied": false,
+                    "showLabelsOnlyWhenOccupied": true,
                     "unfocusedIconsOpacity": 1
                 }
             ],

@@ -15,6 +15,7 @@ _: {
     ./pi400.nix
     ./system.nix
     ./searx.nix
+    ./syncthing.nix
     ./vaultwarden.nix
     ./znc.nix
   ];

@@ -27,6 +27,7 @@
     };
 
     settings.security = {
+      secret_key = "$__env{GRAFANA_KEY}";
       admin_password = "$__env{GRAFANA_PASSWORD}";
     };
 

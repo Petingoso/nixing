@@ -32,7 +32,7 @@
       plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" 
       		 "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90" 
 		 "github.com/mholt/caddy-ratelimit@v0.0.0-20250915152450-04ea34edc0c4"];
-      hash = "sha256-TEnFZhxVlFOxo5VlgGzehCN5EKvkwZ3JTaBUSLy3h1A=";
+      hash = "sha256-anwMRNnsWAwiHySqH1DCGDTqm2ZeNZbEwJHbr8mdyK4=";
       # hash = lib.fakeHash;
       });
     # }).overrideAttrs (finalAttr: prevAttrs: {

@@ -44,11 +44,21 @@
   age.identityPaths = [ "/home/pet/.ssh/id_ed25519"];
   system.stateVersion = "25.11";
 
+  nix.settings = {
+    substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
   networking.tempAddresses = "disabled";
   boot.kernel.sysctl = {
   "net.ipv6.conf.all.accept_ra" = 0;
   "net.ipv6.conf.all.autoconf" = 0;
   "net.ipv6.conf.end0.accept_ra" = 0;
+
+
 };
 
 

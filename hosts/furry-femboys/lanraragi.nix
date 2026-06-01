@@ -19,6 +19,7 @@
   };
 
   fileSystems."/var/lib/private/lanraragi" = {
+    fsType = "none";
     device = "/data/lanraragi";
     options = ["bind"];
   };

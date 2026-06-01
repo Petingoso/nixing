@@ -4,7 +4,6 @@
       experimental-features = [
         "flakes"
         "nix-command"
-        "no-url-literals"
       ];
       trusted-users = [
         "root"

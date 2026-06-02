@@ -19,4 +19,5 @@
     raspberrypi-eeprom
     raspberrypifw
   ];
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_rpi4;
 }

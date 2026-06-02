@@ -11,6 +11,8 @@
     home-manager.users.${config.custom.username} = {
       programs.neovim = {
         enable = true;
+        withRuby = false;
+        withPython3 = true;
         extraPackages = with pkgs; [
           # C
           gcc

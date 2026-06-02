@@ -82,6 +82,7 @@ in {
           package = pkgs.papirus-icon-theme;
           name = "Papirus-Dark";
         };
+        gtk4.theme = config.gtk.theme;
         theme = {
           name = "adw-gtk3";
           package = pkgs.adw-gtk3;
@@ -92,7 +93,7 @@ in {
       qt = {
         enable = true;
 
-        platformTheme = "qtct";
+        platformTheme.name = "qtct";
 
         style.name = "noctalia";
       };

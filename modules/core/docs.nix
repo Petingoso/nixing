@@ -12,7 +12,7 @@ in {
     info.enable = false;
     man = {
       enable = true;
-      generateCaches = false;
+      cache.enable = false;
       man-db.enable = false;
       mandoc.enable = true;
     };

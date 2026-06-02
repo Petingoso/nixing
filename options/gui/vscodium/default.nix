@@ -26,7 +26,7 @@ in {
         xdg.configFile."VSCodium/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/settings.json";
         xdg.configFile."VSCodium/User/tasks.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/tasks.json";
         xdg.configFile."VSCodium/User/keybindings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/keybindings.json";
-        programs.vscode = {
+        programs.vscodium = {
           enable = true;
           package = pkgs.vscodium.fhsWithPackages (ps: with ps; [gcc gnumake gdb lldb clang-tools shfmt python3 nil]);
           profiles.default.extensions = with pkgs.vscode-extensions;

@@ -38,4 +38,7 @@
     syncthing
     (callPackage "${self}/pkgs/scripts" { })
   ];
+  programs.steam = {
+    enable = true;
+  };
 }

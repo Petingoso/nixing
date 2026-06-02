@@ -3,29 +3,33 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.programs.firefox-config;
   inherit (config.custom) username enableHM;
 
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
-in {
+in
+{
   options.custom.programs = {
     #NOTE: Needs home manager
     firefox-config.enable = mkEnableOption "firefox-config";
   };
 
   config = lib.mkIf cfg.enable {
-    home-manager.users.${username} = {
-      config,
-      mozid,
-      ...
-    }:
+    home-manager.users.${username} =
+      {
+        config,
+        mozid,
+        ...
+      }:
       mkIf enableHM {
         # xdg.configFile."firefox/treestyle-tab.json".source = ./tst.json; ## source manually in extensions
         xdg.configFile."firefox/tabnine.json".source = ./tab-nine.json; # # source manually in extensions
         programs.firefox = {
           enable = true;
+          configPath = "${config.xdg.configHome}/mozilla/firefox";
 
           package = pkgs.wrapFirefox pkgs.firefox-esr-140-unwrapped {
             extraPolicies = {
@@ -50,32 +54,31 @@ in {
                 ExtensionRecommendations = false;
                 SkipOnboarding = true;
               };
-              ExtensionSettings =
-                {
-                  "*".installation_mode = "blocked";
+              ExtensionSettings = {
+                "*".installation_mode = "blocked";
 
-                  "tsukihi@lanraragi.extension" = {
-                    install_url = "https://github.com/Difegue/Tsukihi/releases/download/v2.0/Tsukihi-2.0.xpi";
-                    installation_mode = "normal_installed";
-                  };
-                }
-                // (
-                  let
-                    extensionIds = import ./firefox-extension-ids.nix;
-                  in
-                    builtins.listToAttrs (
-                      # for each short id in extensionIds
-                      # create an element in the list that is a set like this
-                      # then use list to Attrs
-                      builtins.map (shortId: {
-                        name = extensionIds.${shortId};
-                        value = {
-                          install_url = "https://addons.mozilla.org/firefox/downloads/latest/${shortId}/latest.xpi";
-                          installation_mode = "normal_installed";
-                        };
-                      }) (builtins.attrNames extensionIds)
-                    )
-                );
+                "tsukihi@lanraragi.extension" = {
+                  install_url = "https://github.com/Difegue/Tsukihi/releases/download/v2.0/Tsukihi-2.0.xpi";
+                  installation_mode = "normal_installed";
+                };
+              }
+              // (
+                let
+                  extensionIds = import ./firefox-extension-ids.nix;
+                in
+                builtins.listToAttrs (
+                  # for each short id in extensionIds
+                  # create an element in the list that is a set like this
+                  # then use list to Attrs
+                  builtins.map (shortId: {
+                    name = extensionIds.${shortId};
+                    value = {
+                      install_url = "https://addons.mozilla.org/firefox/downloads/latest/${shortId}/latest.xpi";
+                      installation_mode = "normal_installed";
+                    };
+                  }) (builtins.attrNames extensionIds)
+                )
+              );
             };
           };
           profiles.Default = {
@@ -109,7 +112,7 @@ in {
                     }
                   ];
                   icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-                  definedAliases = ["@np"];
+                  definedAliases = [ "@np" ];
                 };
                 "NixOS Wiki" = {
                   urls = [
@@ -119,7 +122,7 @@ in {
                   ];
                   icon = "https://nixos.wiki/favicon.png";
                   updateInterval = 24 * 60 * 60 * 1000;
-                  definedAliases = ["@nw"];
+                  definedAliases = [ "@nw" ];
                 };
                 "wikipedia".metaData.alias = "@wiki";
               };
@@ -138,7 +141,7 @@ in {
                 builtins.readFile (
                   fetchGit {
                     url = "https://github.com/arkenfox/user.js";
-                    rev = "0f14e030b3a9391e761c03ce3c260730a78a4db6"; # 140.1
+                    rev = "bb45863be796d331717e2b5d6e490f0d3e3cf93f"; # 144
                   }
                   + "/user.js"
                 )

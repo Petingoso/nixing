@@ -5,6 +5,15 @@
   pkgs,
   ...
 }: {
+# for kernel
+nix.settings = {
+  substituters = [
+    "https://nix-community.cachix.org"
+  ];
+  trusted-public-keys = [
+    "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+  ];
+};
   imports = [inputs.nixos-hardware.nixosModules.raspberry-pi-4];
   hardware = {
     enableRedistributableFirmware = true;
@@ -19,5 +28,4 @@
     raspberrypi-eeprom
     raspberrypifw
   ];
-  boot.kernelPackages = lib.mkForce pkgs.linuxPackages_rpi4;
 }

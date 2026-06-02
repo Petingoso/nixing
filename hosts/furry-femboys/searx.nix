@@ -19,7 +19,7 @@ in {
 
   services.searx = {
     environmentFile = config.age.secrets.searx.path;
-    package = pkgs'.callPackage "${self}/pkgs/searx.nix" {};
+    #package = pkgs'.callPackage "${self}/pkgs/searx.nix" {};
     enable = true;
     redisCreateLocally = true;
     limiterSettings = {
@@ -57,7 +57,7 @@ in {
         infinite_scroll = true;
         center_alignment = true;
         default_theme = "simple";
-        theme_args.simple_style = "auto";
+        theme_args.simple_style = "auto";r
         hotkeys = "vim";
       };
       search = {

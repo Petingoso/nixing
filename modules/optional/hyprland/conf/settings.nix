@@ -48,7 +48,6 @@
         enabled = true;
         range = 20;
         render_power = 2;
-        ignore_window = true;
         color = "0x44000000";
         offset = "8 8";
       };

@@ -21,7 +21,6 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvtyfLtvywk+T7MTIfsoYJxUnVbuZgt8CcHoW49e8UU pet@live"
   ];
 in {
-  "test.age".publicKeys = Wired ++ HeadEmpty;
   "ENV-mediafederation.age".publicKeys = personal ++ media;
   "caddy-env.age".publicKeys = personal;
   "cloudflare.age".publicKeys = personal;
@@ -34,4 +33,9 @@ in {
   "vaultwarden-token.age".publicKeys = personal;
   "wireguard.age".publicKeys = Wired ++ HeadEmpty;
   "znc.nix.age".publicKeys = personal;
+
+  "syncthing-Wired-cert.age".publicKeys = Wired;
+  "syncthing-Wired-key.age".publicKeys = Wired;
+  #"syncthing-HeadEmpty-cert.age" = HeadEmpty;
+  #syncthing-HeadEmpty-key.age" = HeadEmpty;
 }

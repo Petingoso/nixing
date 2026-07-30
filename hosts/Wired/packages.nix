@@ -24,7 +24,6 @@
     #
     # users.users.${username}.packages = with pkgs; [
     rclone
-    bitwarden-desktop
     calibre
     ckan
     evince
@@ -43,7 +42,8 @@
     texliveMedium
     tor-browser
     ungoogled-chromium
-    wineWowPackages.waylandFull
+    wineWow64Packages.stable
+    winetricks
     pear-desktop
     # miru
     pcloud

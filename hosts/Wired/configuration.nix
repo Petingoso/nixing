@@ -39,10 +39,13 @@ in {
       greetd.cage = false;
       networkmanager.enable = true;
       networkmanager.powersave = true;
+      syncthing = {
+        enable = true;
+        hostName = config.networking.hostName;
+      };
     };
   };
 
   age.identityPaths = ["/home/${username}/.ssh/id_ed25519"];
-  age.secrets.test.file = ../../secrets/test.age;
   system.stateVersion = "23.11";
 }

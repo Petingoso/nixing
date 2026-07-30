@@ -13,7 +13,6 @@
   };
 
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
     open = false;
     prime.amdgpuBusId = lib.mkForce "PCI:5:0:0"; # #override nixosHardware option
     powerManagement.enable = true;

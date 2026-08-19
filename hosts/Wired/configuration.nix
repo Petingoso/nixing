@@ -46,6 +46,18 @@ in {
     };
   };
 
-  age.identityPaths = ["/home/${username}/.ssh/id_ed25519"];
+  services.openssh = {
+    enable = true;
+    hostKeys = [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
+  };
+
+  age.identityPaths = [
+    "/etc/ssh/ssh_host_ed25519_key"
+  ];
   system.stateVersion = "23.11";
 }

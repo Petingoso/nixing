@@ -1,16 +1,21 @@
 let
-  Wired_user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5";
-  # Wired_host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAGwssK9tuGPxhbcCypQjm0NBJ5JwS+iG1IIfiAkgzVH";
+  wired_host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILwPyI9fCiJlTMfvqwuKR93H39qc51vLz5TTeRoTpCAy root@Wired";
+  user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5";
 
-  HeadEmpty_user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5";
-  # HeadEmpty_host = "";
+  furry_femboys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMGED4p6L2EYc8SY70XRF4TYM85/KDONH77vz/SFBSWc pet@furryfemboys"
+  ];
 
-  Wired = [Wired_user];
-  HeadEmpty = [HeadEmpty_user];
+  personal = [
+    user
+    wired_host
+  ];
 
-  furry_femboys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMGED4p6L2EYc8SY70XRF4TYM85/KDONH77vz/SFBSWc pet@furryfemboys"];
-
-  personal = Wired ++ HeadEmpty ++ furry_femboys;
+  server =
+    [
+      user
+    ]
+    ++ furry_femboys;
 
   media = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICYiuCHjX9Dmq69WoAn7EfgovnFLv0VhjL7BSTYQcFa7 dtc@apollo"
@@ -22,20 +27,20 @@ let
   ];
 in {
   "ENV-mediafederation.age".publicKeys = personal ++ media;
-  "caddy-env.age".publicKeys = personal;
-  "cloudflare.age".publicKeys = personal;
-  "fail2ban-env.age".publicKeys = personal;
-  "grafana-env.age".publicKeys = personal;
-  "gramps-env.age".publicKeys = personal;
-  "lanraragi.age".publicKeys = personal;
-  "searx.age".publicKeys = personal;
-  "searx-prometheus.age".publicKeys = personal;
-  "vaultwarden-token.age".publicKeys = personal;
-  "wireguard.age".publicKeys = Wired ++ HeadEmpty;
+  "caddy-env.age".publicKeys = server;
+  "cloudflare.age".publicKeys = server;
+  "fail2ban-env.age".publicKeys = server;
+  "grafana-env.age".publicKeys = server;
+  "gramps-env.age".publicKeys = server;
+  "lanraragi.age".publicKeys = server;
+  "searx.age".publicKeys = server;
+  "searx-prometheus.age".publicKeys = server;
+  "vaultwarden-token.age".publicKeys = server;
+  "wireguard.age".publicKeys = personal;
   "znc.nix.age".publicKeys = personal;
 
-  "syncthing-Wired-cert.age".publicKeys = Wired;
-  "syncthing-Wired-key.age".publicKeys = Wired;
+  "syncthing-Wired-cert.age".publicKeys = [wired_host];
+  "syncthing-Wired-key.age".publicKeys = [wired_host];
   #"syncthing-HeadEmpty-cert.age" = HeadEmpty;
   #syncthing-HeadEmpty-key.age" = HeadEmpty;
 }

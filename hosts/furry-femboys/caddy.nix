@@ -15,6 +15,7 @@
   lanraragiDomain = "lrr.${base}";
   webdavDomain = "dav.${base}";
   grafanaDomain = "grafana.${base}";
+  microbinDomain = "bin.${base}";
 
   vaultServer = "http://localhost:${config.services.vaultwarden.config.ROCKET_PORT}";
   searchServer = "http://localhost:${config.services.searx.settings.server.port}";
@@ -24,6 +25,8 @@
   lanraragiServer = "http://localhost:${toString config.services.lanraragi.port}";
   grafanaServer = "http://localhost:${toString config.services.grafana.settings.server.http_port}";
   anubisServer = config.services.anubis.instances.default.settings.BIND;
+  microbinServer = "http://localhost:6900";
+
 
   customCaddy =
     (pkgs.caddy.withPlugins {
@@ -234,6 +237,17 @@ in {
         ${caddyCSP}
 
                reverse_proxy ${vaultServer} {
+               	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
+               	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
+                       }
+      '';
+    };
+
+    virtualHosts."${microbinDomain}" = {
+      extraConfig = ''
+        ${commonCaddy}
+        ${blockEngines}
+               reverse_proxy ${microbinServer} {
                	header_up X-Forwarded-For {http.request.header.Cf-Connecting-Ip}
                	header_up X-Real-IP {http.request.header.Cf-Connecting-Ip}
                        }

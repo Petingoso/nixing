@@ -29,6 +29,7 @@ in {
   "grafana-env.age".publicKeys = personal;
   "gramps-env.age".publicKeys = personal;
   "lanraragi.age".publicKeys = personal;
+  "linx.age".publicKeys = personal;
   "searx.age".publicKeys = personal;
   "searx-prometheus.age".publicKeys = personal;
   "vaultwarden-token.age".publicKeys = personal;

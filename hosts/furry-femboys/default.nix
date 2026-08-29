@@ -12,6 +12,7 @@ _: {
     ./lanraragi.nix
     ./logrotate.nix
     ./metrics.nix
+    ./paste.nix
     ./pi400.nix
     ./system.nix
     ./searx.nix

@@ -15,7 +15,6 @@
   },
   "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono",
   "terminal.integrated.fontSize": 16,
-  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/vs-nvim",
   "security.workspace.trust.enabled": false,
   "editor.lineNumbers": "relative",
   "nix.enableLanguageServer": true,
@@ -54,6 +53,9 @@
   "editor.defaultFormatter": "vscode.html-language-features"
 },
 "workbench.sideBar.location": "right",
-"p2p-live-share.trystero": {}
+"p2p-live-share.trystero": {},
+"[python]": {
+  "editor.defaultFormatter": "eeyore.yapf"
+}
 }
 

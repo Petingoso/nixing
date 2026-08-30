@@ -188,5 +188,10 @@
         "key": "ctrl+b",
         "command": "-vscode-neovim.ctrl-b",
         "when": "editorTextFocus && neovim.ctrlKeysNormal.b && neovim.init && neovim.mode != 'insert' && editorLangId not in 'neovim.editorLangIdExclusions'"
+    },
+    {
+        "key": "shift+enter",
+        "command": "-workbench.action.terminal.sendSequence",
+        "when": "config.terminal.integrated.enableWin32InputMode && terminalFocus && terminalShellIntegrationEnabled && !accessibilityModeEnabled && terminalShellType == 'pwsh'"
     }
 ]

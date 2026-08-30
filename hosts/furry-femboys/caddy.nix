@@ -32,11 +32,10 @@
     (pkgs.caddy.withPlugins {
       # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
       # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"];
-      plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" 
+      plugins = ["github.com/caddy-dns/cloudflare@v0.2.4" 
       		 "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90" 
-		 "github.com/mholt/caddy-ratelimit@v0.0.0-20250915152450-04ea34edc0c4"];
-      hash = "sha256-anwMRNnsWAwiHySqH1DCGDTqm2ZeNZbEwJHbr8mdyK4=";
-      # hash = lib.fakeHash;
+		 "github.com/mholt/caddy-ratelimit@v0.0.0-20260521172720-16aecbbcb8ca"];
+      hash = "sha256-FXd/fWgNUeRQRX3SEP49SX7YaW2+krI/XQROL2qDLE4=";
       });
     # }).overrideAttrs (finalAttr: prevAttrs: {
     #   doInstallCheck = false; # until https://github.com/nixos/nixpkgs/issues/430090 gets merged

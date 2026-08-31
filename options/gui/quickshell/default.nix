@@ -30,15 +30,28 @@ in
       QS_ICON_THEME = "Papirus-Dark";
     };
 
-    home-manager.users.${username} =
-      {
-        config,
-        pkgs,
-        ...
-      }:
-      {
-        imports = [
-          inputs.noctalia.homeModules.default
+    home-manager.users.${username} = {
+      config,
+      pkgs,
+      ...
+    }: {
+      imports = [
+        inputs.noctalia.homeModules.default
+      ];
+
+      programs.noctalia.enable = true;
+
+      xdg.configFile."noctalia/settings.json".source =
+        config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/quickshell/settings.json";
+
+      wayland.windowManager.hyprland.settings = {
+        source = "~/.config/hypr/noctalia/noctalia-colors.conf";
+        exec-once = ["noctalia"];
+        bind = [
+          ",XF86AudioRaiseVolume,exec,${ipc} volume increase"
+          ",XF86AudioLowerVolume,exec,${ipc} volume decrease"
+          ",XF86AudioMute,exec,${ipc} muteOutput"
+          "ALT,b,exec,${ipc} bar toggle"
         ];
 
         programs.noctalia-shell.enable = true;
@@ -111,5 +124,6 @@ in
         # kitty
         programs.kitty.extraConfig = mkIf cfg'.kitty.enable "include ~/.config/kitty/themes/noctalia.conf";
       };
+    };
   };
 }

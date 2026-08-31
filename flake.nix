@@ -21,10 +21,14 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
+<<<<<<< HEAD
     noctalia = {
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+=======
+    noctalia.url = "github:noctalia-dev/noctalia";
+>>>>>>> 53f06d7 (fix noctalia stuff)
 
     nix-alien.url = "github:thiagokokada/nix-alien";
 

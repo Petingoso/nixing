@@ -8,7 +8,7 @@ let
   cfg = config.custom.programs.quickshell;
   cfg' = config.custom.programs;
 
-  ipc = "noctalia-shell ipc call";
+  ipc = "noctalia msg";
 
   inherit (config.custom) username enableHM;
 
@@ -23,7 +23,7 @@ in
 
   config = mkIf (cfg.enable && enableHM) {
     custom.programs.launcher = "${ipc} launcher toggle";
-    custom.programs.locker = "${ipc} lockScreen lock";
+    custom.programs.locker = "${ipc} session lock";
     custom.programs.power_menu = "${ipc} sessionMenu toggle";
 
     environment.sessionVariables = {
@@ -48,27 +48,11 @@ in
         source = "~/.config/hypr/noctalia/noctalia-colors.conf";
         exec-once = ["noctalia"];
         bind = [
-          ",XF86AudioRaiseVolume,exec,${ipc} volume increase"
-          ",XF86AudioLowerVolume,exec,${ipc} volume decrease"
-          ",XF86AudioMute,exec,${ipc} muteOutput"
-          "ALT,b,exec,${ipc} bar toggle"
+          ",XF86AudioRaiseVolume,exec,${ipc} volume-up"
+          ",XF86AudioLowerVolume,exec,${ipc} volume-down"
+          ",XF86AudioMute,exec,${ipc} volume-mute"
+          "ALT,b,exec,${ipc} bar-toggle"
         ];
-
-        programs.noctalia-shell.enable = true;
-
-        xdg.configFile."noctalia/settings.json".source =
-          config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/quickshell/settings.json";
-
-        wayland.windowManager.hyprland.settings = {
-          source = "~/.config/hypr/noctalia/noctalia-colors.conf";
-          exec-once = [ "noctalia-shell" ];
-          bind = [
-            ",XF86AudioRaiseVolume,exec,${ipc} volume increase"
-            ",XF86AudioLowerVolume,exec,${ipc} volume decrease"
-            ",XF86AudioMute,exec,${ipc} muteOutput"
-            "ALT,b,exec,${ipc} bar toggle"
-          ];
-        };
 
         xdg.configFile."noctalia/user-templates.toml".text = ''
           [config]

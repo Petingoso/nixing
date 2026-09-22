@@ -3,7 +3,7 @@ _: {
     ./firefox
     ./kitty
     # ./themes
-    ./quickshell
+    ./noctalia
     ./vesktop
     ./vscodium
     ./mpv.nix

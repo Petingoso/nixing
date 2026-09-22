@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   ...
 }: let
   inherit (config.custom) username;

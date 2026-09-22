@@ -3,7 +3,11 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
+<<<<<<< HEAD
   "workbench.colorTheme": "Gruvbox Dark Soft",
+=======
+  "workbench.colorTheme": "NoctaliaTheme",
+>>>>>>> 67b1383 (wip)
   "[typst]": {
     "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
   },
@@ -57,5 +61,6 @@
 "[python]": {
   "editor.defaultFormatter": "eeyore.yapf"
 }
+"git.openRepositoryInParentFolders": "always"
 }
 

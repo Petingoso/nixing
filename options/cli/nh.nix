@@ -2,14 +2,16 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.custom.programs.nh;
   HM = config.custom.enableHM;
 
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) str;
-in {
+in
+{
   options.custom.programs.nh = {
     enable = mkEnableOption "nh";
     clean.enable = mkEnableOption "enable gc";

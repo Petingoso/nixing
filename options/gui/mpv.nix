@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.programs.mpv;
   inherit (config.custom) username enableHM;
 
@@ -11,7 +12,8 @@
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) nullOr str;
-in {
+in
+{
   #NOTE: needs HM
   options.custom.programs.mpv = {
     enable = mkEnableOption "mpv";
@@ -37,8 +39,7 @@ in {
           # border = "no";
         };
         scripts = attrValues {
-          inherit
-            (pkgs.mpvScripts)
+          inherit (pkgs.mpvScripts)
             mpris
             thumbfast
             # sponsorblock

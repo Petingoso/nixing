@@ -5,12 +5,13 @@
   nixosTests,
   unstableGitUpdater,
   fetchPypi,
-}: let
+}:
+let
   python = python3.override {
     packageOverrides = final: prev: {
       flask-babel = prev.flask-babel.overrideAttrs (old: rec {
         version = "4.0.0";
-        patches = [];
+        patches = [ ];
         src = fetchFromGitHub {
           owner = "python-babel";
           repo = "flask-babel";
@@ -25,12 +26,10 @@
           inherit version;
           hash = "sha256-aSNJ5Yj94yKHX40wJawBaJ/q1ZAef7GNaHCkRRnWKik=";
         };
-        nativeBuildInputs =
-          (old.nativeBuildInputs or [])
-          ++ [
-            prev.setuptools
-            prev.setuptools-scm
-          ];
+        nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
+          prev.setuptools
+          prev.setuptools-scm
+        ];
       });
       # pyyaml = prev.pyyaml.overrideAttrs (old: rec {
       #   version = "6.0.3";
@@ -44,40 +43,42 @@
     };
   };
 in
-  python.pkgs.toPythonModule (
-    python.pkgs.buildPythonApplication rec {
-      pname = "searxng";
-      version = "0-unstable-2025-12-07";
-      pyproject = true;
+python.pkgs.toPythonModule (
+  python.pkgs.buildPythonApplication rec {
+    pname = "searxng";
+    version = "0-unstable-2025-12-07";
+    pyproject = true;
 
-      src = fetchFromGitHub {
-        owner = "searxng";
-        repo = "searxng";
-        rev = "9d3ec9a2a2e914fb642ac43246814ccf78774f94";
-        # hash = lib.fakeHash;
-        hash = "sha256-6XQeGm1vvjX9ErXpqpMSlWvaLr7RjOF4fBltShoFHZ8=";
-      };
+    src = fetchFromGitHub {
+      owner = "searxng";
+      repo = "searxng";
+      rev = "9d3ec9a2a2e914fb642ac43246814ccf78774f94";
+      # hash = lib.fakeHash;
+      hash = "sha256-6XQeGm1vvjX9ErXpqpMSlWvaLr7RjOF4fBltShoFHZ8=";
+    };
 
-      nativeBuildInputs = with python.pkgs; [pythonRelaxDepsHook];
+    nativeBuildInputs = with python.pkgs; [ pythonRelaxDepsHook ];
 
-      pythonRemoveDeps = [
-        "typer-slim" # we use typer instead
-      ];
+    pythonRemoveDeps = [
+      "typer-slim" # we use typer instead
+    ];
 
-      pythonRelaxDeps = [
-        "certifi"
-        "httpx-socks"
-        "lxml"
-        "pygments"
-        "valkey"
-      ];
+    pythonRelaxDeps = [
+      "certifi"
+      "httpx-socks"
+      "lxml"
+      "pygments"
+      "valkey"
+    ];
 
-      preBuild = let
+    preBuild =
+      let
         versionString = lib.concatStringsSep "." (
           builtins.tail (lib.splitString "-" (lib.removePrefix "0-" version))
         );
         commitAbbrev = builtins.substring 0 8 src.rev;
-      in ''
+      in
+      ''
         export SEARX_DEBUG="true";
 
         cat > searx/version_frozen.py <<EOF
@@ -89,66 +90,67 @@ in
         EOF
       '';
 
-      build-system = with python.pkgs; [setuptools];
+    build-system = with python.pkgs; [ setuptools ];
 
-      dependencies = with python.pkgs;
-        [
-          babel
-          brotli
-          certifi
-          cryptography
-          fasttext-predict
-          flask
-          flask-babel
-          httpx
-          httpx-socks
-          isodate
-          jinja2
-          lxml
-          markdown-it-py
-          msgspec
-          pygments
-          python-dateutil
-          pyyaml
-          setproctitle
-          typer
-          uvloop
-          valkey
-          whitenoise
+    dependencies =
+      with python.pkgs;
+      [
+        babel
+        brotli
+        certifi
+        cryptography
+        fasttext-predict
+        flask
+        flask-babel
+        httpx
+        httpx-socks
+        isodate
+        jinja2
+        lxml
+        markdown-it-py
+        msgspec
+        pygments
+        python-dateutil
+        pyyaml
+        setproctitle
+        typer
+        uvloop
+        valkey
+        whitenoise
 
-          setuptools-scm
-        ]
-        ++ httpx.optional-dependencies.http2
-        ++ httpx-socks.optional-dependencies.asyncio;
+        setuptools-scm
+      ]
+      ++ httpx.optional-dependencies.http2
+      ++ httpx-socks.optional-dependencies.asyncio;
 
-      # tests try to connect to network
-      doCheck = false;
+    # tests try to connect to network
+    doCheck = false;
 
-      postInstall = ''
-        # Create a symlink for easier access to static data
-        mkdir -p $out/share
-        ln -s ../${python.sitePackages}/searx/static $out/share/
+    postInstall = ''
+      # Create a symlink for easier access to static data
+      mkdir -p $out/share
+      ln -s ../${python.sitePackages}/searx/static $out/share/
 
-        # copy config schema for the limiter
-        cp searx/limiter.toml $out/${python.sitePackages}/searx/limiter.toml
-      '';
+      # copy config schema for the limiter
+      cp searx/limiter.toml $out/${python.sitePackages}/searx/limiter.toml
+    '';
 
-      passthru = {
-        tests = {
-          searxng = nixosTests.searx;
-        };
-        updateScript = unstableGitUpdater {hardcodeZeroVersion = true;};
+    passthru = {
+      tests = {
+        searxng = nixosTests.searx;
       };
+      updateScript = unstableGitUpdater { hardcodeZeroVersion = true; };
+    };
 
-      meta = with lib; {
-        homepage = "https://github.com/searxng/searxng";
-        description = "Fork of Searx, a privacy-respecting, hackable metasearch engine";
-        license = licenses.agpl3Plus;
-        mainProgram = "searxng-run";
-        maintainers = with maintainers; [
-          SuperSandro2000
-          _999eagle
-        ];
-      };
-    }
-  )
+    meta = with lib; {
+      homepage = "https://github.com/searxng/searxng";
+      description = "Fork of Searx, a privacy-respecting, hackable metasearch engine";
+      license = licenses.agpl3Plus;
+      mainProgram = "searxng-run";
+      maintainers = with maintainers; [
+        SuperSandro2000
+        _999eagle
+      ];
+    };
+  }
+)

@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   users.users.immich = {
     home = "/var/lib/immich";
     createHome = true;

@@ -81,8 +81,7 @@ in
     hostname = "Wired";
     hostDir = ./Wired;
     enableHM = true;
-    extraModules = [ inputs.agenix.nixosModules.default ]
-                   ++ (import ../modules/desktop { }).imports;
+    extraModules = [ inputs.agenix.nixosModules.default ] ++ (import ../modules/desktop { }).imports;
     ignoreOverride = ignoreOverride;
   };
   HeadEmpty = mkHost {

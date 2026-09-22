@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   environment.systemPackages = with pkgs; [
     opensnitch-ui
     config.boot.kernelPackages.opensnitch-ebpf

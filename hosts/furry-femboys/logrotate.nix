@@ -1,8 +1,12 @@
-{...}: {
+{ ... }:
+{
   fileSystems."/var/log/caddy" = {
     device = "none";
     fsType = "tmpfs";
-    options = ["size=100M" "mode=777"];
+    options = [
+      "size=100M"
+      "mode=777"
+    ];
     neededForBoot = false;
   };
   systemd.tmpfiles.rules = [

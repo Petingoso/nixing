@@ -3,14 +3,15 @@
   config,
   self,
   ...
-}: {
+}:
+{
   age.secrets.cloudflare = {
     file = "${self}/secrets/cloudflare.age";
   };
 
   services.ddclient = {
     enable = true;
-    domains = ["undertale.uk"];
+    domains = [ "undertale.uk" ];
     protocol = "cloudflare";
     zone = "undertale.uk";
     username = "token";

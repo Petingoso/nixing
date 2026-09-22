@@ -2,13 +2,15 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.custom.programs.kitty;
   inherit (config.custom) username enableHM;
 
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
-in {
+in
+{
   options.custom.programs = {
     kitty.enable = lib.mkEnableOption "kitty";
   };
@@ -70,23 +72,23 @@ in {
           listen_on = "unix:/tmp/kitty";
         };
 
-        keybindings =
-          {
-            "ctrl+f3" = "detach_tab";
-            "kitty_mod + q" = "close_window";
-            "kitty_mod + f" = "next_window";
-            "kitty_mod + b" = "previous_window";
-            "kitty_mod + k" = "move_window_foward";
-            "kitty_mod + l" = "move_window_backward";
-            "kitty_mod + p" = "set_tab_title";
-            "ctrl + plus" = "change_font_size all +2.0";
-            "ctrl + minus" = "change_font_size all -2.0";
-          }
-          // builtins.listToAttrs (builtins.genList (x: {
-              name = "ctrl+alt+${builtins.toString x}";
-              value = "goto_tab ${builtins.toString x}";
-            })
-            10);
+        keybindings = {
+          "ctrl+f3" = "detach_tab";
+          "kitty_mod + q" = "close_window";
+          "kitty_mod + f" = "next_window";
+          "kitty_mod + b" = "previous_window";
+          "kitty_mod + k" = "move_window_foward";
+          "kitty_mod + l" = "move_window_backward";
+          "kitty_mod + p" = "set_tab_title";
+          "ctrl + plus" = "change_font_size all +2.0";
+          "ctrl + minus" = "change_font_size all -2.0";
+        }
+        // builtins.listToAttrs (
+          builtins.genList (x: {
+            name = "ctrl+alt+${builtins.toString x}";
+            value = "goto_tab ${builtins.toString x}";
+          }) 10
+        );
       };
     };
   };

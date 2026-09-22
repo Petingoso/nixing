@@ -4,8 +4,9 @@
   config,
   pkgs,
   ...
-}: {
-  imports = [inputs.nixos-hardware.nixosModules.lenovo-legion-15arh05h];
+}:
+{
+  imports = [ inputs.nixos-hardware.nixosModules.lenovo-legion-15arh05h ];
 
   hardware.graphics = {
     enable = true;

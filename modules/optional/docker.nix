@@ -1,7 +1,9 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.custom) username;
-in {
-  users.extraGroups.docker.members = ["${username}"];
+in
+{
+  users.extraGroups.docker.members = [ "${username}" ];
   virtualisation.docker = {
     # Consider disabling the system wide Docker daemon
     enable = false;

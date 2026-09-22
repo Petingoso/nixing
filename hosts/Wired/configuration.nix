@@ -1,9 +1,11 @@
 {
   config,
   ...
-}: let
+}:
+let
   inherit (config.custom) username;
-in {
+in
+{
   programs.kdeconnect.enable = true;
 
   custom = {

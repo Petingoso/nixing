@@ -3,11 +3,13 @@
   inputs,
   lib,
   ...
-}: let
+}:
+let
   inherit (config.custom) username enableHM;
 
   inherit (lib.modules) mkIf;
-in {
+in
+{
   config = mkIf enableHM {
     environment.sessionVariables = rec {
       XDG_BIN_HOME = "$HOME/.local/bin";

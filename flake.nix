@@ -19,7 +19,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-
     hyprland.url = "github:hyprwm/Hyprland";
 
     noctalia = {
@@ -43,7 +42,9 @@
     stm-nix.url = "github:fdnt7/stm32cubeide-nix";
   };
 
-  outputs = {self, ...} @ inputs: {
-    nixosConfigurations = import ./hosts {inherit self inputs;};
-  };
+  outputs =
+    { self, ... }@inputs:
+    {
+      nixosConfigurations = import ./hosts { inherit self inputs; };
+    };
 }

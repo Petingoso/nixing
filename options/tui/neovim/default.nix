@@ -3,7 +3,8 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   options.custom.programs = {
     neovim-config.enable = lib.mkEnableOption "neovim-config";
   };

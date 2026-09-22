@@ -4,7 +4,8 @@
   inputs,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.theme_switching;
   cfg' = config.custom.programs;
   inherit (config.custom) username enableHM;
@@ -26,7 +27,8 @@
 
     ${matugenCommand}
   '';
-in {
+in
+{
   options.theme_switching = {
     enable = mkEnableOption "Activate the facilities for mutagen themes";
   };
@@ -104,7 +106,7 @@ in {
         Unit = {
           Description = "Setup theme files for programs";
         };
-        wantedBy = ["graphical.target"];
+        wantedBy = [ "graphical.target" ];
         script = setupScript;
         reload = matugenCommand;
       };

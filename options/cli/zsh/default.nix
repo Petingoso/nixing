@@ -3,10 +3,12 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   cfg = config.custom.programs.zsh;
   inherit (config.custom) username enableHM;
-in {
+in
+{
   options.custom.programs = {
     zsh.enable = lib.mkEnableOption "zsh";
     zsh.zinit.enable = lib.mkEnableOption "zsh.zinit";

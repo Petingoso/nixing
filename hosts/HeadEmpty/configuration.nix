@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.custom) username;
-in {
+in
+{
   programs.kdeconnect.enable = true;
 
   custom = {
@@ -42,6 +44,6 @@ in {
     };
   };
 
-  age.identityPaths = ["/home/${username}/.ssh/id_ed25519"];
+  age.identityPaths = [ "/home/${username}/.ssh/id_ed25519" ];
   system.stateVersion = "24.05";
 }

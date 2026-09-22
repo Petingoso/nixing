@@ -3,17 +3,24 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.programs.git;
   inherit (config.custom) username enableHM;
 
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption;
-  inherit (lib.types) attrs listOf nullOr str;
+  inherit (lib.types)
+    attrs
+    listOf
+    nullOr
+    str
+    ;
 
   delta = getExe pkgs.delta;
-in {
+in
+{
   options.custom.programs.git = {
     #NOTE: needs HM
     enable = mkEnableOption "git";
@@ -44,7 +51,7 @@ in {
     };
     includes = mkOption {
       type = listOf attrs;
-      default = [];
+      default = [ ];
       description = "passthrough to the hm module";
     };
   };

@@ -11,11 +11,10 @@ let
     wired_host
   ];
 
-  server =
-    [
-      user
-    ]
-    ++ furry_femboys;
+  server = [
+    user
+  ]
+  ++ furry_femboys;
 
   media = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICYiuCHjX9Dmq69WoAn7EfgovnFLv0VhjL7BSTYQcFa7 dtc@apollo"
@@ -25,7 +24,8 @@ let
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe pet@teto"
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIvtyfLtvywk+T7MTIfsoYJxUnVbuZgt8CcHoW49e8UU pet@live"
   ];
-in {
+in
+{
   "ENV-mediafederation.age".publicKeys = personal ++ media;
   "caddy-env.age".publicKeys = server;
   "cloudflare.age".publicKeys = server;
@@ -39,8 +39,8 @@ in {
   "wireguard.age".publicKeys = personal;
   "znc.nix.age".publicKeys = personal;
 
-  "syncthing-Wired-cert.age".publicKeys = [wired_host];
-  "syncthing-Wired-key.age".publicKeys = [wired_host];
+  "syncthing-Wired-cert.age".publicKeys = [ wired_host ];
+  "syncthing-Wired-key.age".publicKeys = [ wired_host ];
   #"syncthing-HeadEmpty-cert.age" = HeadEmpty;
   #syncthing-HeadEmpty-key.age" = HeadEmpty;
 }

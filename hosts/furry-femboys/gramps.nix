@@ -5,7 +5,8 @@
   lib,
   self,
   ...
-}: {
+}:
+{
   age.secrets.gramps-env.file = "${self}/secrets/gramps-env.age";
   # Runtime
   virtualisation.docker = {
@@ -19,12 +20,12 @@
   virtualisation.oci-containers.backend = "docker";
 
   virtualisation.oci-containers.containers."gramps-grampsweb" = {
-    environmentFiles = [config.age.secrets.gramps-env.path];
+    environmentFiles = [ config.age.secrets.gramps-env.path ];
     image = "ghcr.io/gramps-project/grampsweb:latest";
     environment = {
       "GRAMPSWEB_CELERY_CONFIG__broker_url" = "redis://grampsweb_redis:6379/0";
       "GRAMPSWEB_CELERY_CONFIG__result_backend" = "redis://grampsweb_redis:6379/0";
-      "GUNICORN_NUM_WORKERS" = "1"; #NOTE: for performance
+      "GUNICORN_NUM_WORKERS" = "1"; # NOTE: for performance
       "GRAMPSWEB_RATELIMIT_STORAGE_URI" = "redis://grampsweb_redis:6379/1";
       "GRAMPSWEB_BASE_URL" = "https://gramps.undertale.uk"; # NOTE: url
     };
@@ -104,7 +105,14 @@
       "gramps_gramps_tmp:/tmp:rw"
       "gramps_gramps_users:/app/users:rw"
     ];
-    cmd = ["celery" "-A" "gramps_webapi.celery" "worker" "--loglevel=INFO" "--concurrency=1"]; # NOTE: concurrency
+    cmd = [
+      "celery"
+      "-A"
+      "gramps_webapi.celery"
+      "worker"
+      "--loglevel=INFO"
+      "--concurrency=1"
+    ]; # NOTE: concurrency
     dependsOn = [
       "grampsweb_redis"
     ];
@@ -181,7 +189,7 @@
 
   # Networks
   systemd.services."docker-network-gramps_default" = {
-    path = [pkgs.docker];
+    path = [ pkgs.docker ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -190,13 +198,13 @@
     script = ''
       docker network inspect gramps_default || docker network create gramps_default
     '';
-    partOf = ["docker-compose-gramps-root.target"];
-    wantedBy = ["docker-compose-gramps-root.target"];
+    partOf = [ "docker-compose-gramps-root.target" ];
+    wantedBy = [ "docker-compose-gramps-root.target" ];
   };
 
   # Volumes
   systemd.services."docker-volume-gramps_gramps_cache" = {
-    path = [pkgs.docker];
+    path = [ pkgs.docker ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -204,11 +212,11 @@
     script = ''
       docker volume inspect gramps_gramps_cache || docker volume create gramps_gramps_cache
     '';
-    partOf = ["docker-compose-gramps-root.target"];
-    wantedBy = ["docker-compose-gramps-root.target"];
+    partOf = [ "docker-compose-gramps-root.target" ];
+    wantedBy = [ "docker-compose-gramps-root.target" ];
   };
   systemd.services."docker-volume-gramps_gramps_db" = {
-    path = [pkgs.docker];
+    path = [ pkgs.docker ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -216,11 +224,11 @@
     script = ''
       docker volume inspect gramps_gramps_db || docker volume create gramps_gramps_db
     '';
-    partOf = ["docker-compose-gramps-root.target"];
-    wantedBy = ["docker-compose-gramps-root.target"];
+    partOf = [ "docker-compose-gramps-root.target" ];
+    wantedBy = [ "docker-compose-gramps-root.target" ];
   };
   systemd.services."docker-volume-gramps_gramps_index" = {
-    path = [pkgs.docker];
+    path = [ pkgs.docker ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -228,11 +236,11 @@
     script = ''
       docker volume inspect gramps_gramps_index || docker volume create gramps_gramps_index
     '';
-    partOf = ["docker-compose-gramps-root.target"];
-    wantedBy = ["docker-compose-gramps-root.target"];
+    partOf = [ "docker-compose-gramps-root.target" ];
+    wantedBy = [ "docker-compose-gramps-root.target" ];
   };
   systemd.services."docker-volume-gramps_gramps_media" = {
-    path = [pkgs.docker];
+    path = [ pkgs.docker ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -240,11 +248,11 @@
     script = ''
       docker volume inspect gramps_gramps_media || docker volume create gramps_gramps_media
     '';
-    partOf = ["docker-compose-gramps-root.target"];
-    wantedBy = ["docker-compose-gramps-root.target"];
+    partOf = [ "docker-compose-gramps-root.target" ];
+    wantedBy = [ "docker-compose-gramps-root.target" ];
   };
   systemd.services."docker-volume-gramps_gramps_secret" = {
-    path = [pkgs.docker];
+    path = [ pkgs.docker ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -252,11 +260,11 @@
     script = ''
       docker volume inspect gramps_gramps_secret || docker volume create gramps_gramps_secret
     '';
-    partOf = ["docker-compose-gramps-root.target"];
-    wantedBy = ["docker-compose-gramps-root.target"];
+    partOf = [ "docker-compose-gramps-root.target" ];
+    wantedBy = [ "docker-compose-gramps-root.target" ];
   };
   systemd.services."docker-volume-gramps_gramps_thumb_cache" = {
-    path = [pkgs.docker];
+    path = [ pkgs.docker ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -264,11 +272,11 @@
     script = ''
       docker volume inspect gramps_gramps_thumb_cache || docker volume create gramps_gramps_thumb_cache
     '';
-    partOf = ["docker-compose-gramps-root.target"];
-    wantedBy = ["docker-compose-gramps-root.target"];
+    partOf = [ "docker-compose-gramps-root.target" ];
+    wantedBy = [ "docker-compose-gramps-root.target" ];
   };
   systemd.services."docker-volume-gramps_gramps_tmp" = {
-    path = [pkgs.docker];
+    path = [ pkgs.docker ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -276,11 +284,11 @@
     script = ''
       docker volume inspect gramps_gramps_tmp || docker volume create gramps_gramps_tmp
     '';
-    partOf = ["docker-compose-gramps-root.target"];
-    wantedBy = ["docker-compose-gramps-root.target"];
+    partOf = [ "docker-compose-gramps-root.target" ];
+    wantedBy = [ "docker-compose-gramps-root.target" ];
   };
   systemd.services."docker-volume-gramps_gramps_users" = {
-    path = [pkgs.docker];
+    path = [ pkgs.docker ];
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
@@ -288,8 +296,8 @@
     script = ''
       docker volume inspect gramps_gramps_users || docker volume create gramps_gramps_users
     '';
-    partOf = ["docker-compose-gramps-root.target"];
-    wantedBy = ["docker-compose-gramps-root.target"];
+    partOf = [ "docker-compose-gramps-root.target" ];
+    wantedBy = [ "docker-compose-gramps-root.target" ];
   };
 
   # Root service
@@ -299,6 +307,6 @@
     unitConfig = {
       Description = "Root target generated by compose2nix.";
     };
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
   };
 }

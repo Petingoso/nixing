@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   services.openafsClient.enable = true;
   services.openafsClient.cellName = "ist.utl.pt";
   security.krb5.enable = true;

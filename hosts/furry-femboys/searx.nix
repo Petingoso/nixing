@@ -5,9 +5,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   pkgs' = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system};
-in {
+in
+{
   age.secrets.searx.file = "${self}/secrets/searx.age";
   age.secrets.searx-prometheus = {
     file = "${self}/secrets/searx-prometheus.age";
@@ -26,7 +28,7 @@ in {
       botdetection.ip_limit.filter_link_local = false;
       botdetection.ip_limit.link_token = true;
       botdetection.ip_lists.pass_searxng_org = true;
-      botdetection.ip_lists.pass_ip = ["127.0.0.1/32"];
+      botdetection.ip_lists.pass_ip = [ "127.0.0.1/32" ];
     };
 
     settings = {
@@ -57,7 +59,7 @@ in {
         infinite_scroll = true;
         center_alignment = true;
         default_theme = "simple";
-        theme_args.simple_style = "auto";r
+        theme_args.simple_style = "auto";
         hotkeys = "vim";
       };
       search = {

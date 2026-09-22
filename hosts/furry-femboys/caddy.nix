@@ -4,7 +4,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   base = "undertale.uk";
 
   vaultDomain = "vault.${base}";
@@ -94,7 +95,8 @@
   '';
 
   blockEngines = ''header X-Robots-Tag "noindex, nofollow, noarchive, nositelinkssearchbox, nosnippet, notranslate, noimageindex" '';
-  rateLimit = ''    rate_limit {
+  rateLimit = ''
+    rate_limit {
     				zone searx {
     					match {
     						path /
@@ -108,12 +110,16 @@
     				sweep_interval 5m
     			}
   '';
-in {
+in
+{
   age.secrets.caddy-env.file = "${self}/secrets/caddy-env.age";
 
-  networking.firewall.allowedTCPPorts = [80 443];
-  networking.firewall.allowedUDPPorts = [443];
-  users.users.caddy.extraGroups = [config.users.groups.anubis.name];
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
+  networking.firewall.allowedUDPPorts = [ 443 ];
+  users.users.caddy.extraGroups = [ config.users.groups.anubis.name ];
   services.caddy = {
     enable = true;
     package = customCaddy;

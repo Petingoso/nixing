@@ -2,9 +2,11 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   inherit (config.custom) username;
-in {
+in
+{
   environment.systemPackages = with pkgs; [
     baobab
     font-manager

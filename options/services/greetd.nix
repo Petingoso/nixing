@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.services.greetd;
   inherit (config.custom) username;
 
@@ -15,7 +16,8 @@
 
   cage = getExe pkgs.cage;
   greeter = getExe pkgs.${cfg.greeter};
-in {
+in
+{
   options.custom.services.greetd = {
     enable = mkEnableOption "greetd";
     cage = mkEnableOption "cage";
@@ -34,9 +36,10 @@ in {
       enable = true;
       settings.default_session = {
         command =
-          if cfg.cage
-          then "${cage} -s -- ${greeter}"
-          else "${greeter} --cmd ${builtins.elemAt cfg.environments 0}";
+          if cfg.cage then
+            "${cage} -s -- ${greeter}"
+          else
+            "${greeter} --cmd ${builtins.elemAt cfg.environments 0}";
 
         user = username;
       };

@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   wayland.windowManager.hyprland.settings.env = [
     "CLUTTER_BACKEND,wayland,x11,*"
     "MOZ_ENABLE_WAYLAND,1"

@@ -2,7 +2,8 @@
   pkgs,
   self,
   ...
-}: {
+}:
+{
   environment.systemPackages = with pkgs; [
     baobab
     # btrbk
@@ -48,8 +49,8 @@
     # miru
     pcloud
     obsidian
-    (olympus.override {celesteWrapper = steam-run;})
-    (callPackage "${self}/pkgs/scripts" {})
+    (olympus.override { celesteWrapper = steam-run; })
+    (callPackage "${self}/pkgs/scripts" { })
     ludusavi
     xdg-utils
     gamescope

@@ -2,9 +2,11 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib.attrsets) attrValues;
-in {
+in
+{
   documentation = {
     enable = true;
     dev.enable = true;
@@ -22,8 +24,7 @@ in {
   };
 
   environment.systemPackages = attrValues {
-    inherit
-      (pkgs)
+    inherit (pkgs)
       man-pages
       man-pages-posix
       ;

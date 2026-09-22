@@ -89,7 +89,10 @@ in
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5" # main
   ];
 
-  users.users.petnix.extraGroups = [ "kvm" "uinput" ];
+  users.users.petnix.extraGroups = [
+    "kvm"
+    "uinput"
+  ];
 
   hardware.uinput.enable = true;
   services.sunshine = {

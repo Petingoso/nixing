@@ -2,9 +2,11 @@
   config,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (config.custom) username;
-in {
+in
+{
   virtualisation = {
     libvirtd = {
       enable = true;
@@ -21,7 +23,7 @@ in {
   programs.virt-manager.enable = true;
 
   users.users.${username} = {
-    extraGroups = ["libvirtd"];
+    extraGroups = [ "libvirtd" ];
   };
   environment.systemPackages = with pkgs; [
     spice
@@ -35,8 +37,8 @@ in {
   home-manager.users.${username} = {
     dconf.settings = {
       "org/virt-manager/virt-manager/connections" = {
-        autoconnect = ["qemu:///system"];
-        uris = ["qemu:///system"];
+        autoconnect = [ "qemu:///system" ];
+        uris = [ "qemu:///system" ];
       };
     };
   };

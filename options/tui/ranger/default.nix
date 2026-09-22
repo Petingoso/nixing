@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.custom;
-in {
+in
+{
   options.custom.programs = {
     #NOTE: needs HM
     ranger.enable = lib.mkEnableOption "ranger";

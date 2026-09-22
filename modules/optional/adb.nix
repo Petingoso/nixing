@@ -1,9 +1,11 @@
-{config, ...}: let
+{ config, ... }:
+let
   inherit (config.custom) username;
-in {
+in
+{
   programs.adb.enable = true;
 
   users.users.${username} = {
-    extraGroups = ["adbusers"];
+    extraGroups = [ "adbusers" ];
   };
 }

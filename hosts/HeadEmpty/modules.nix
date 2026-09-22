@@ -1,6 +1,8 @@
-{lib,self, ...}: let
+{ lib, self, ... }:
+let
   inherit (lib.lists) map;
-in {
+in
+{
   imports = map (name: "${self}/modules/optional/${name}") [
     "cpu/intel.nix"
     "hyprland/default.nix"

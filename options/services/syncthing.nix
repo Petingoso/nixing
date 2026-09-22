@@ -2,12 +2,14 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   cfg = config.custom.services.syncthing;
   inherit (config.custom) username;
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.types) str;
-in {
+in
+{
   options.custom.services.syncthing = {
     enable = mkEnableOption "syncthing";
     username = mkOption {

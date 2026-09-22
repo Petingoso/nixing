@@ -3,14 +3,16 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   cfg = config.custom.programs.vesktop;
   inherit (config.custom) username enableHM;
 
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
   inherit (lib.strings) concatStrings;
-in {
+in
+{
   options.custom.programs.vesktop = {
     enable = mkEnableOption "vesktop";
   };
@@ -47,8 +49,8 @@ in {
         autoUpdate = false;
         autoUpdateNotification = false;
         useQuickCss = true;
-        themeLinks = [];
-        enabledThemes = ["./theme.css"];
+        themeLinks = [ ];
+        enabledThemes = [ "./theme.css" ];
         enableReactDevtools = false;
         transparent = true;
         winCtrlQ = false;
@@ -90,7 +92,7 @@ in {
           GifPaste.enabled = true;
           IgnoreActivities = {
             enabled = true;
-            ignoredActivities = [];
+            ignoredActivities = [ ];
           };
           ImageZoom = {
             enabled = true;

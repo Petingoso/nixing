@@ -4,7 +4,8 @@
   pkgs,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.custom.programs.vscode;
   inherit (config.custom) username enableHM;
 
@@ -13,23 +14,40 @@
   inherit (lib.options) mkEnableOption mkOption;
   # inherit (lib.types) nullOr str;
   nix-vscode-extensions = inputs.nix-vscode-extensions.extensions.${pkgs.stdenv.hostPlatform.system};
-in {
+in
+{
   options.custom.programs.vscode = {
     #NOTE: needs HM
     enable = mkEnableOption "vscode";
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.${username} = {config, ...}:
+    home-manager.users.${username} =
+      { config, ... }:
       mkIf enableHM {
         # makes it runtime editable, this is a crime
-        xdg.configFile."VSCodium/User/settings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/settings.json";
-        xdg.configFile."VSCodium/User/tasks.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/tasks.json";
-        xdg.configFile."VSCodium/User/keybindings.json".source = config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/keybindings.json";
+        xdg.configFile."VSCodium/User/settings.json".source =
+          config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/settings.json";
+        xdg.configFile."VSCodium/User/tasks.json".source =
+          config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/tasks.json";
+        xdg.configFile."VSCodium/User/keybindings.json".source =
+          config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/vscodium/keybindings.json";
         programs.vscodium = {
           enable = true;
-          package = pkgs.vscodium.fhsWithPackages (ps: with ps; [gcc gnumake gdb lldb clang-tools shfmt python3 nil]);
-          profiles.default.extensions = with pkgs.vscode-extensions;
+          package = pkgs.vscodium.fhsWithPackages (
+            ps: with ps; [
+              gcc
+              gnumake
+              gdb
+              lldb
+              clang-tools
+              shfmt
+              python3
+              nil
+            ]
+          );
+          profiles.default.extensions =
+            with pkgs.vscode-extensions;
             [
               # LSP and formatters
               ms-vscode.cpptools

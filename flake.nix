@@ -17,15 +17,16 @@
 
     # common
 
-    #hardware support
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    noctalia.url = "github:noctalia-dev/noctalia-shell";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
-    #running dynamic apps easily
     nix-alien.url = "github:thiagokokada/nix-alien";
 
     #secret management

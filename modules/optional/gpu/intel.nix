@@ -2,18 +2,19 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib.attrsets) attrValues;
-in {
+in
+{
   # https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/intel/default.nix
-  boot.initrd.kernelModules = ["i915"];
+  boot.initrd.kernelModules = [ "i915" ];
 
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
     extraPackages = attrValues {
-      inherit
-        (pkgs)
+      inherit (pkgs)
         mesa
         libdrm
         libva
@@ -24,8 +25,7 @@ in {
         ;
     };
     extraPackages32 = attrValues {
-      inherit
-        (pkgs.driversi686Linux)
+      inherit (pkgs.driversi686Linux)
         mesa
         libvdpau-va-gl
         intel-vaapi-driver

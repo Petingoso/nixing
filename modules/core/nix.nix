@@ -1,4 +1,5 @@
-{config, ...}: {
+{ config, ... }:
+{
   nix = {
     settings = {
       experimental-features = [
@@ -7,7 +8,7 @@
       ];
       trusted-users = [
         "root"
-        config.mystuff.other.system.username
+        config.custom.username
       ];
       auto-optimise-store = true;
       keep-outputs = true;

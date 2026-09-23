@@ -1,8 +1,7 @@
-{config, ...}: {
-  config = {
-    programs.direnv = {
-      enable = true;
-      loadInNixShell = true;
-    };
+{ ... }:
+{
+  programs.direnv = {
+    enable = true;
+    loadInNixShell = true;
   };
 }

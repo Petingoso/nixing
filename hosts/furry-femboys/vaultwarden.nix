@@ -2,7 +2,8 @@
   self,
   config,
   ...
-}: {
+}:
+{
   age.secrets.vaultwarden-token.file = "${self}/secrets/vaultwarden-token.age";
 
   services.vaultwarden = {

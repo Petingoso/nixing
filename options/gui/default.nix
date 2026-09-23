@@ -1,13 +1,12 @@
 _: {
   imports = [
+    ./bootstrap.nix
     ./firefox
     ./kitty
-    ./rofi
-    ./swaync
-    ./themes
+    # ./themes
+    ./noctalia
     ./vesktop
     ./vscodium
-    ./waybar
     ./mpv.nix
   ];
 }

@@ -1,19 +1,64 @@
-{osConfig, ...}: {
+{ ... }: {
   wayland.windowManager.hyprland.settings.env = [
-    "CLUTTER_BACKEND,wayland"
-    "XDG_SESSION_TYPE,wayland"
-    "MOZ_ENABLE_WAYLAND,1"
-
-    "WLR_NO_HARDWARE_CURSORS,1"
-    "WLR_BACKEND,vulkan"
-    "GDK_BACKEND,wayland"
-
-    "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-    "QT_QPA_PLATFORM,wayland"
-    "QT_QPA_PLATFORMTHEME,kvantum"
-    "QT_STYLE_OVERRIDE,kvantum"
-
-    "LC_ALL,C"
-    "FLAKE,/home/${osConfig.mystuff.other.system.username}/flake"
+    {
+      _args = [
+        "CLUTTER_BACKEND"
+        "wayland,x11,*"
+      ];
+    }
+    {
+      _args = [
+        "MOZ_ENABLE_WAYLAND"
+        "1"
+      ];
+    }
+    {
+      _args = [
+        "SDL_VIDEODRIVER"
+        "wayland"
+      ];
+    }
+    {
+      _args = [
+        "WLR_BACKEND"
+        "vulkan"
+      ];
+    }
+    {
+      _args = [
+        "GDK_BACKEND"
+        "wayland"
+      ];
+    }
+    {
+      _args = [
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION"
+        "1"
+      ];
+    }
+    {
+      _args = [
+        "QT_QPA_PLATFORM"
+        "wayland;xcb"
+      ];
+    }
+    {
+      _args = [
+        "QT_QPA_PLATFORMTHEME"
+        "qt6ct"
+      ];
+    }
+    # {
+    #   _args = [ "QT_STYLE_OVERRIDE" "qt6ct" ];
+    # }
+    # {
+    #   _args = [ "XDG_CURRENT_DESKTOP" "Hyprland" ];
+    # }
+    # {
+    #   _args = [ "XDG_SESSION_TYPE" "wayland" ];
+    # }
+    # {
+    #   _args = [ "XDG_SESSION_DESKTOP" "Hyprland" ];
+    # }
   ];
 }

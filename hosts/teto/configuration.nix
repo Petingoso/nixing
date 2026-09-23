@@ -1,23 +1,31 @@
 {
   config,
-  inputs,
   pkgs,
   ...
-}: let
-  inherit (config.mystuff.other.system) username;
-in {
+}:
+let
+  inherit (config.custom) username;
+in
+{
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
   };
+
   services = {
-    xserver = {
-      xkb.layout = "pt";
-    };
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
-    displayManager.gdm.autoSuspend = false;
+    # xserver = {
+    #   xkb.layout = "pt";
+    # };
+    desktopManager.plasma6.enable = true;
+    displayManager.sddm.enable = false;
+    # displayManager.gdm.enable = true;
+    # displayManager.gdm.enable = false;
+    # desktopManager.gnome.enable = true;
+    # displayManager.gdm.autoSuspend = false;
   };
+
+  services.xserver.enable = true;
+  services.xserver.displayManager.startx.enable = true;
 
   environment.systemPackages = with pkgs.gnomeExtensions; [
     blur-my-shell
@@ -28,9 +36,8 @@ in {
     mouse-follows-focus-2
   ];
 
-  programs.kdeconnect.enable = true;
-  mystuff = {
-    other.home-manager.enable = true;
+  custom = {
+    username = "petnix";
     programs = {
       git = {
         enable = true;
@@ -40,8 +47,12 @@ in {
         enable = true;
         zinit.enable = true;
       };
+
       nh.enable = true;
+      nh.clean.enable = false; # auto-update.nix does it
       nh.flake = "/home/${username}/flake";
+
+      quickshell.enable = true;
       firefox-config.enable = true;
       kitty.enable = true;
       mpv.enable = true;
@@ -52,11 +63,16 @@ in {
     };
     services = {
       networkmanager.enable = true;
-      networkmanager.powersave = true;
+      networkmanager.powersave = false;
+      greetd = {
+        enable = true;
+        greeter = "tuigreet";
+        cage = false;
+      };
     };
   };
 
-  age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
+  age.identityPaths = [ "/home/${username}/.ssh/id_ed25519" ];
   system.stateVersion = "23.11";
 
   networking.firewall.enable = true;
@@ -71,10 +87,22 @@ in {
 
   users.users.petnix.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5" # main
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwWOg8uO5Nhon69IDx/mXvtTzG3jmvBVRhY2nEElVHe" # teto
   ];
 
-  users.users.petnix.extraGroups = ["kvm"];
+  users.users.petnix.extraGroups = [
+    "kvm"
+    "uinput"
+  ];
+
+  hardware.uinput.enable = true;
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # only needed for Wayland -- omit this when using with Xorg
+    openFirewall = true;
+  };
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   # services.printing.enable = true;
   # services.samba.enable = true;
   # services.printing.drivers = [

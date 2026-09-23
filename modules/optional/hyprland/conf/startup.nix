@@ -1,15 +1,20 @@
-{pkgs, ...}: {
+{ pkgs, lib, ... }:
+{
   wayland.windowManager.hyprland.settings = {
-    exec = ["pkill waybar;waybar &"];
-    exec-once = [
-      "GDK_BACKEND=x11 pcloud"
-      "${pkgs.kdePackages.kdeconnect-kde}/libexec/kdeconnectd"
-
-      "${pkgs.swaynotificationcenter}"
-      "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"
-      "fcitx5"
-      "opensnitch-ui"
-      "${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular --reconnect-tries 1 "
-    ];
+    on = {
+      _args = [
+        "hyprland.start"
+        (lib.generators.mkLuaInline "function()
+    hl.exec_cmd(\"${pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnect-indicator\")
+    hl.exec_cmd(\"fcitx-5\")
+    hl.exec_cmd(\"noctalia\")
+    hl.exec_cmd(\"${pkgs.wl-clip-persist}/bin/wl-clip-persist --clipboard regular --reconnect-tries 1 \")
+    end
+    ")
+      ];
+    };
+    #exec-once = [
+    #"opensnitch-ui"
+    #];
   };
 }

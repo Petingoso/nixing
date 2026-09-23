@@ -1,34 +1,49 @@
 {
   description = "petingoso's flake";
 
-  outputs = {
-    self,
-    nixpkgs,
-    ...
-  } @ inputs: {
-    inherit (nixpkgs) lib;
-    nixosConfigurations = import ./hosts {inherit inputs self;};
-  };
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-26.05";
+
+    home-manager-stable = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager-unstable = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
 
     nixpkgs-unstable-latest.url = "github:NixOS/nixpkgs/nixos-unstable-small";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # common
 
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-    };
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    noctalia.url = "github:noctalia-dev/noctalia";
 
     nix-alien.url = "github:thiagokokada/nix-alien";
 
+    #secret management
     agenix.url = "github:ryantm/agenix";
 
+    #vscode extensions
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
+    #theme generation
+    matugen.url = "github:/InioX/Matugen";
+
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+
+    stm-nix.url = "github:fdnt7/stm32cubeide-nix";
   };
+
+  outputs =
+    { self, ... }@inputs:
+    {
+      nixosConfigurations = import ./hosts { inherit self inputs; };
+    };
 }

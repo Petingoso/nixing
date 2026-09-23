@@ -7,32 +7,47 @@
   pkgs,
   modulesPath,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  boot.initrd.availableKernelModules = ["xhci_pci" "usb_storage" "uas" "usbhid"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = [];
-  boot.extraModulePackages = [];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "usb_storage"
+    "uas"
+    "usbhid"
+  ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/d2b8e296-edd0-4e08-9480-f6d04d6a93e1";
     fsType = "ext4";
-    options = ["noatime"];
+    options = [ "noatime" ];
   };
 
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/CA30-F685";
     fsType = "vfat";
-    options = ["fmask=0022" "dmask=0022"];
+    options = [
+      "fmask=0022"
+      "dmask=0022"
+    ];
   };
 
   fileSystems."/data" = {
     device = "/dev/disk/by-uuid/96d0505c-8862-4c74-9b1d-bee4e09668b2";
     fsType = "ext4";
-    options = ["noatime"];
+    options = [ "noatime" ];
+  };
+
+  fileSystems."/backups" = {
+    device = "/dev/disk/by-uuid/76c25d16-238d-4206-9e3e-cb50ed2792b4";
+    fsType = "ext4";
+    options = [ "noatime" ];
   };
 
   fileSystems."/backups" = {

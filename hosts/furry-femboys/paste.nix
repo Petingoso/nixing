@@ -1,7 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
-  customLinx = pkgs.callPackage ./linx.nix {};
+  customLinx = pkgs.callPackage ../../pkgs/linx.nix { };
 
   linxConfig = pkgs.writeText "config.toml" ''
     bind = '0.0.0.0:6900'
@@ -23,7 +23,8 @@ let
     referrer-policy = 'same-origin'
     x-frame-options = ""
   '';
-in {
+in
+{
 
   fileSystems."/var/lib/linx-server" = {
     fsType = "none";
@@ -37,7 +38,7 @@ in {
     description = "Linx-server Service";
     after = [ "network.target" ];
     wantedBy = [ "multi-user.target" ];
-    
+
     serviceConfig = {
       ExecStart = "${customLinx}/bin/linx-server --config=${linxConfig}";
       StateDirectory = "linx-server";

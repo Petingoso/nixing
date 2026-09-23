@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   environment.systemPackages = with pkgs; [
     opensnitch-ui
     config.boot.kernelPackages.opensnitch-ebpf
@@ -44,7 +45,7 @@
             type = "simple";
             sensitive = true;
             operand = "process.path";
-            data = "${lib.getBin pkgs.kdePackages.kdeconnect-kde}/libexec/.kdeconnectd-wrapped";
+            data = "${lib.getBin pkgs.kdePackages.kdeconnect-kde}/bin/kdeconnectd";
           };
         };
       };

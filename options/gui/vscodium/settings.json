@@ -3,7 +3,11 @@
   "extensions.experimental.affinity": {
     "asvetliakov.vscode-neovim": 1
   },
-  "workbench.colorTheme": "Nord",
+<<<<<<< HEAD
+  "workbench.colorTheme": "Gruvbox Dark Soft",
+=======
+  "workbench.colorTheme": "NoctaliaTheme",
+>>>>>>> 67b1383 (wip)
   "[typst]": {
     "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?"
   },
@@ -15,10 +19,7 @@
   },
   "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font Mono",
   "terminal.integrated.fontSize": 16,
-  "vscode-neovim.neovimInitVimPaths.linux": "~/.config/vs-nvim",
   "security.workspace.trust.enabled": false,
-  "workbench.sideBar.location": "right",
-  "editor.columnSelection": true,
   "editor.lineNumbers": "relative",
   "nix.enableLanguageServer": true,
 "nix.formatterPath": "alejandra",
@@ -29,8 +30,37 @@
     "miDebuggerPath": "/usr/bin/gdb"
 },
 "[c]": {
-    "editor.defaultFormatter": "ms-vscode.cpptools"
+    "editor.defaultFormatter": "xaver.clang-format"
 },
-"diffEditor.ignoreTrimWhitespace": false
+"diffEditor.ignoreTrimWhitespace": false,
+"C_Cpp.intelliSenseEngine": "disabled",
+"stm32-for-vscode.openOCDPath": "/home/petnix/.config/VSCodium/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-tools/openocd/0.12.0-7.1/.content/bin/openocd",
+"stm32-for-vscode.makePath": "/usr/bin/make",
+"stm32-for-vscode.armToolchainPath": "/home/petnix/.config/VSCodium/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.content/bin",
+"stm32-for-vscode.makeConcurrentJobs": 12,
+"cortex-debug.openocdPath": "/home/petnix/.config/VSCodium/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-tools/openocd/0.12.0-7.1/.content/bin/openocd",
+"cortex-debug.armToolchainPath": "/home/petnix/.config/VSCodium/User/globalStorage/bmd.stm32-for-vscode/@xpack-dev-tools/arm-none-eabi-gcc/15.2.1-1.1.1/.content/bin",
+"todo-tree.general.tags": [
+  "BUG",
+  "HACK",
+  "FIXME",
+  "TODO",
+  "XXX",
+  "[ ]",
+  "[x]",
+  "NOTE:"
+],
+"[cpp]": {
+  "editor.defaultFormatter": "xaver.clang-format"
+},
+"[html]": {
+  "editor.defaultFormatter": "vscode.html-language-features"
+},
+"workbench.sideBar.location": "right",
+"p2p-live-share.trystero": {},
+"[python]": {
+  "editor.defaultFormatter": "eeyore.yapf"
+}
+"git.openRepositoryInParentFolders": "always"
 }
 

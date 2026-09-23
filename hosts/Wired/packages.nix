@@ -1,14 +1,12 @@
 {
   pkgs,
-  config,
   self,
   ...
-}: let
-  inherit (config.mystuff.other.system) username;
-in {
+}:
+{
   environment.systemPackages = with pkgs; [
     baobab
-    btrbk
+    # btrbk
     compsize
     font-manager
     gnome-disk-utility
@@ -19,15 +17,14 @@ in {
     nemo-fileroller
     piper
     qbittorrent
-    xfce.ristretto
+    ristretto
     p7zip
     wdisplays
     # mcomix
-  ];
-
-  users.users.${username}.packages = with pkgs; [
+    # ];
+    #
+    # users.users.${username}.packages = with pkgs; [
     rclone
-    bitwarden-desktop
     calibre
     ckan
     evince
@@ -46,21 +43,21 @@ in {
     texliveMedium
     tor-browser
     ungoogled-chromium
-    wineWowPackages.waylandFull
-    youtube-music
+    wineWow64Packages.stable
+    winetricks
+    pear-desktop
     # miru
     pcloud
     obsidian
-
-    (olympus.override {celesteWrapper = steam-run;})
-    (callPackage "${self}/pkgs/steam-run-ksp.nix" {})
+    (olympus.override { celesteWrapper = steam-run; })
+    (callPackage "${self}/pkgs/scripts" { })
     ludusavi
     xdg-utils
     gamescope
     r2modman
-    config.boot.kernelPackages.vhba
+    # config.boot.kernelPackages.vhba
   ];
   programs.steam.enable = true;
-  programs.cdemu.enable = true;
-  programs.cdemu.gui = true;
+  # programs.cdemu.enable = true;
+  # programs.cdemu.gui = true;
 }

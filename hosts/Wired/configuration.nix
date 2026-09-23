@@ -1,14 +1,15 @@
 {
   config,
-  pkgs,
   ...
-}: let
-  inherit (config.mystuff.other.system) username;
-in {
+}:
+let
+  inherit (config.custom) username;
+in
+{
   programs.kdeconnect.enable = true;
 
-  mystuff = {
-    other.home-manager.enable = true;
+  custom = {
+    username = "petnix";
     programs = {
       git = {
         enable = true;
@@ -18,13 +19,14 @@ in {
         enable = true;
         zinit.enable = true;
       };
-      nh.enable = true;
-      nh.flake = "/home/${username}/flake";
+      nh = {
+        enable = true;
+        flake = "/home/${username}/flake";
+      };
+
+      quickshell.enable = true;
       firefox-config.enable = true;
       kitty.enable = true;
-      rofi.enable = true;
-      swaync.enable = true;
-      waybar.enable = true;
       mpv.enable = true;
       neovim-config.enable = true;
       vscode.enable = true;
@@ -32,14 +34,31 @@ in {
       vesktop.enable = true;
     };
     services = {
+      greetd.enable = true;
+      #TODO: modularize?
+      greetd.greeter = "tuigreet";
+      greetd.cage = false;
       networkmanager.enable = true;
       networkmanager.powersave = true;
+      syncthing = {
+        enable = true;
+        hostName = config.networking.hostName;
+      };
     };
-    gtk.enable = true;
-    qt.enable = true;
   };
 
-  age.identityPaths = ["/home/${config.mystuff.other.system.username}/.ssh/id_ed25519"];
-  age.secrets.test.file = ../../secrets/test.age;
+  services.openssh = {
+    enable = true;
+    hostKeys = [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
+  };
+
+  age.identityPaths = [
+    "/etc/ssh/ssh_host_ed25519_key"
+  ];
   system.stateVersion = "23.11";
 }

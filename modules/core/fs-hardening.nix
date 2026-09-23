@@ -1,3 +1,7 @@
 _: {
-  fileSystems."/boot".options = ["nodev" "nosuid" "noexec"];
+  fileSystems."/boot".options = [
+    "nodev"
+    "nosuid"
+    "noexec"
+  ];
 }

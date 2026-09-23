@@ -3,4 +3,5 @@ _: {
     enable = true;
     implementation = "broker";
   };
+  services.upower.enable = true;
 }

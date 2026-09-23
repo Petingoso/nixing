@@ -2,11 +2,13 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   inherit (lib.attrsets) attrValues;
-in {
+in
+{
   # https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/amd/default.nix
-  services.xserver.videoDrivers = ["modesetting"];
+  services.xserver.videoDrivers = [ "modesetting" ];
 
   hardware = {
     amdgpu = {
@@ -17,8 +19,7 @@ in {
       enable = true;
       enable32Bit = true;
       extraPackages = attrValues {
-        inherit
-          (pkgs)
+        inherit (pkgs)
           mesa
           libdrm
           libva
@@ -27,8 +28,7 @@ in {
           ;
       };
       extraPackages32 = attrValues {
-        inherit
-          (pkgs.driversi686Linux)
+        inherit (pkgs.driversi686Linux)
           mesa
           libvdpau-va-gl
           ;
@@ -36,7 +36,7 @@ in {
     };
   };
 
-  boot.initrd.kernelModules = ["amdgpu"];
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
   environment.sessionVariables = {
     AMD_VULKAN_ICD = "RADV";

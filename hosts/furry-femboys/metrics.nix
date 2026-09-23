@@ -3,15 +3,16 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   age.secrets.grafana-env = {
     file = "${self}/secrets/grafana-env.age";
     owner = "grafana";
   };
 
   age.secrets.searx-prometheus = {
-  	file = "${self}/secrets/searx-prometheus.age";
-	owner = "prometheus";
+    file = "${self}/secrets/searx-prometheus.age";
+    owner = "prometheus";
   };
 
   systemd.services.grafana.serviceConfig.EnvironmentFile = config.age.secrets.grafana-env.path;
@@ -32,11 +33,11 @@
     };
 
     settings.smtp = {
-    	enabled = true;
-    	user = "$__env{SMTP_USER}";
-    	password = "$__env{SMTP_PASSWORD}";
-    	host = "$__env{SMTP_HOST}";
-    	from_address = "$__env{SMTP_FROM}";
+      enabled = true;
+      user = "$__env{SMTP_USER}";
+      password = "$__env{SMTP_PASSWORD}";
+      host = "$__env{SMTP_HOST}";
+      from_address = "$__env{SMTP_FROM}";
     };
 
     provision = {
@@ -53,11 +54,10 @@
     };
   };
 
-
   services.prometheus.exporters.node = {
     enable = true;
     port = 9999;
-    enabledCollectors = ["systemd"];
+    enabledCollectors = [ "systemd" ];
   };
 
   services.prometheus.exporters.smartctl = {
@@ -93,7 +93,7 @@
         job_name = "caddy";
         static_configs = [
           {
-            targets = ["localhost:2019"];
+            targets = [ "localhost:2019" ];
           }
         ];
       }
@@ -101,7 +101,7 @@
         job_name = "anubis";
         static_configs = [
           {
-            targets = ["localhost:9091"];
+            targets = [ "localhost:9091" ];
           }
         ];
       }
@@ -109,7 +109,7 @@
         job_name = "searxng";
         static_configs = [
           {
-            targets = ["localhost:8100"];
+            targets = [ "localhost:8100" ];
           }
         ];
         basic_auth = {

@@ -1,72 +1,75 @@
 {
   lib,
-  pkgs,
   config,
   ...
-}: {
-  options.mystuff.programs = {
+}:
+let
+  cfg = config.custom.programs.kitty;
+  inherit (config.custom) username enableHM;
+
+in
+{
+  options.custom.programs = {
     kitty.enable = lib.mkEnableOption "kitty";
-  };
+  }
+  // lib.optionalAttrs enableHM {
+    config = lib.mkIf (cfg.enable) {
+      home-manager.users.${username} = {
+        programs.kitty.enable = true;
 
-  config = lib.mkIf config.mystuff.programs.kitty.enable {
-    home-manager.users.${config.mystuff.other.system.username} = {
-      programs.kitty.enable = true;
-      programs.kitty.extraConfig = "include /tmp/themes/kitty/kitty_theme";
+        programs.kitty = {
+          settings = {
+            font_family = "Jetbrains Mono";
+            bold_font = "auto";
+            italic_font = "auto";
 
-      programs.kitty = {
-        settings = {
-          font_family = "Jetbrains Mono";
-          bold_font = "auto";
-          italic_font = "auto";
+            bold_italic_font = "auto";
+            font_size = 16;
 
-          bold_italic_font = "auto";
-          font_size = 16;
+            adjust_line_height = 0;
 
-          adjust_line_height = 0;
+            adjust_column_width = 0;
 
-          adjust_column_width = 0;
+            disable_ligatures = "always";
 
-          disable_ligatures = "always";
+            background_opacity = "0.6";
 
-          background_opacity = "0.6";
+            cursor_shape = "block";
 
-          cursor_shape = "block";
+            scrollback_lines = 10000;
 
-          scrollback_lines = 10000;
+            mouse_hide_wait = 3;
 
-          mouse_hide_wait = 3;
+            url_style = "double";
 
-          url_style = "double";
+            open_url_with = "firefox";
 
-          open_url_with = "firefox";
+            url_prefixes = "http https file ftp gemini irc gopher mailto news git";
 
-          url_prefixes = "http https file ftp gemini irc gopher mailto news git";
+            detect_urls = true;
+            # url_excluded_characters
 
-          detect_urls = true;
-          # url_excluded_characters
+            select_by_word_characters = "@-./_~?&=%+#";
 
-          select_by_word_characters = "@-./_~?&=%+#";
+            focus_follows_mouse = true;
 
-          focus_follows_mouse = true;
+            enable_audio_bell = false;
 
-          enable_audio_bell = false;
+            remember_window_size = true;
 
-          remember_window_size = true;
+            tab_bar_edge = "top";
 
-          tab_bar_edge = "top";
+            tab_bar_style = "powerline";
+            tab_powerline_style = "angled";
 
-          tab_bar_style = "powerline";
-          tab_powerline_style = "angled";
+            close_on_child_death = true;
 
-          close_on_child_death = true;
+            allow_remote_control = true;
 
-          allow_remote_control = true;
+            listen_on = "unix:/tmp/kitty";
+          };
 
-          listen_on = "unix:/tmp/kitty";
-        };
-
-        keybindings =
-          {
+          keybindings = {
             "ctrl+f3" = "detach_tab";
             "kitty_mod + q" = "close_window";
             "kitty_mod + f" = "next_window";
@@ -77,11 +80,13 @@
             "ctrl + plus" = "change_font_size all +2.0";
             "ctrl + minus" = "change_font_size all -2.0";
           }
-          // builtins.listToAttrs (builtins.genList (x: {
+          // builtins.listToAttrs (
+            builtins.genList (x: {
               name = "ctrl+alt+${builtins.toString x}";
               value = "goto_tab ${builtins.toString x}";
-            })
-            10);
+            }) 10
+          );
+        };
       };
     };
   };

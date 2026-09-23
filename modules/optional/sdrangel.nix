@@ -2,15 +2,17 @@
   config,
   inputs,
   ...
-}: let
-  inherit (config.mystuff.other.system) username;
-in {
+}:
+let
+  inherit (config.custom) username;
+in
+{
   # environment.systemPackages = [ pkgs.sdrangel];
   hardware.rtl-sdr.enable = true;
   users.users.${username} = {
-    extraGroups = ["plugdev"];
+    extraGroups = [ "plugdev" ];
   };
-  imports = [inputs.nix-flatpak.nixosModules.nix-flatpak];
+  imports = [ inputs.nix-flatpak.nixosModules.nix-flatpak ];
   services.flatpak.enable = true;
   services.flatpak.packages = [
     "org.sdrangel.SDRangel"

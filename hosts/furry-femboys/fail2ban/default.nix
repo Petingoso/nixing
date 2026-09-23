@@ -4,7 +4,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   environment.etc = {
     "fail2ban/filter.d/caddy.conf".text = ''
       [Definition]

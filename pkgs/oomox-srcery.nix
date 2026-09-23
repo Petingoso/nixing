@@ -14,9 +14,9 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "RADWqcJS7RRu5SP2JKpf2UDaYIg+2jL8sX5ZMQICWq4=";
   };
 
-  buildInputs = [];
+  buildInputs = [ ];
 
-  propagatedUserEnvPkgs = [];
+  propagatedUserEnvPkgs = [ ];
 
   installPhase = ''
     runHook preInstall
@@ -32,6 +32,6 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://github.com/Petingoso/oomox-srcery";
     license = licenses.agpl3Plus;
     platforms = platforms.linux;
-    maintainers = with maintainers; [petingoso];
+    maintainers = with maintainers; [ petingoso ];
   };
 }

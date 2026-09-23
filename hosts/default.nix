@@ -1,63 +1,112 @@
-{inputs, ...}: let
-  inherit (inputs) self;
-  inherit (self) lib;
+{
+  inputs,
+  self,
+  ...
+}:
+let
+  mkHost =
+    {
+      channel,
+      system ? "x86_64-linux",
+      hostDir,
+      extraModules ? [ ],
+      hostname,
+      enableHM ? false,
+      ignoreOverride ? [ ],
+    }:
+    let
+      pkgs = if channel == "stable" then inputs.nixpkgs-stable else inputs.nixpkgs-unstable;
+      lib = pkgs.lib;
 
-  inherit (lib.attrsets) listToAttrs;
-  inherit (lib.path) append;
+      hm =
+        if enableHM then
+          (if channel == "stable" then inputs.home-manager-stable else inputs.home-manager-unstable)
+        else
+          null;
 
-  createHost' = extraModules: hostDir:
+      hostExtraModules =
+        (import (hostDir + "/modules.nix") {
+          inherit self lib;
+        }).imports;
+    in
     lib.nixosSystem {
-      system = null;
       specialArgs = {
-        inherit lib inputs self;
+        inherit
+          inputs
+          self
+          enableHM
+          ;
+        nixpkgs = pkgs;
       };
+
       modules =
-        [
+        lib.flatten [
           hostDir
-          ../options
-          ../modules/core
+          "${self}/modules/core"
+          (import "${self}/options" { }).imports
+
+          (
+            { config, ... }:
+            {
+              config = {
+                custom.hostname = hostname;
+                custom.platform = system;
+                custom.enableHM = enableHM;
+
+                nix.registry =
+                  let
+                    # We map over all inputs, but skip the ones in ignoreOverride
+                    shouldOverride = name: !(builtins.elem name ignoreOverride);
+                  in
+                  {
+                    nixpkgs.flake = pkgs;
+                  }
+                  // (lib.mapAttrs (name: value: { flake = value; }) (
+                    lib.filterAttrs (name: _: shouldOverride name) inputs
+                  ));
+
+                nix.nixPath = [ "nixpkgs=${pkgs}" ];
+              };
+            }
+          )
         ]
+        ++ lib.optional enableHM hm.nixosModules.home-manager
+        ++ hostExtraModules
         ++ extraModules;
     };
-
-  createHost = createHost' [];
-  createDesktop = createHost' [../modules/desktop];
-  createServer = createHost' [];
-
-  createHosts = hosts:
-    listToAttrs (map (host: let
-        createFn =
-          {
-            desktop = createDesktop;
-            server = createServer;
-            generic = createHost;
-          }
-          ."${host.type}";
-        path' = append host.dir "system.nix";
-        cfg = (import path') {
-          inherit inputs;
-        };
-      in {
-        name = cfg.mystuff.other.system.hostname;
-        value = createFn host.dir;
-      })
-      hosts);
+  ignoreOverride = [ "hyprland" ];
 in
-  createHosts [
-    {
-      dir = ./Wired;
-      type = "desktop";
-    }
-    {
-      dir = ./HeadEmpty;
-      type = "desktop";
-    }
-    {
-      dir = ./teto;
-      type = "desktop";
-    }
-    {
-      dir = ./furry-femboys;
-      type = "server";
-    }
-  ]
+{
+  Wired = mkHost {
+    channel = "unstable";
+    hostname = "Wired";
+    hostDir = ./Wired;
+    enableHM = true;
+    extraModules = [ inputs.agenix.nixosModules.default ] ++ (import ../modules/desktop { }).imports;
+    ignoreOverride = ignoreOverride;
+  };
+  HeadEmpty = mkHost {
+    channel = "unstable";
+    hostname = "HeadEmpty";
+    hostDir = ./HeadEmpty;
+    enableHM = true;
+    extraModules = (import ../modules/desktop { }).imports;
+    ignoreOverride = ignoreOverride;
+  };
+  teto = mkHost {
+    channel = "stable";
+    hostname = "teto";
+    hostDir = ./teto;
+    enableHM = true;
+    extraModules = (import ../modules/desktop { }).imports;
+    ignoreOverride = ignoreOverride;
+  };
+  furry-femboys = mkHost {
+    channel = "stable";
+    hostname = "furry-femboys";
+    hostDir = ./furry-femboys;
+    enableHM = false;
+    system = "aarch64-linux";
+    ignoreOverride = ignoreOverride;
+  };
+}

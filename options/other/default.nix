@@ -1,6 +1,11 @@
-_: {
-  imports = [
-    ./home-manager.nix
-    ./system.nix
-  ];
+{
+  enableHM,
+  config,
+  lib,
+  ...
+}:
+{
+
+  imports = lib.optional enableHM ./home-manager.nix;
+
 }

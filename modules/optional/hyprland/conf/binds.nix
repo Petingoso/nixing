@@ -1,110 +1,147 @@
 {
-  config,
   pkgs,
+  osConfig,
+  lib,
   ...
-}: let
-  lock_cmd = "${pkgs.playerctl}/bin/playerctl pause; ${config.programs.hyprlock.package}/bin/hyprlock";
-  rofi-menu = "rofi -show drun -theme ~/.config/rofi/launchers/menu.rasi";
-in {
-  home.packages = with pkgs; [hyprshade grim slurp swappy playerctl wl-clipboard libnotify];
-  xdg.configFile."hypr/blue-light-filter.glsl".source = ./blue-light.glsl;
-  wayland.windowManager.hyprland.settings = {
-    bindm = ["ALT,mouse:272,movewindow" "ALT,mouse:273,resizewindow"];
-    bind =
+}:
+let
+  launcher-cmd = osConfig.custom.programs.launcher;
+  lock-cmd = osConfig.custom.programs.locker;
+  power-cmd = osConfig.custom.programs.power_menu;
+
+  mod = "ALT";
+
+  mkLua = lib.generators.mkLuaInline;
+
+  bind = key: luaExpr: {
+    _args = [
+      key
+      (mkLua luaExpr)
+    ];
+  };
+
+  exec = key: cmd: bind key "hl.dsp.exec_cmd(\"${cmd}\")";
+  group = key: action: bind key "hl.dsp.group.${action}";
+
+  focus = key: direction: bind "${mod} + ${key}" "hl.dsp.focus({ direction = '${direction}' })";
+
+  move =
+    key: direction: bind "${mod} + SHIFT + ${key}" "hl.dsp.window.move({ direction = '${direction}' })";
+
+  monitor = key: direction: bind "${mod} + ${key}" "hl.dsp.focus({ monitor = '${direction}' })";
+
+  moveMonitor =
+    key: direction:
+    bind "${mod} + SHIFT + ${key}" "hl.dsp.window.move({ monitor = '${direction}', follow = false })";
+
+  workspace = key: number: bind "${mod} + ${key}" "hl.dsp.focus({ workspace = ${number} })";
+
+  moveWorkspace =
+    key: number:
+    bind "${mod} + SHIFT + ${key}" "hl.dsp.window.move({ workspace = ${number}, follow = false })";
+
+  gesture = fingers: direction: action: args: {
+    _args = [
+      (mkLua ''
+        {
+          fingers = ${toString fingers},
+          direction = "${direction}",
+          action = "${action}"${lib.optionalString (args != "") ", ${args}"}
+        }
+      '')
+    ];
+  };
+
+  workspaces = builtins.concatLists (
+    builtins.genList (
+      x:
+      let
+        wsKey = builtins.toString (if x == 9 then 0 else x + 1);
+        wsNum = builtins.toString (x + 1);
+      in
       [
-        "ALT CONTROL, Q ,exit,"
-        "ALT SHIFT, R, exec, hyprctl reload"
-        "ALT, Space, togglefloating"
-        "ALT, Q, killactive"
-        "ALT, C, pseudo,"
-        "ALT, F, fullscreen,"
-
-        "ALT, G, exec, ~/.local/bin/togglegaps"
-        "ALT, Return, exec, kitty -1"
-
-        "ALT, B, exec, pkill -SIGUSR1 'waybar'"
-        "ALT SHIFT, B, exec, pkill -SIGUSR2 'waybar'"
-
-        ",Print,exec,grim $HOME/Pictures/SS/$(date +'%Y%m%d%H%M%S_1.png') && notify-send 'Screenshot Saved'"
-
-        "SUPER,Print,exec,grim - | wl-copy && notify-send 'Screenshot Copied to Clipboard'"
-
-        "SUPERSHIFT,Print,exec,grim - | swappy -f -"
-
-        "SUPERSHIFT,S,exec,slurp | grim -g - /tmp/photo && wl-copy --type image/png < /tmp/photo && notify-send 'Screenshot Copied to Clipboard'"
-
-        ''
-          ALT SHIFT,S,exec,slurp | grim -g - /tmp/photo && swappy -f /tmp/photo
-        ''
-
-        "ALT, D, exec, ${rofi-menu}"
-        "ALT, T, exec, .local/bin/theme_changer_WL"
-        "ALT CONTROL, X, exec,~/.local/bin/powermenu"
-        "ALT CONTROL, K, exec,~/.local/bin/hypr_bindings"
-
-        "ALT CONTROL, E,exec,hyprshade toggle .config/hypr/blue-light-filter.glsl"
-
-        "ALT SHIFT, P, exec, ${lock_cmd}"
-
-        "ALT SHIFT, T, exec, swaync-client -t"
-
-        "ALT, V, togglesplit"
-        "ALT SHIFT, V, togglegroup"
-        "ALT, N ,changegroupactive,f"
-        "ALT SHIFT,N,changegroupactive,b"
-        "ALT, S,layoutmsg,swapwithmaster"
-
-        # ",XF86MonBrightnessUp,exec,light -A 10.2"
-        # ",XF86MonBrightnessDown,exec,light -T 0.63"
-
-        "ALT,P,exec,playerctl play-pause"
-        ",XF86AudioRaiseVolume,exec,amixer set Master 5%+"
-        ",XF86AudioLowerVolume,exec,amixer set Master 5%-"
-        ",XF86AudioMute,exec,amixer  set Master 1+ toggle"
-        ",XF86Calculator,exec,qalculate-gtk"
-
-        "ALT, tab, workspace, +1"
-        "ALT SHIFT, tab, workspace, -1"
-        "ALT, period, focusmonitor,r"
-        "ALT, comma, focusmonitor,l"
-        "ALT SHIFT,period,movewindow,mon:r"
-        "ALT SHIFT,comma,movewindow,mon:l"
-
-        "ALT CONTROL,left,splitratio,-0.1"
-        "ALT CONTROL,right,splitratio,+0.1"
-        "ALT CONTROL,h,splitratio,-0.1"
-        "ALT CONTROL,l,splitratio,+0.1"
-
-        "ALT, left, movefocus, l"
-        "ALT, right, movefocus, r"
-        "ALT, up, movefocus, u"
-        "ALT, down, movefocus, d"
-
-        "ALT, h, movefocus, l"
-        "ALT, l, movefocus, r"
-        "ALT, k, movefocus, u"
-        "ALT, j, movefocus, d"
-
-        "ALT SHIFT, left, movewindow, l"
-        "ALT SHIFT, right, movewindow, r"
-        "ALT SHIFT, up, movewindow, u"
-        "ALT SHIFT, down, movewindow, d"
-
-        "ALT SHIFT, h, movewindow, l"
-        "ALT SHIFT, l, movewindow, r"
-        "ALT SHIFT, k, movewindow, u"
-        "ALT SHIFT, j, movewindow, d"
+        (workspace wsKey wsNum)
+        (moveWorkspace wsKey wsNum)
       ]
-      ++ (
-        # workspaces
-        # binds ALT + [shift +] {1..10} to [move to] workspace {1..10}
-        builtins.concatLists (builtins.genList (x: let
-            ws = let c = (x + 1) / 10; in builtins.toString (x + 1 - (c * 10));
-          in [
-            "ALT, ${ws}, workspace, ${toString (x + 1)}"
-            "ALT SHIFT, ${ws}, movetoworkspacesilent, ${toString (x + 1)}"
-          ])
-          10)
-      );
+    ) 10
+  );
+in
+{
+  home.packages = with pkgs; [
+    playerctl
+    qalculate-gtk
+  ];
+
+  wayland.windowManager.hyprland.settings = {
+    gesture = [
+      (gesture 3 "horizontal" "workspace" "")
+      (gesture 2 "pinch" "cursor_zoom" "mods = \"SHIFT\", zoom_level = 1, mode = \"live\"")
+    ];
+
+    bind = [
+      # Applications
+
+      (bind "${mod} + Return" "hl.dsp.exec_raw(\"kitty -1\")") # so the single instance actually works
+      (exec "${mod} + SHIFT + R" "hyprctl reload")
+      (exec "${mod} + D" launcher-cmd)
+      (exec "${mod} + SHIFT + D" "noctalia msg window-switcher")
+      (exec "${mod} + SHIFT + P" lock-cmd)
+      (exec "${mod} + CONTROL + X" power-cmd)
+
+      # Window management
+      (bind "${mod} + Q" "hl.dsp.window.close()")
+      (bind "${mod} + Space" "hl.dsp.window.float()")
+      (bind "${mod} + C" "hl.dsp.window.pseudo()")
+      (bind "${mod} + F" "hl.dsp.window.fullscreen()")
+
+      # Screenshots
+      (exec "Print" "noctalia msg screenshot-fullscreen")
+      (exec "SUPER + SHIFT + S" "noctalia msg screenshot-region")
+      (exec "SHIFT + Print" "noctalia msg screenshot-annotate")
+
+      # Media / utilities
+      (exec "${mod} + P" "playerctl play-pause")
+      (exec "XF86Calculator" "qalculate-gtk")
+
+      # Groups
+      (group "${mod} + SHIFT + V" "toggle()")
+      (group "${mod} + N" "next()")
+      (group "${mod} + SHIFT + N" "prev()")
+
+      # Workspace cycling
+      (bind "${mod} + Tab" "hl.dsp.focus({ workspace = \"e+1\" })")
+      (bind "${mod} + SHIFT + Tab" "hl.dsp.focus({ workspace = \"e-1\" })")
+
+      # Monitors
+      (monitor "period" "r")
+      (monitor "comma" "l")
+      (moveMonitor "period" "r")
+      (moveMonitor "comma" "l")
+
+      # Focus
+      (focus "Left" "l")
+      (focus "Right" "r")
+      (focus "Up" "u")
+      (focus "Down" "d")
+      (focus "H" "l")
+      (focus "L" "r")
+      (focus "K" "u")
+      (focus "J" "d")
+
+      # Move
+      (move "Left" "l")
+      (move "Right" "r")
+      (move "Up" "u")
+      (move "Down" "d")
+      (move "H" "l")
+      (move "L" "r")
+      (move "K" "u")
+      (move "J" "d")
+
+      # Mouse
+      (bind "${mod} + mouse:272" "hl.dsp.window.drag()")
+      (bind "${mod} + mouse:273" "hl.dsp.window.resize()")
+    ]
+    ++ workspaces;
   };
 }

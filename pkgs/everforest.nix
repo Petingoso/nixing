@@ -14,9 +14,9 @@ stdenvNoCC.mkDerivation rec {
     sha256 = "yiugIUzQ8cOtxizamG/labJ3s2h5Z7mC0/l3N9ZwZWk=";
   };
 
-  buildInputs = [];
+  buildInputs = [ ];
 
-  propagatedUserEnvPkgs = [];
+  propagatedUserEnvPkgs = [ ];
 
   installPhase = ''
     runHook preInstall
@@ -33,6 +33,6 @@ stdenvNoCC.mkDerivation rec {
     homepage = "https://github.com/theory-of-everything/everforest-gtk";
     license = licenses.gpl3Only;
     platforms = platforms.linux;
-    maintainers = with maintainers; [petingoso];
+    maintainers = with maintainers; [ petingoso ];
   };
 }

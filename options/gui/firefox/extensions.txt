@@ -1,0 +1,14 @@
+vimium-ff
+ublock-origin
+bitwarden-password-manager
+buster-captcha-solver
+chameleon-ext
+cookie-editor
+darkreader
+noscript
+prettier-lichess
+skip-redirect
+smart-referer
+tab-session-manager
+tampermonkey
+tab-nine

@@ -5,13 +5,15 @@
   lib,
   pkgs,
   ...
-}: let
+}:
+let
   pkgs' = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system};
-in {
+in
+{
   age.secrets.searx.file = "${self}/secrets/searx.age";
   age.secrets.searx-prometheus = {
-  	file = "${self}/secrets/searx-prometheus.age";
-	mode = "444";
+    file = "${self}/secrets/searx-prometheus.age";
+    mode = "444";
   };
   systemd.tmpfiles.rules = [
     "L+ /run/searx/limiter.toml - - - - /etc/searxng/limiter.toml"
@@ -27,7 +29,7 @@ in {
       botdetection.ip_limit.filter_link_local = false;
       botdetection.ip_limit.link_token = true;
       botdetection.ip_lists.pass_searxng_org = true;
-      botdetection.ip_lists.pass_ip = ["127.0.0.1/32"];
+      botdetection.ip_lists.pass_ip = [ "127.0.0.1/32" ];
     };
 
     settings = {
@@ -50,7 +52,7 @@ in {
         enable_metrics = true;
 
         #FIXME: use environmentFile and "@SEARX_SECRET_KEY@";
-	open_metrics = lib.removeSuffix "\n" (builtins.readFile config.age.secrets.searx-prometheus.path);
+        open_metrics = lib.removeSuffix "\n" (builtins.readFile config.age.secrets.searx-prometheus.path);
       };
       ui = {
         default_locale = "en";
@@ -67,12 +69,12 @@ in {
         autocomplete = "duckduckgo";
         ban_time_on_fail = 5;
         max_ban_time_on_fail = 120;
-      };      
-	#      engines = lib.singleton { 
-	#       	name = "brave";
-	#        engine = "brave";
-	# using_tor_proxy = "true";
-	#    };
+      };
+      #      engines = lib.singleton {
+      #       	name = "brave";
+      #        engine = "brave";
+      # using_tor_proxy = "true";
+      #    };
 
       enabled_plugins = [
         "Basic Calculator"

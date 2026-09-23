@@ -1,14 +1,21 @@
 {
   config,
   self,
-  lib,
+  inputs,
   pkgs,
   ...
-}: {
+}:
+let
+  pkgs' = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system};
+in
+{
   age.secrets.lanraragi.file = "${self}/secrets/lanraragi.age";
+  #HACK: WORKAROUND for redis version downgrade on stable
+  services.redis.package = pkgs'.redis;
 
   services.lanraragi = {
-    # package = pkgs.callPackage "${self}/pkgs/lanraragi/package.nix" {};
+    #package = pkgs.callPackage "${self}/pkgs/lanraragi/package.nix" {};
+    package = pkgs'.lanraragi;
     enable = true;
     port = 8500;
     passwordFile = config.age.secrets.lanraragi.path;
@@ -21,7 +28,7 @@
   fileSystems."/var/lib/private/lanraragi" = {
     fsType = "none";
     device = "/data/lanraragi";
-    options = ["bind"];
+    options = [ "bind" ];
   };
 
   systemd.tmpfiles.rules = [

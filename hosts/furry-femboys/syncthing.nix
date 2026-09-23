@@ -1,15 +1,16 @@
-{...}:{
-services.syncthing = {
-  enable = true;
-  openDefaultPorts = true;
-  guiAddress = "0.0.0.0:8384"; 
-  dataDir = "/data/syncthing";
-};
+{ config, ... }: {
+  custom.services.syncthing = {
+    enable = true;
+    username = "syncthing";
+    hostName = config.networking.hostName;
+    confDir = "/data/syncthing-conf";
+    dataDir = "/data/syncthing";
+    documentsPath = "/data/syncthing/Documents";
+    syncPath = "/data/syncthing/Sync";
+  };
 
-networking.firewall.allowedTCPPorts = [ 8384 ];
-
-systemd.tmpfiles.rules = [
+  systemd.tmpfiles.rules = [
     "d /data/syncthing 0700 syncthing syncthing - - --no-override"
-];
-
+    "d /data/syncthing-conf 0700 syncthing syncthing - - --no-override"
+  ];
 }

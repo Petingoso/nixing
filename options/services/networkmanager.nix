@@ -3,16 +3,20 @@
   lib,
   pkgs,
   ...
-}: let
-  cfg = config.mystuff.services.networkmanager;
-  inherit (config.mystuff.other.system) username;
+}:
+let
+  cfg = config.custom.services.networkmanager;
+  inherit (config.custom) username;
+
   inherit (lib.options) mkOption;
   inherit (lib.types) bool;
-in {
-  options.mystuff.services.networkmanager = {
+in
+{
+  options.custom.services.networkmanager = {
     enable = mkOption {
       description = "enable networkmanager";
       type = bool;
+      default = false;
     };
 
     powersave = mkOption {
@@ -26,9 +30,9 @@ in {
     users.users."${username}".extraGroups = [ "networkmanager" ];
     networking = {
       networkmanager = {
-        enable = true;
+        enable = cfg.enable;
         wifi.powersave = cfg.powersave;
-        plugins = [pkgs.networkmanager-openvpn];
+        plugins = [ pkgs.networkmanager-openvpn ];
       };
     };
   };

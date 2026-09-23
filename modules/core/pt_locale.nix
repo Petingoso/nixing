@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   # Set your time zone.
   services.tzupdate.enable = true;
 

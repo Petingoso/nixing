@@ -1,5 +1,9 @@
-{pkgs, ...}: {
-  environment.systemPackages = [pkgs.dualsensectl pkgs.trigger-control];
+{ pkgs, ... }:
+{
+  environment.systemPackages = [
+    pkgs.dualsensectl
+    pkgs.trigger-control
+  ];
 
   services = {
     udev = {

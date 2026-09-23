@@ -17,7 +17,7 @@
     nemo-fileroller
     piper
     qbittorrent
-    xfce.ristretto
+    ristretto
     p7zip
     wdisplays
     # mcomix

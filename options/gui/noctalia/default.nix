@@ -3,7 +3,8 @@
   lib,
   inputs,
   ...
-}: let
+}:
+let
   cfg = config.custom.programs.quickshell;
   cfg' = config.custom.programs;
 
@@ -21,27 +22,29 @@
   inherit (config.custom) username enableHM;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
-in {
-  options.custom.programs.quickshell =
-    {
-      #NOTE: needs HM
-      enable = mkEnableOption "quickshell";
-    }
-    // lib.optionalAttrs enableHM {
-      config = mkIf (cfg.enable) {
-        custom.programs.launcher = lib.mkForce "${ipc} panel-toggle launcher";
-        custom.programs.locker = lib.mkForce "${ipc} session lock";
-        custom.programs.power_menu = lib.mkForce "${ipc} panel-toggle session";
+in
+{
+  options.custom.programs.quickshell = {
+    #NOTE: needs HM
+    enable = mkEnableOption "quickshell";
+  }
+  // lib.optionalAttrs enableHM {
+    config = mkIf (cfg.enable) {
+      custom.programs.launcher = lib.mkForce "${ipc} panel-toggle launcher";
+      custom.programs.locker = lib.mkForce "${ipc} session lock";
+      custom.programs.power_menu = lib.mkForce "${ipc} panel-toggle session";
 
-        environment.sessionVariables = {
-          QS_ICON_THEME = "Papirus-Dark";
-        };
+      environment.sessionVariables = {
+        QS_ICON_THEME = "Papirus-Dark";
+      };
 
-        home-manager.users.${username} = {
+      home-manager.users.${username} =
+        {
           config,
           pkgs,
           ...
-        }: {
+        }:
+        {
           imports = [
             inputs.noctalia.homeModules.default
           ];
@@ -133,6 +136,6 @@ in {
           # kitty
           programs.kitty.extraConfig = mkIf cfg'.kitty.enable "include ~/.config/kitty/themes/noctalia.conf";
         };
-      };
     };
+  };
 }

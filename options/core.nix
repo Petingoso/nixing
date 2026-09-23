@@ -49,8 +49,8 @@ with lib;
       extraGroups = [ "wheel" ];
     };
 
-  } 
+  }
   // lib.optionalAttrs enableHM {
     home-manager.users.${cfg.username}.home.stateVersion = config.system.stateVersion;
-};
+  };
 }

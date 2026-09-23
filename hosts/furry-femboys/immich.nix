@@ -4,7 +4,7 @@
   inputs,
   ...
 }:
-let 
+let
   pkgs' = inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system};
 in
 {

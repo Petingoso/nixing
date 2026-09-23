@@ -34,7 +34,7 @@ let
         inherit
           inputs
           self
-	  enableHM
+          enableHM
           ;
         nixpkgs = pkgs;
       };
@@ -49,9 +49,9 @@ let
             { config, ... }:
             {
               config = {
-	        custom.hostname   = hostname;
-      	        custom.platform   = system;
-      	 	custom.enableHM   = enableHM;
+                custom.hostname = hostname;
+                custom.platform = system;
+                custom.enableHM = enableHM;
 
                 nix.registry =
                   let

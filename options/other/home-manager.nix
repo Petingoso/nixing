@@ -7,6 +7,7 @@
 let
   inherit (config.custom) username;
 in
+{
   config = {
     environment.sessionVariables = rec {
       XDG_BIN_HOME = "$HOME/.local/bin";
@@ -33,4 +34,5 @@ in
         };
       };
     };
+  };
 }

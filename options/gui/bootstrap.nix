@@ -16,4 +16,3 @@
     description = "Command to toggle the power menu";
   };
 }
-

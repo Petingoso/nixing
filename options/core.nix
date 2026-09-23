@@ -1,12 +1,10 @@
 {
   lib,
   config,
-  hostname ? null,
-  system ? null,
+  enableHM,
   ...
 }:
 let
-  inherit hostname system;
   cfg = config.custom;
 in
 with lib;
@@ -26,13 +24,12 @@ with lib;
 
     hostname = mkOption {
       type = types.str;
-      default = hostname;
       description = "System Hostname";
     };
 
     platform = mkOption {
       type = types.str;
-      default = system;
+      default = "x86_64-linux";
       description = "System Architecture";
     };
 
@@ -52,7 +49,8 @@ with lib;
       extraGroups = [ "wheel" ];
     };
 
-    home-manager.users.${cfg.username}.home.stateVersion =
-      (lib.mkIf cfg.enableHM) config.system.stateVersion;
-  };
+  } 
+  // lib.optionalAttrs enableHM {
+    home-manager.users.${cfg.username}.home.stateVersion = config.system.stateVersion;
+};
 }

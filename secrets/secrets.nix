@@ -38,12 +38,12 @@ in
   "vaultwarden-token.age".publicKeys = server;
   "wireguard.age".publicKeys = personal;
   "znc.nix.age".publicKeys = server;
-
+  "linx.age".publicKeys = personal;
   "syncthing-Wired-cert.age".publicKeys = personal;
   "syncthing-Wired-key.age".publicKeys = personal;
 
-  "syncthing-server-cert.age".publicKeys = server;
-  "syncthing-server-key.age".publicKeys = server;
+  "syncthing-furry-femboys-cert.age".publicKeys = server;
+  "syncthing-furry-femboys-key.age".publicKeys = server;
   #"syncthing-HeadEmpty-cert.age" = HeadEmpty;
   #syncthing-HeadEmpty-key.age" = HeadEmpty;
 }

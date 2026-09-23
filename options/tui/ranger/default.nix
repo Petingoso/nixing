@@ -2,11 +2,11 @@
   pkgs,
   lib,
   config,
-  enableHM,
   ...
 }:
 let
   cfg = config.custom;
+  inherit (config.custom) enableHM;
 in
 {
   options.custom.programs = {

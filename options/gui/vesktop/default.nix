@@ -2,11 +2,10 @@
   config,
   lib,
   pkgs,
-  enableHM,
   ...
 }: let
   cfg = config.custom.programs.vesktop;
-  inherit (config.custom) username;
+  inherit (config.custom) username enableHM;
 
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;

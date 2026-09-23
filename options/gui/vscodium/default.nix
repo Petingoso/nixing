@@ -3,11 +3,10 @@
   lib,
   pkgs,
   inputs,
-  enableHM,
   ...
 }: let
   cfg = config.custom.programs.vscode;
-  inherit (config.custom) username;
+  inherit (config.custom) username enableHM;
 
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;

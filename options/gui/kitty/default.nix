@@ -1,11 +1,10 @@
 {
   lib,
   config,
-  enableHM,
   ...
 }: let
   cfg = config.custom.programs.kitty;
-  inherit (config.custom) username ;
+  inherit (config.custom) username enableHM ;
 
 in {
   options.custom.programs =

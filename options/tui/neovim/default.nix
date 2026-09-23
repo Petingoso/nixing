@@ -2,9 +2,11 @@
   lib,
   pkgs,
   config,
-  enableHM,
   ...
 }:
+let
+  inherit (config.custom) enableHM;
+in
 {
   options.custom.programs = {
     neovim-config.enable = lib.mkEnableOption "neovim-config";

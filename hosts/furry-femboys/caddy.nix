@@ -30,7 +30,7 @@ let
   microbinServer = "http://localhost:6900";
 
   customCaddy = (
-    inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.system}.caddy.withPlugins {
+    inputs.nixpkgs-unstable-latest.legacyPackages.${pkgs.stdenv.hostPlatform.system}.caddy.withPlugins {
       # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/corazawaf/coraza-caddy@v2.0.0"];
       # plugins = ["github.com/caddy-dns/cloudflare@v0.2.1" "github.com/mholt/caddy-webdav@v0.0.0-20250805175825-7a5c90d8bf90"];
       plugins = [

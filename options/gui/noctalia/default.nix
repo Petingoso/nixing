@@ -2,7 +2,6 @@
   config,
   lib,
   inputs,
-  enableHM,
   ...
 }: let
   cfg = config.custom.programs.quickshell;

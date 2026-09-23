@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  enableHM,
   ...
 }:
 let
@@ -9,6 +8,7 @@ let
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) str;
+  inherit (config.custom) enableHM;
 in
 {
   options.custom.programs.nh = {

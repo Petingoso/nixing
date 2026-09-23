@@ -2,13 +2,11 @@
   config,
   inputs,
   lib,
-  enableHM,
   ...
 }:
 let
   inherit (config.custom) username;
 in
-lib.optionalAttrs enableHM {
   config = {
     environment.sessionVariables = rec {
       XDG_BIN_HOME = "$HOME/.local/bin";
@@ -35,5 +33,4 @@ lib.optionalAttrs enableHM {
         };
       };
     };
-  };
 }

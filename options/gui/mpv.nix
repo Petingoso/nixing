@@ -2,12 +2,11 @@
   config,
   lib,
   pkgs,
-  enableHM,
   ...
 }:
 let
   cfg = config.custom.programs.mpv;
-  inherit (config.custom) username;
+  inherit (config.custom) username enableHM;
 
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;

@@ -34,9 +34,6 @@ let
         inherit
           inputs
           self
-          lib
-          hostname
-          system
 	  enableHM
           ;
         nixpkgs = pkgs;
@@ -52,6 +49,10 @@ let
             { config, ... }:
             {
               config = {
+	        custom.hostname   = hostname;
+      	        custom.platform   = system;
+      	 	custom.enableHM   = enableHM;
+
                 nix.registry =
                   let
                     # We map over all inputs, but skip the ones in ignoreOverride
@@ -65,7 +66,6 @@ let
                   ));
 
                 nix.nixPath = [ "nixpkgs=${pkgs}" ];
-                custom.enableHM = enableHM;
               };
             }
           )

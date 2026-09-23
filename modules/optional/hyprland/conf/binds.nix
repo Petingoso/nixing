@@ -1,106 +1,147 @@
 {
   pkgs,
   osConfig,
+  lib,
   ...
 }:
 let
   launcher-cmd = osConfig.custom.programs.launcher;
   lock-cmd = osConfig.custom.programs.locker;
   power-cmd = osConfig.custom.programs.power_menu;
+
   mod = "ALT";
+
+  mkLua = lib.generators.mkLuaInline;
+
+  bind = key: luaExpr: {
+    _args = [
+      key
+      (mkLua luaExpr)
+    ];
+  };
+
+  exec = key: cmd: bind key "hl.dsp.exec_cmd(\"${cmd}\")";
+  group = key: action: bind key "hl.dsp.group.${action}";
+
+  focus = key: direction: bind "${mod} + ${key}" "hl.dsp.focus({ direction = '${direction}' })";
+
+  move =
+    key: direction: bind "${mod} + SHIFT + ${key}" "hl.dsp.window.move({ direction = '${direction}' })";
+
+  monitor = key: direction: bind "${mod} + ${key}" "hl.dsp.focus({ monitor = '${direction}' })";
+
+  moveMonitor =
+    key: direction:
+    bind "${mod} + SHIFT + ${key}" "hl.dsp.window.move({ monitor = '${direction}', follow = false })";
+
+  workspace = key: number: bind "${mod} + ${key}" "hl.dsp.focus({ workspace = ${number} })";
+
+  moveWorkspace =
+    key: number:
+    bind "${mod} + SHIFT + ${key}" "hl.dsp.window.move({ workspace = ${number}, follow = false })";
+
+  gesture = fingers: direction: action: args: {
+    _args = [
+      (mkLua ''
+        {
+          fingers = ${toString fingers},
+          direction = "${direction}",
+          action = "${action}"${lib.optionalString (args != "") ", ${args}"}
+        }
+      '')
+    ];
+  };
+
+  workspaces = builtins.concatLists (
+    builtins.genList (
+      x:
+      let
+        wsKey = builtins.toString (if x == 9 then 0 else x + 1);
+        wsNum = builtins.toString (x + 1);
+      in
+      [
+        (workspace wsKey wsNum)
+        (moveWorkspace wsKey wsNum)
+      ]
+    ) 10
+  );
 in
 {
   home.packages = with pkgs; [
     playerctl
     qalculate-gtk
-    hyprshot
   ];
+
   wayland.windowManager.hyprland.settings = {
-    bindm = [
-      "${mod},mouse:272,movewindow"
-      "${mod},mouse:273,resizewindow"
+    gesture = [
+      (gesture 3 "horizontal" "workspace" "")
+      (gesture 2 "pinch" "cursor_zoom" "mods = \"SHIFT\", zoom_level = 1, mode = \"live\"")
     ];
+
     bind = [
-      "${mod} CONTROL, Q ,exit,"
-      "${mod} SHIFT, R, exec, hyprctl reload"
-      "${mod}, Space, togglefloating"
-      "${mod}, Q, killactive"
-      "${mod}, C, pseudo,"
-      "${mod}, F, fullscreen,"
+      # Applications
 
-      "${mod}, Return, exec, kitty -1"
+      (bind "${mod} + Return" "hl.dsp.exec_raw(\"kitty -1\")") # so the single instance actually works
+      (exec "${mod} + SHIFT + R" "hyprctl reload")
+      (exec "${mod} + D" launcher-cmd)
+      (exec "${mod} + SHIFT + D" "noctalia msg window-switcher")
+      (exec "${mod} + SHIFT + P" lock-cmd)
+      (exec "${mod} + CONTROL + X" power-cmd)
 
-      ",Print,exec, hyprshot -m output -o ~/Pictures/SS/ -z"
+      # Window management
+      (bind "${mod} + Q" "hl.dsp.window.close()")
+      (bind "${mod} + Space" "hl.dsp.window.float()")
+      (bind "${mod} + C" "hl.dsp.window.pseudo()")
+      (bind "${mod} + F" "hl.dsp.window.fullscreen()")
 
-      "SUPERSHIFT,S,exec, hyprshot -m region -z --clipboard-only"
+      # Screenshots
+      (exec "Print" "noctalia msg screenshot-fullscreen")
+      (exec "SUPER + SHIFT + S" "noctalia msg screenshot-region")
+      (exec "SHIFT + Print" "noctalia msg screenshot-annotate")
 
-      "${mod}, D, exec, ${launcher-cmd}"
-      "${mod} SHIFT, P, exec, ${lock-cmd}"
-      "${mod} CONTROL, X, exec, ${power-cmd}"
+      # Media / utilities
+      (exec "${mod} + P" "playerctl play-pause")
+      (exec "XF86Calculator" "qalculate-gtk")
 
-      # "${mod}, V, togglesplit"
-      "${mod} SHIFT, V, togglegroup"
-      "${mod}, N ,changegroupactive,f"
-      "${mod} SHIFT,N,changegroupactive,b"
-      "${mod}, S,layoutmsg,swapwithmaster"
+      # Groups
+      (group "${mod} + SHIFT + V" "toggle()")
+      (group "${mod} + N" "next()")
+      (group "${mod} + SHIFT + N" "prev()")
 
-      "${mod},P,exec,playerctl play-pause"
-      # ",XF86AudioRaiseVolume,exec,amixer set Master 5%+"
-      # ",XF86AudioLowerVolume,exec,amixer set Master 5%-"
-      # ",XF86AudioMute,exec,amixer  set Master 1+ toggle"
-      ",XF86Calculator,exec,qalculate-gtk"
+      # Workspace cycling
+      (bind "${mod} + Tab" "hl.dsp.focus({ workspace = \"e+1\" })")
+      (bind "${mod} + SHIFT + Tab" "hl.dsp.focus({ workspace = \"e-1\" })")
 
-      "${mod}, tab, workspace, +1"
-      "${mod} SHIFT, tab, workspace, -1"
-      "${mod}, period, focusmonitor,r"
-      "${mod}, comma, focusmonitor,l"
-      "${mod} SHIFT,period,movewindow,mon:r"
-      "${mod} SHIFT,comma,movewindow,mon:l"
+      # Monitors
+      (monitor "period" "r")
+      (monitor "comma" "l")
+      (moveMonitor "period" "r")
+      (moveMonitor "comma" "l")
 
-      # "${mod} CONTROL,left,splitratio,-0.1"
-      # "${mod} CONTROL,right,splitratio,+0.1"
-      # "${mod} CONTROL,h,splitratio,-0.1"
-      # "${mod} CONTROL,l,splitratio,+0.1"
+      # Focus
+      (focus "Left" "l")
+      (focus "Right" "r")
+      (focus "Up" "u")
+      (focus "Down" "d")
+      (focus "H" "l")
+      (focus "L" "r")
+      (focus "K" "u")
+      (focus "J" "d")
 
-      "${mod}, left, movefocus, l"
-      "${mod}, right, movefocus, r"
-      "${mod}, up, movefocus, u"
-      "${mod}, down, movefocus, d"
+      # Move
+      (move "Left" "l")
+      (move "Right" "r")
+      (move "Up" "u")
+      (move "Down" "d")
+      (move "H" "l")
+      (move "L" "r")
+      (move "K" "u")
+      (move "J" "d")
 
-      "${mod}, h, movefocus, l"
-      "${mod}, l, movefocus, r"
-      "${mod}, k, movefocus, u"
-      "${mod}, j, movefocus, d"
-
-      "${mod} SHIFT, left, movewindow, l"
-      "${mod} SHIFT, right, movewindow, r"
-      "${mod} SHIFT, up, movewindow, u"
-      "${mod} SHIFT, down, movewindow, d"
-
-      "${mod} SHIFT, h, movewindow, l"
-      "${mod} SHIFT, l, movewindow, r"
-      "${mod} SHIFT, k, movewindow, u"
-      "${mod} SHIFT, j, movewindow, d"
+      # Mouse
+      (bind "${mod} + mouse:272" "hl.dsp.window.drag()")
+      (bind "${mod} + mouse:273" "hl.dsp.window.resize()")
     ]
-    ++ (
-      # workspaces
-      # binds ${mod} + [shift +] {1..10} to [move to] workspace {1..10}
-      builtins.concatLists (
-        builtins.genList (
-          x:
-          let
-            ws =
-              let
-                c = (x + 1) / 10;
-              in
-              builtins.toString (x + 1 - (c * 10));
-          in
-          [
-            "${mod}, ${ws}, workspace, ${toString (x + 1)}"
-            "${mod} SHIFT, ${ws}, movetoworkspacesilent, ${toString (x + 1)}"
-          ]
-        ) 10
-      )
-    );
+    ++ workspaces;
   };
 }

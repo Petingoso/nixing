@@ -37,13 +37,14 @@ in
 
     home-manager.users.${config.custom.username} = {
       imports = [
-        # inputs.hyprland.homeManagerModules.default
+        #inputs.hyprland.homeManagerModules.default
         ./conf/binds.nix
         ./conf/exports.nix
         ./conf/startup.nix
         ./conf/settings.nix
       ];
       wayland.windowManager.hyprland.enable = true;
+      wayland.windowManager.hyprland.configType = "lua";
     };
     custom = {
       services.greetd.environments = [

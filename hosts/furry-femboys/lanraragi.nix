@@ -10,6 +10,8 @@ let
 in
 {
   age.secrets.lanraragi.file = "${self}/secrets/lanraragi.age";
+  #HACK: WORKAROUND for redis version downgrade on stable
+  services.redis.package = pkgs'.redis;
 
   services.lanraragi = {
     #package = pkgs.callPackage "${self}/pkgs/lanraragi/package.nix" {};

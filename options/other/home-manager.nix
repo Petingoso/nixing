@@ -2,15 +2,14 @@
   config,
   inputs,
   lib,
+  enableHM,
   ...
 }:
 let
-  inherit (config.custom) username enableHM;
-
-  inherit (lib.modules) mkIf;
+  inherit (config.custom) username;
 in
-{
-  config = mkIf enableHM {
+lib.optionalAttrs enableHM {
+  config = {
     environment.sessionVariables = rec {
       XDG_BIN_HOME = "$HOME/.local/bin";
       PATH = [

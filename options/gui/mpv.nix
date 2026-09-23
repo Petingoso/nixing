@@ -2,11 +2,12 @@
   config,
   lib,
   pkgs,
+  enableHM,
   ...
 }:
 let
   cfg = config.custom.programs.mpv;
-  inherit (config.custom) username enableHM;
+  inherit (config.custom) username;
 
   inherit (lib.attrsets) attrValues;
   inherit (lib.modules) mkIf;
@@ -22,29 +23,30 @@ in
       type = nullOr str;
       default = null;
     };
-  };
-
-  config = mkIf cfg.enable {
-    home-manager.users.${username} = mkIf enableHM {
-      programs.mpv = {
-        enable = true;
-        config = {
-          vo = "gpu-next";
-          hwdec = "auto";
-          gpu-api = "vulkan";
-          vulkan-device = mkIf (cfg.gpu != null) cfg.gpu;
-          # volume = 50;
-          # osc = "no";
-          # osd-bar = "no";
-          # border = "no";
-        };
-        scripts = attrValues {
-          inherit (pkgs.mpvScripts)
-            mpris
-            thumbfast
-            # sponsorblock
-            # uosc
-            ;
+  }
+  // lib.optionalAttrs enableHM {
+    config = mkIf cfg.enable {
+      home-manager.users.${username} = {
+        programs.mpv = {
+          enable = true;
+          config = {
+            vo = "gpu-next";
+            hwdec = "auto";
+            gpu-api = "vulkan";
+            vulkan-device = mkIf (cfg.gpu != null) cfg.gpu;
+            # volume = 50;
+            # osc = "no";
+            # osd-bar = "no";
+            # border = "no";
+          };
+          scripts = attrValues {
+            inherit (pkgs.mpvScripts)
+              mpris
+              thumbfast
+              # sponsorblock
+              # uosc
+              ;
+          };
         };
       };
     };

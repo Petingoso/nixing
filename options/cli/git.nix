@@ -54,33 +54,34 @@ in
       default = [ ];
       description = "passthrough to the hm module";
     };
-  };
-
-  config = mkIf (cfg.enable && enableHM) {
-    home-manager.users.${username} = {
-      programs.git = {
-        enable = true;
-        settings.user.name = cfg.userName;
-        settings.user.email = cfg.userEmail;
-        inherit (cfg) includes;
-        settings = {
-          core = {
-            inherit (cfg) editor;
-            pager = "${delta}";
+  }
+  // lib.optionalAttrs enableHM {
+    config = mkIf (cfg.enable) {
+      home-manager.users.${username} = {
+        programs.git = {
+          enable = true;
+          settings.user.name = cfg.userName;
+          settings.user.email = cfg.userEmail;
+          inherit (cfg) includes;
+          settings = {
+            core = {
+              inherit (cfg) editor;
+              pager = "${delta}";
+            };
+            init.defaultBranch = cfg.defaultBranch;
+            push.autoSetupRemote = true;
+            commit = {
+              verbose = true;
+              gpgsign = cfg.signingKey != null;
+            };
+            gpg.format = "ssh";
+            user.signingkey = mkIf (cfg.signingKey != null) "key::${cfg.signingKey}";
+            interactive.diffFilter = "${delta} --color-only";
+            # diff.algorithm = "histogram";
+            # transfer.fsckobjects = true;
+            # fetch.fsckobjects = true;
+            # receive.fsckobjects = true;
           };
-          init.defaultBranch = cfg.defaultBranch;
-          push.autoSetupRemote = true;
-          commit = {
-            verbose = true;
-            gpgsign = cfg.signingKey != null;
-          };
-          gpg.format = "ssh";
-          user.signingkey = mkIf (cfg.signingKey != null) "key::${cfg.signingKey}";
-          interactive.diffFilter = "${delta} --color-only";
-          # diff.algorithm = "histogram";
-          # transfer.fsckobjects = true;
-          # fetch.fsckobjects = true;
-          # receive.fsckobjects = true;
         };
       };
     };

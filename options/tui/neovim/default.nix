@@ -2,59 +2,62 @@
   lib,
   pkgs,
   config,
+  enableHM,
   ...
 }:
 {
   options.custom.programs = {
     neovim-config.enable = lib.mkEnableOption "neovim-config";
-  };
-  config = lib.mkIf config.custom.programs.neovim-config.enable {
-    home-manager.users.${config.custom.username} = {
-      programs.neovim = {
-        enable = true;
-        withRuby = false;
-        withPython3 = true;
-        extraPackages = with pkgs; [
-          # C
-          gcc
+  }
+  // lib.optionalAttrs enableHM {
+    config = lib.mkIf config.custom.programs.neovim-config.enable {
+      home-manager.users.${config.custom.username} = {
+        programs.neovim = {
+          enable = true;
+          withRuby = false;
+          withPython3 = true;
+          extraPackages = with pkgs; [
+            # C
+            gcc
 
-          # utils
-          unzip
-          hurl
-          jq
-          ripgrep
+            # utils
+            unzip
+            hurl
+            jq
+            ripgrep
 
-          # browsersync
-          # nodePackages.browser-sync
-          yarn
-          nodejs
+            # browsersync
+            # nodePackages.browser-sync
+            yarn
+            nodejs
 
-          # formatters
-          stylua
-          ccls
-          clang-tools
-          shfmt
-          prettierd
-          typstyle
-          rustfmt
+            # formatters
+            stylua
+            ccls
+            clang-tools
+            shfmt
+            prettierd
+            typstyle
+            rustfmt
 
-          # LSPs
-          lua-language-server
-          vscode-langservers-extracted
-          # vscode-extensions.ms-vscode.cpptools
-          black
-          basedpyright
-          phpactor
-          tinymist
-          nil
-          java-language-server
-          rust-analyzer
-        ];
-      };
+            # LSPs
+            lua-language-server
+            vscode-langservers-extracted
+            # vscode-extensions.ms-vscode.cpptools
+            black
+            basedpyright
+            phpactor
+            tinymist
+            nil
+            java-language-server
+            rust-analyzer
+          ];
+        };
 
-      home.file."./.config/nvim" = {
-        source = ./conf;
-        recursive = true;
+        home.file."./.config/nvim" = {
+          source = ./conf;
+          recursive = true;
+        };
       };
     };
   };

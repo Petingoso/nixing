@@ -1,12 +1,11 @@
 {
   config,
   lib,
+  enableHM,
   ...
 }:
 let
   cfg = config.custom.programs.nh;
-  HM = config.custom.enableHM;
-
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) str;
@@ -19,16 +18,17 @@ in
       type = str;
       description = "flake directory";
     };
-  };
-
-  config = mkIf (cfg.enable && HM) {
-    programs.nh = {
-      enable = true;
-      inherit (cfg) flake;
-      clean = {
-        enable = cfg.clean.enable;
-        dates = "weekly";
-        extraArgs = "--keep 10";
+  }
+  // lib.optionalAttrs enableHM {
+    config = mkIf (cfg.enable) {
+      programs.nh = {
+        enable = true;
+        inherit (cfg) flake;
+        clean = {
+          enable = cfg.clean.enable;
+          dates = "weekly";
+          extraArgs = "--keep 10";
+        };
       };
     };
   };

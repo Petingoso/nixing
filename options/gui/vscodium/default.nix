@@ -50,7 +50,7 @@ in
             with pkgs.vscode-extensions;
             [
               # LSP and formatters
-              ms-vscode.cpptools
+              #NOTE: add clangd/ make here up to date
               myriad-dreamin.tinymist
               sumneko.lua
               ms-python.python
@@ -71,23 +71,12 @@ in
               usernamehw.errorlens
               gruntfuggly.todo-tree
               oderwat.indent-rainbow
-
-              # Themes
-              arcticicestudio.nord-visual-studio-code
-              catppuccin.catppuccin-vsc
-              jdinhlife.gruvbox
-              enkia.tokyo-night
-              mvllow.rose-pine
             ]
             ++ (with nix-vscode-extensions; [
               open-vsx.murloccra4ler.bettersearch
 
               open-vsx.mkhl.shfmt
               open-vsx.johnnymorganz.stylua
-
-              open-vsx.sainnhe.everforest
-              open-vsx.srcery-colors.srcery-colors
-              open-vsx.ginfuru.ginfuru-better-solarized-dark-theme
             ]);
         };
       };

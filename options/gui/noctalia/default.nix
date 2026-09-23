@@ -31,9 +31,9 @@ in
   };
 
   config = mkIf (cfg.enable && enableHM) {
-    custom.programs.launcher = "${ipc} panel-toggle launcher";
-    custom.programs.locker = "${ipc} session lock";
-    custom.programs.power_menu = "${ipc} panel-toggle session";
+    custom.programs.launcher = lib.mkForce "${ipc} panel-toggle launcher";
+    custom.programs.locker = lib.mkForce "${ipc} session lock";
+    custom.programs.power_menu = lib.mkForce "${ipc} panel-toggle session";
 
     environment.sessionVariables = {
       QS_ICON_THEME = "Papirus-Dark";

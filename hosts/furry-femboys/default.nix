@@ -14,7 +14,6 @@ _: {
     ./metrics.nix
     ./paste.nix
     ./pi400.nix
-    ./system.nix
     ./searx.nix
     ./syncthing.nix
     ./vaultwarden.nix

@@ -1,5 +1,6 @@
 _: {
   imports = [
+    ./bootstrap.nix
     ./firefox
     ./kitty
     # ./themes

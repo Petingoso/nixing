@@ -37,6 +37,7 @@ let
           lib
           hostname
           system
+	  enableHM
           ;
         nixpkgs = pkgs;
       };

@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  enableHM,
   ...
 }:
 let
@@ -11,8 +12,9 @@ in
   options.custom.programs = {
     #NOTE: needs HM
     ranger.enable = lib.mkEnableOption "ranger";
-  };
-  config = lib.mkIf (cfg.enableHM && cfg.programs.ranger.enable) {
+  }
+  // lib.optionalAttrs enableHM {
+  config = lib.mkIf cfg.programs.ranger.enable {
     home-manager.users.${cfg.username} = {
       home.packages = [
         pkgs.ranger
@@ -32,5 +34,6 @@ in
         };
       };
     };
+  };
   };
 }

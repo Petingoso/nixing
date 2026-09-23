@@ -37,10 +37,10 @@ in
   "searx-prometheus.age".publicKeys = server;
   "vaultwarden-token.age".publicKeys = server;
   "wireguard.age".publicKeys = personal;
-  "znc.nix.age".publicKeys = personal;
+  "znc.nix.age".publicKeys = server;
 
-  "syncthing-Wired-cert.age".publicKeys = [ wired_host ];
-  "syncthing-Wired-key.age".publicKeys = [ wired_host ];
+  "syncthing-Wired-cert.age".publicKeys = personal;
+  "syncthing-Wired-key.age".publicKeys = personal;
 
   "syncthing-server-cert.age".publicKeys = server;
   "syncthing-server-key.age".publicKeys = server;

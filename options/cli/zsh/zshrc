@@ -55,8 +55,8 @@ bindkey "^[[1;5D" backward-word
 #-------ALIAS-------
 alias chroot='TERM=xterm-256color chroot'
 alias vampiretrain=" ~/.fightcade2/emulator/fbneo/run_vsav_training.sh"
-alias eza="eza -x --icons"
-alias ls="eza -x --icons"
+alias eza="eza -x --icons always"
+alias ls="eza -x --icons always"
 alias bat="bat --theme=gruvbox-dark"
 # alias btop="btop --utf-force"
 alias v='nvim'

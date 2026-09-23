@@ -21,7 +21,7 @@ in
     home-manager = {
       useUserPackages = true;
       useGlobalPkgs = true;
-      backupFileExtension = "hm_backup";
+      backupFileExtension = "bkup-home-manager-${toString inputs.self.lastModifiedDate }";
       users.${username} = {
         programs = {
           home-manager.enable = true;

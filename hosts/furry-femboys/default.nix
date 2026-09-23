@@ -1,6 +1,6 @@
 _: {
   imports = [
-    ./anubis.nix
+    ./anubis
     ./backup.nix
     ./configuration.nix
     ./caddy.nix
@@ -12,9 +12,11 @@ _: {
     ./lanraragi.nix
     ./logrotate.nix
     ./metrics.nix
+    ./paste.nix
     ./pi400.nix
     ./system.nix
     ./searx.nix
+    ./syncthing.nix
     ./vaultwarden.nix
     ./znc.nix
   ];

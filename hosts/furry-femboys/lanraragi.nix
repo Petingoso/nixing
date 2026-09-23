@@ -9,7 +9,7 @@
   age.secrets.lanraragi.file = "${self}/secrets/lanraragi.age";
 
   services.lanraragi = {
-    package = pkgs.callPackage "${self}/pkgs/lanraragi/package.nix" { };
+    # package = pkgs.callPackage "${self}/pkgs/lanraragi/package.nix" {};
     enable = true;
     port = 8500;
     passwordFile = config.age.secrets.lanraragi.path;
@@ -20,6 +20,7 @@
   };
 
   fileSystems."/var/lib/private/lanraragi" = {
+    fsType = "none";
     device = "/data/lanraragi";
     options = [ "bind" ];
   };

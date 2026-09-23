@@ -65,4 +65,6 @@
   # networking.interfaces.end0.useDHCP = lib.mkDefault true;
   # networking.interfaces.enp1s0u1u2.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlan0.useDHCP = lib.mkDefault true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 }

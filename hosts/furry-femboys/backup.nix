@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
   services.borgbackup.jobs.gramps = {
     paths = "/data/docker/volumes/gramps_gramps_db";
     repo = "/data/backup/gramps";
@@ -13,6 +12,7 @@
       monthly = -1; # Keep at least one archive for each month
     };
     exclude = [ "/data/backup/gramps" ]; # Prevent self-backing
+
   };
 
   services.borgbackup.jobs.archive = {

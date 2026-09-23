@@ -14,7 +14,7 @@
       ];
     };
     #exec-once = [
-      #"opensnitch-ui"
+    #"opensnitch-ui"
     #];
   };
 }

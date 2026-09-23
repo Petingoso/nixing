@@ -21,7 +21,8 @@ in
 
   services.searx = {
     environmentFile = config.age.secrets.searx.path;
-    #package = pkgs'.callPackage "${self}/pkgs/searx.nix" {};
+    package = pkgs'.searxng;
+    # package = pkgs.callPackage "${self}/pkgs/searx.nix" {};
     enable = true;
     redisCreateLocally = true;
     limiterSettings = {

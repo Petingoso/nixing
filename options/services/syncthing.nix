@@ -31,6 +31,16 @@ in
       description = "where data will be stored";
       default = "/home/${cfg.username}/.local/share/syncthing";
     };
+
+    documentsPath = mkOption {
+      type = str;
+      default = "/home/${cfg.username}/Documents";
+    };
+
+    syncPath = mkOption {
+      type = str;
+      default = "/home/${cfg.username}/Sync";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -63,7 +73,7 @@ in
       settings = {
         devices = {
           "server" = {
-            id = "SS6AYGS-OMHE5F3-VVTK74G-Z2S2GDA-HNA5KW3-6QPA6L7-6WD7T4B-FEPGUAL";
+            id = "DUOZC7B-7SS2E45-D426FJH-TSSROG6-PWQZP4L-HN4VH52-RRXQAB4-X4262AD";
           };
           "HeadEmpty" = {
             id = "WGFRXWA-HAZYELG-IAJ4ZW7-QPGUDB2-MNM6C72-4R3UTUG-BKKHLVM-MMOQ4QY";
@@ -75,7 +85,7 @@ in
 
         folders = {
           "Documents" = {
-            path = "/home/${cfg.username}/Documents";
+            path = cfg.documentsPath;
             devices = [
               "server"
               "HeadEmpty"
@@ -83,7 +93,7 @@ in
             ];
           };
           "Sync" = {
-            path = "/home/${cfg.username}/Sync";
+            path = cfg.syncPath;
             devices = [
               "server"
               "HeadEmpty"

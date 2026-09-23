@@ -41,6 +41,9 @@ in
 
   "syncthing-Wired-cert.age".publicKeys = [ wired_host ];
   "syncthing-Wired-key.age".publicKeys = [ wired_host ];
+
+  "syncthing-server-cert.age".publicKeys = server;
+  "syncthing-server-key.age".publicKeys = server;
   #"syncthing-HeadEmpty-cert.age" = HeadEmpty;
   #syncthing-HeadEmpty-key.age" = HeadEmpty;
 }

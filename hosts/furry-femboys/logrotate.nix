@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   fileSystems."/var/log/caddy" = {
     device = "none";
     fsType = "tmpfs";

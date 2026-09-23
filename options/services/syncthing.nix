@@ -34,11 +34,13 @@ in
 
     documentsPath = mkOption {
       type = str;
+      description = "path to Documents";
       default = "/home/${cfg.username}/Documents";
     };
 
     syncPath = mkOption {
       type = str;
+      description = "path to Sync";
       default = "/home/${cfg.username}/Sync";
     };
   };

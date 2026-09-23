@@ -27,7 +27,7 @@ in
           italic_font = "auto";
 
           bold_italic_font = "auto";
-          font_size = 10;
+          font_size = 16;
 
           adjust_line_height = 0;
 

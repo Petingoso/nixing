@@ -665,6 +665,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable-latest": {
+      "locked": {
+        "lastModified": 1790129251,
+        "narHash": "sha256-hnCbO2PRL+EftlNv0mUJQI8Lg0t3/zL87hbrlpD9l/4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "bee02066546d9018a0b45090a0afbff09f756640",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable-small",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1789684949,
@@ -824,6 +840,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs-stable": "nixpkgs-stable",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nixpkgs-unstable-latest": "nixpkgs-unstable-latest",
         "noctalia": "noctalia",
         "stm-nix": "stm-nix"
       }

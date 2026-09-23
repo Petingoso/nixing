@@ -15,6 +15,9 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nixpkgs-unstable-latest.url = "github:NixOS/nixpkgs/nixos-unstable-small";
+
+
     # common
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";

@@ -15,13 +15,6 @@ with lib;
       default = "pet";
       description = "The name of the primary user.";
     };
-
-    enableHM = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Enable Home Manager integration";
-    };
-
     hostname = mkOption {
       type = types.str;
       description = "System Hostname";

@@ -22,30 +22,28 @@ in
       type = nullOr str;
       default = null;
     };
-  }
-  // lib.optionalAttrs enableHM {
-    config = mkIf cfg.enable {
-      home-manager.users.${username} = {
-        programs.mpv = {
-          enable = true;
-          config = {
-            vo = "gpu-next";
-            hwdec = "auto";
-            gpu-api = "vulkan";
-            vulkan-device = mkIf (cfg.gpu != null) cfg.gpu;
-            # volume = 50;
-            # osc = "no";
-            # osd-bar = "no";
-            # border = "no";
-          };
-          scripts = attrValues {
-            inherit (pkgs.mpvScripts)
-              mpris
-              thumbfast
-              # sponsorblock
-              # uosc
-              ;
-          };
+  };
+  config = mkIf cfg.enable {
+    home-manager.users.${username} = {
+      programs.mpv = {
+        enable = true;
+        config = {
+          vo = "gpu-next";
+          hwdec = "auto";
+          gpu-api = "vulkan";
+          vulkan-device = mkIf (cfg.gpu != null) cfg.gpu;
+          # volume = 50;
+          # osc = "no";
+          # osd-bar = "no";
+          # border = "no";
+        };
+        scripts = attrValues {
+          inherit (pkgs.mpvScripts)
+            mpris
+            thumbfast
+            # sponsorblock
+            # uosc
+            ;
         };
       };
     };

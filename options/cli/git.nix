@@ -3,15 +3,15 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   cfg = config.custom.programs.git;
-  inherit (config.custom) username enableHM;
+  inherit (config.custom) username;
 
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption;
-  inherit (lib.types)
+  inherit
+    (lib.types)
     attrs
     listOf
     nullOr
@@ -19,8 +19,7 @@ let
     ;
 
   delta = getExe pkgs.delta;
-in
-{
+in {
   options.custom.programs.git = {
     #NOTE: needs HM
     enable = mkEnableOption "git";
@@ -51,37 +50,35 @@ in
     };
     includes = mkOption {
       type = listOf attrs;
-      default = [ ];
+      default = [];
       description = "passthrough to the hm module";
     };
-  }
-  // lib.optionalAttrs enableHM {
-    config = mkIf (cfg.enable) {
-      home-manager.users.${username} = {
-        programs.git = {
-          enable = true;
-          settings.user.name = cfg.userName;
-          settings.user.email = cfg.userEmail;
-          inherit (cfg) includes;
-          settings = {
-            core = {
-              inherit (cfg) editor;
-              pager = "${delta}";
-            };
-            init.defaultBranch = cfg.defaultBranch;
-            push.autoSetupRemote = true;
-            commit = {
-              verbose = true;
-              gpgsign = cfg.signingKey != null;
-            };
-            gpg.format = "ssh";
-            user.signingkey = mkIf (cfg.signingKey != null) "key::${cfg.signingKey}";
-            interactive.diffFilter = "${delta} --color-only";
-            # diff.algorithm = "histogram";
-            # transfer.fsckobjects = true;
-            # fetch.fsckobjects = true;
-            # receive.fsckobjects = true;
+  };
+  config = mkIf (cfg.enable) {
+    home-manager.users.${username} = {
+      programs.git = {
+        enable = true;
+        settings.user.name = cfg.userName;
+        settings.user.email = cfg.userEmail;
+        inherit (cfg) includes;
+        settings = {
+          core = {
+            inherit (cfg) editor;
+            pager = "${delta}";
           };
+          init.defaultBranch = cfg.defaultBranch;
+          push.autoSetupRemote = true;
+          commit = {
+            verbose = true;
+            gpgsign = cfg.signingKey != null;
+          };
+          gpg.format = "ssh";
+          user.signingkey = mkIf (cfg.signingKey != null) "key::${cfg.signingKey}";
+          interactive.diffFilter = "${delta} --color-only";
+          # diff.algorithm = "histogram";
+          # transfer.fsckobjects = true;
+          # fetch.fsckobjects = true;
+          # receive.fsckobjects = true;
         };
       };
     };

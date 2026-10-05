@@ -27,6 +27,12 @@ in {
     enable = mkEnableOption "quickshell";
   };
   config = mkIf (cfg.enable) {
+    nix.settings = {
+      extra-substituters = ["https://noctalia.cachix.org"];
+      extra-trusted-public-keys = [
+        "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
+      ];
+    };
     custom.programs.launcher = lib.mkForce "${ipc} panel-toggle launcher";
     custom.programs.locker = lib.mkForce "${ipc} session lock";
     custom.programs.power_menu = lib.mkForce "${ipc} panel-toggle session";
@@ -50,7 +56,7 @@ in {
       programs.noctalia.enable = true;
 
       xdg.configFile."noctalia/settings.toml".source =
-        config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/quickshell/settings.toml";
+        config.lib.file.mkOutOfStoreSymlink "/home/${username}/flake/options/gui/noctalia/settings.toml";
 
       wayland.windowManager.hyprland.extraConfig = ''
         local noctalia = require("noctalia")

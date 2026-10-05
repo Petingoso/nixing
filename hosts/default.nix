@@ -74,7 +74,7 @@ let
         ++ hostExtraModules
         ++ extraModules;
     };
-  ignoreOverride = [ "hyprland" ];
+  ignoreOverride = [ "hyprland" "noctalia"];
 in
 {
   Wired = mkHost {

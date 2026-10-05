@@ -6,7 +6,7 @@
 }:
 let
   cfg = config.custom.programs.firefox-config;
-  inherit (config.custom) username enableHM;
+  inherit (config.custom) username;
 
   inherit (lib.options) mkEnableOption;
 in
@@ -24,10 +24,10 @@ in
       }:
       {
         # xdg.configFile."firefox/treestyle-tab.json".source = ./tst.json; ## source manually in extensions
-        xdg.configFile."firefox/tabnine.json".source = ./tab-nine.json; # # source manually in extensions
+        #xdg.configFile."firefox/tabnine.json".source = ./tab-nine.json; # # source manually in extensions
         programs.firefox = {
           enable = true;
-          configPath = "${config.xdg.configHome}/mozilla/firefox";
+          #configPath = "${config.xdg.configHome}/mozilla/firefox";
 
           package = pkgs.wrapFirefox pkgs.firefox-esr-140-unwrapped {
             extraPolicies = {

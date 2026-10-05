@@ -1,13 +1,52 @@
-{ ... }:
-{
+{lib, ...}: let
+  mkLua = lib.generators.mkLuaInline;
+  monitor = {
+    output,
+    mode ? "preferred",
+    position ? "auto",
+    scale ? 1,
+    transform ? null,
+    disabled ? null,
+  }: {
+    _args = [
+      (mkLua ''
+        {
+          output = "${output}",
+          mode = "${mode}",
+          position = "${position}",
+          scale = ${toString scale}${
+          lib.optionalString (transform != null) ''
+            ,
+            transform = ${toString transform}''
+        }${
+          lib.optionalString (disabled != null) ''
+            ,
+            disabled = ${lib.boolToString disabled}''
+        }
+        }
+      '')
+    ];
+  };
+in {
   wayland.windowManager.hyprland.settings = {
+    monitor = [
+      (monitor {
+        output = "desc:Ancor Communications Inc ASUS VS247 F8LMTF187560";
+        mode = "preferred";
+        position = "auto";
+        scale = 1;
+        transform = 1;
+      })
+
+      (monitor {
+        output = "";
+        mode = "preferred";
+        position = "auto";
+        scale = 1;
+      })
+    ];
 
     config = {
-      monitor = [
-        "desc:Ancor Communications Inc ASUS VS247 F8LMTF187560, preferred, auto, 1, transform, 1"
-        ",preferred,auto,1"
-      ];
-
       cursor.no_hardware_cursors = true;
 
       input = {

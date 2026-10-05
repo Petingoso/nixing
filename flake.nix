@@ -23,7 +23,7 @@
 
     hyprland.url = "github:hyprwm/Hyprland";
 
-    noctalia.url = "github:noctalia-dev/noctalia";
+    noctalia.url = "github:noctalia-dev/noctalia/cachix";
 
     nix-alien.url = "github:thiagokokada/nix-alien";
 

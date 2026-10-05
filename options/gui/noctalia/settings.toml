@@ -19,10 +19,6 @@ end = [
 margin_ends = 10
 position = "left"
 
-    [bar.default.monitor.eDP-1]
-    scale = 0.70
-    thickness = 26
-
 [brightness]
 enable_ddcutil = true
 
@@ -177,9 +173,6 @@ wallpaper_scheme = "dysfunctional"
 
 [wallpaper]
 directory = "/home/petnix/.config/wallpaper"
-
-[widget.spacer_2]
-type = "spacer"
 
 [widget.tray]
 drawer = true

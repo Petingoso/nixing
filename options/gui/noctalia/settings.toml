@@ -1,6 +1,4 @@
 config_version = 14
-[accessibility]
-ui_scale = 0.85
 
 [bar.default]
 end = [

@@ -1,6 +1,7 @@
 let
   wired_host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILwPyI9fCiJlTMfvqwuKR93H39qc51vLz5TTeRoTpCAy root@Wired";
   user = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMGkaggPzHcfdwitao9/yK3XBDCsAsRRWBQLr/mwSs5";
+  head_empty_host = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ0eP90e45xDjApi5e3tCw85L+/WKN46+e30gRkkrTlp root@HeadEmpty";
 
   furry_femboys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMGED4p6L2EYc8SY70XRF4TYM85/KDONH77vz/SFBSWc pet@furryfemboys"
@@ -9,7 +10,7 @@ let
   personal = [
     user
     wired_host
-    #head_empty_host
+    head_empty_host
   ];
 
   server = [
@@ -40,11 +41,13 @@ in
   "wireguard.age".publicKeys = personal;
   "znc.nix.age".publicKeys = server;
   "linx.age".publicKeys = personal;
+
   "syncthing-Wired-cert.age".publicKeys = personal;
   "syncthing-Wired-key.age".publicKeys = personal;
 
   "syncthing-furry-femboys-cert.age".publicKeys = server;
   "syncthing-furry-femboys-key.age".publicKeys = server;
+
   "syncthing-HeadEmpty-cert.age".publicKeys = personal;
   "syncthing-HeadEmpty-key.age".publicKeys = personal;
 }

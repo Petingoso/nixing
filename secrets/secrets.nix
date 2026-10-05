@@ -9,6 +9,7 @@ let
   personal = [
     user
     wired_host
+    #head_empty_host
   ];
 
   server = [
@@ -44,6 +45,6 @@ in
 
   "syncthing-furry-femboys-cert.age".publicKeys = server;
   "syncthing-furry-femboys-key.age".publicKeys = server;
-  #"syncthing-HeadEmpty-cert.age" = HeadEmpty;
-  #syncthing-HeadEmpty-key.age" = HeadEmpty;
+  "syncthing-HeadEmpty-cert.age".publicKeys = personal;
+  "syncthing-HeadEmpty-key.age".publicKeys = personal;
 }

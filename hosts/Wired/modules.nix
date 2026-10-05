@@ -32,5 +32,6 @@ in
     # "waydroid.nix"
     "roblox.nix"
     "stm.nix"
+    "host-keys.nix"
   ];
 }

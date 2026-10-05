@@ -17,7 +17,8 @@ in
     "wayland.nix"
     "wireguard.nix"
     "opentabletdriver.nix"
-    "steamlink.nix"
-    "stm.nix"
+    "host-keys.nix"
+    #"steamlink.nix"
+    #"stm.nix"
   ];
 }

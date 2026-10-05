@@ -41,6 +41,10 @@ in
       greetd.cage = false;
       networkmanager.enable = true;
       networkmanager.powersave = true;
+      #syncthing = {
+      #  enable = true;
+      #  hostName = config.networking.hostName;
+      #};
     };
   };
 

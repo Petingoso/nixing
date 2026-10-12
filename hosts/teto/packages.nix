@@ -20,6 +20,7 @@ in
     wdisplays
     inetutils
     dig
+    heroic
     # mcomix
   ];
 
